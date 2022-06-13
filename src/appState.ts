@@ -56,3 +56,23 @@ export interface ICustomizationItem {
   title: string;
   isSoldOut: boolean;
 }
+
+/**
+ * Auth interface for authentication
+ * process
+ */
+export interface IUserRegister {
+  email: string;
+  address: string;
+  password: string;
+  zipCode: string;
+  city: string;
+  browser: string;
+  status: string;
+  phone: string;
+}
+
+export interface IUserLogin {
+  email: string;
+  passowrd: string
+}
