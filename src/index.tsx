@@ -11,6 +11,7 @@ import {
   Route,
 } from "react-router-dom";
 import { Counter } from './features/counter/Counter';
+import { Login } from './pages/Login/Login';
 
 
 const container = document.getElementById('root')!;
@@ -22,6 +23,7 @@ root.render(
       <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="/s" element={<Login />} />
       </Routes>
       </BrowserRouter>
     </Provider>
