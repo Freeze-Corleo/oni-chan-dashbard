@@ -1,10 +1,15 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import { ThunkAction, Action } from '@reduxjs/toolkit';
 
+import { configureStore } from '../store';
+
+import { ProductGateway } from '../secondary-adapters/products/productGateway';
+
+// Instiate all gateways
+const productGateway = new ProductGateway();
+
+// Implement gateways as redux middleware
 export const store = configureStore({
-  reducer: {
-    counter: counterReducer,
-  },
+  productGateway,
 });
 
 export type AppDispatch = typeof store.dispatch;
