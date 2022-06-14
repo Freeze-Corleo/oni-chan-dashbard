@@ -1,18 +1,20 @@
 import React from 'react';
-import { WaveLogo } from '../../components/atom/WaveLogo';
 import Button from "../../components/atom/RegisterButton";
 import Footer from '../../components/organisms/Footer';
 import Form from '../../components/molecules/forms/Form';
 import styles from './Login.module.css';
+import Navigation from '../../components/organisms/Navigation';
 
 export function Register() {
 
     return (
         <div>
-            <WaveLogo />
+            <Navigation />
             <p className={styles.connect}>Se connecter</p>
-            <Form />
-            <Button label="S'inscrire" />
+            <div className="h-screen">
+                <Form />
+                <Button label="S'inscrire" />
+            </div>
             <Footer />
         </div>
     );
