@@ -8,6 +8,7 @@ import { Login } from '../pages/auth/Login';
 import Register from '../pages/auth/Register';
 import EmailVerification from '../pages/auth/EmailVerification';
 import App from '../App';
+import { LoginEmail } from '../pages/auth/LoginEmail';
 
 const AppRoute = () => {
   return (
@@ -17,7 +18,11 @@ const AppRoute = () => {
       <Route path="/" element={<App />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+<<<<<<< HEAD
       <Route path="/verify-code" element={<EmailVerification />} />
+=======
+      <Route path='/loginEmail' element={<LoginEmail />} />
+>>>>>>> 4ad12b987487fa4dd00a84b0e4ac21a800ed4373
     </Routes>
   );
 };
