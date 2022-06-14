@@ -16,6 +16,7 @@ const RegisterForm = () => {
           type="text"
           nameInput="email"
           onChangeFunction={onChangeValueRegister}
+          placeholder=""
         />
       </div>
     </div>

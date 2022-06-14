@@ -1,6 +1,6 @@
 import React from 'react';
 import { WaveLogo } from '../../components/atom/WaveLogo';
-import { RegisterBtn } from '../../components/atom/RegisterButton';
+import Button from "../../components/atom/RegisterButton";
 import Footer from '../../components/organisms/Footer';
 import Form from '../../components/molecules/forms/Form';
 import styles from './Login.module.css';
@@ -12,7 +12,7 @@ export function Register() {
             <WaveLogo />
             <p className={styles.connect}>Se connecter</p>
             <Form />
-            <RegisterBtn />
+            <Button label="S'inscrire" />
             <Footer />
         </div>
     );
