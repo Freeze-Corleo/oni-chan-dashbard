@@ -2,10 +2,10 @@ import React from 'react';
 import { WaveLogo } from '../../components/atom/WaveLogo';
 import { RegisterBtn } from '../../components/atom/RegisterButton';
 import Footer from '../../components/organisms/Footer';
-import Form from '../../components/organisms/Form';
+import Form from '../../components/molecules/forms/Form';
 import styles from './Login.module.css';
 
-export function LoginEmail() {
+export function Register() {
 
     return (
         <div>

@@ -1,4 +1,4 @@
-const Form = () => {
+const RegisterForm = () => {
     return (
         <div>
             <form className="space-y-6 grid justify-items-start ml-96">
@@ -28,7 +28,7 @@ const Form = () => {
                 </div>
             </form>
         </div>
-    );
-}
+  );
+};
 
-export default Form;
+export default RegisterForm;
