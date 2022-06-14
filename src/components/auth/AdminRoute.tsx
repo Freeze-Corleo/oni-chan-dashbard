@@ -1,13 +1,12 @@
 import React from 'react';
 
-const AdminRoute = ({
-  component,
-  auth,
-  ...rest
-}: {
-  component: React.Component;
-  auth: any;
-  rest: any;
-}) => <div>leodelpon</div>;
+import { Navigate, Outlet } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 
-export default AdminRoute;
+const ProtectedRoutes = (props: any) => {
+  const auth = useAuth();
+
+  return auth ? <Outlet /> : <Navigate to="/login" />;
+};
+
+export default ProtectedRoutes;
