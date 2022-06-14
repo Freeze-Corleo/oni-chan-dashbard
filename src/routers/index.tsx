@@ -6,6 +6,7 @@ import PublicRoutes from '../components/auth/Public Route';
 
 import { Login } from '../pages/auth/Login';
 import Register from '../pages/auth/Register';
+import EmailVerification from '../pages/auth/EmailVerification';
 import App from '../App';
 
 const AppRoute = () => {
@@ -16,6 +17,7 @@ const AppRoute = () => {
       <Route path="/" element={<App />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/verify-code" element={<EmailVerification />} />
     </Routes>
   );
 };
