@@ -64,7 +64,7 @@ const ProfilIcon = () => {
 
 const Navigation = () => {
   return (
-    <div className="relative">
+    <div className="relative z-10">
       <img
         src={process.env.PUBLIC_URL + '/img/wave.png'}
         className="w-screen absolute z-10"
