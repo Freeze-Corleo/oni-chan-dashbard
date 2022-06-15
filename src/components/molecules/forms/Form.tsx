@@ -26,7 +26,7 @@ const RegisterForm = () => {
                 </div>
                 <div className="w-1/3">
                     <Label htmlfor="adresse" label="Adresse :" />
-                    <div className="space-y-4">
+                    <div className="space-y-4 mb-20">
                     <Input type="text" nameInput="rue" placeholder="Adresse rue" onChangeFunction={onChangeValueRegister} />   
                     <Input type="text" nameInput="ville" placeholder="Ville" onChangeFunction={onChangeValueRegister} />   
                     <Input type="text" nameInput="cp" placeholder="Code Postal" onChangeFunction={onChangeValueRegister} />   
