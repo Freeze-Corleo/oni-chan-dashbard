@@ -37,3 +37,18 @@
     transform: translateY(0px);
   }
 }
+
+::-webkit-scrollbar {
+  width:12px;
+}
+
+
+::-webkit-scroll-track {
+  border-radius: 8px;
+}
+
+
+::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 8px;
+}

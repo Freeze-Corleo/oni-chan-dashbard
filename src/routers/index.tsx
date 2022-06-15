@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoutes from '../components/auth/AdminRoute';
 import PublicRoutes from '../components/auth/Public Route';
 
-import { Login } from '../pages/auth/Login';
+import Login from '../pages/auth/Login';
 import Register from '../pages/auth/Register';
 import EmailVerification from '../pages/auth/EmailVerification';
 import App from '../App';

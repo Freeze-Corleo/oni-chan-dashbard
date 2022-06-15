@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Input from '../../atom/Input';
+import Input from '../../atoms/Input';
 
 const RegisterForm = () => {
   const onChangeValueRegister = (
