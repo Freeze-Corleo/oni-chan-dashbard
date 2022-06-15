@@ -1,17 +1,10 @@
-import React from 'react';
-import styles from './Login.module.css';
-
-import Footer from '../../components/organisms/Footer';
-import Navigation from '../../components/organisms/Navigation';
-
 import LoginForm from '../../components/molecules/forms/Login';
+import HomeRoot from '../../components/organisms/HomeRoot';
 
 const Login = () => {
   return (
     <div>
-      <Navigation />
-      <LoginForm />
-      <Footer />
+      <HomeRoot children={<LoginForm />} />
     </div>
   );
 };
