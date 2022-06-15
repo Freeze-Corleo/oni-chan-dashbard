@@ -9,7 +9,7 @@ const Label = ({
 }) => {
   return (
     <label
-      className="block mb-2 text-sm py-2 font-medium text-gray-900 dark:text-gray-300"
+      className="block mb-2 text-sm py-2 font-medium text-gray-900"
       htmlFor={htmlfor}
     >
       {label}

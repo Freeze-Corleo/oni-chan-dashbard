@@ -1,10 +1,34 @@
 import React from 'react';
 
+import Label from '../../atoms/Label';
+import Input from '../../atoms/Input';
+import { IUserLogin } from '../../../appState';
+
+import { AuthenticationGateway } from '../../../secondary-adapters/auth/authGateway';
+
 const LoginForm = () => {
   const [emailLogin, setEmailLogin] = React.useState<boolean>(false);
+  const _auth = new AuthenticationGateway();
+  const [credentials, setCredentials] = React.useState<IUserLogin>({
+    email: '',
+    password: '',
+  });
 
   const onDisplayLoginForm = () => {
     setEmailLogin(true);
+  };
+
+  const onChangeCredentials = (
+    _event: React.ChangeEvent<{ name: string; value: string }>
+  ) => {
+    setCredentials({
+      ...credentials,
+      [_event.target.name]: _event.target.value,
+    });
+  };
+
+  const userConnection = () => {
+    _auth.login(credentials);
   };
 
   return (
@@ -15,7 +39,7 @@ const LoginForm = () => {
       <div className="relative z-50 grid place-content-center space-y-4">
         {!emailLogin && (
           <>
-            {/* <button
+            <button
               type="button"
               className="rounded-full flex items-center bg-blue-700 text-white font-medium tracking-wide px-20 py-2 cursor-pointer space-x-4 hover:bg-blue-900 shadow-md transition duration-300 linear"
             >
@@ -25,18 +49,17 @@ const LoginForm = () => {
                 className="w-7"
               />
               <p style={{ fontSize: 16 }}>Se connecter avec Facebook</p>
-            </button> */}
-            <button
-              type="button"
-              className="rounded-full flex items-center bg-white text-black font-medium tracking-wide px-20 py-2 cursor-pointer space-x-4 hover:bg-gray-200 shadow-md transition duration-300 linear border"
-            >
-              <img
-                src={process.env.PUBLIC_URL + '/img/google-icon.png'}
-                alt="icone de google"
-                className="w-7"
-              />
-              <p style={{ fontSize: 16 }}>Se connecter avec Google</p>
             </button>
+            <a href="http://localhost:8080/oni-chan/auth/google">
+              <div className="rounded-full flex items-center bg-white text-black font-medium tracking-wide px-20 py-2 cursor-pointer space-x-4 hover:bg-gray-200 shadow-md transition duration-300 linear border">
+                <img
+                  src={process.env.PUBLIC_URL + '/img/google-icon.png'}
+                  alt="icone de google"
+                  className="w-7"
+                />
+                <p style={{ fontSize: 16 }}>Se connecter avec Google</p>
+              </div>
+            </a>
 
             <button
               type="button"
@@ -59,7 +82,37 @@ const LoginForm = () => {
             </div>
           </>
         )}
-        {emailLogin && <></>}
+        {emailLogin && (
+          <>
+            <div className="w-1/2">
+              <Label htmlfor="mdp" label="Email" />
+              <Input
+                type="text"
+                nameInput="email"
+                placeholder="Entrer votre email"
+                onChangeFunction={onChangeCredentials}
+              />
+            </div>
+            <div className="w-1/2">
+              <Label htmlfor="cmdp" label="Mot de passe :" />
+              <Input
+                type="password"
+                nameInput="password"
+                placeholder="Entrer votre mot de passe"
+                onChangeFunction={onChangeCredentials}
+              />
+            </div>
+            <div className="grid place-content-center pt-8">
+              <button
+                onClick={() => userConnection()}
+                type="button"
+                className="rounded-full flex items-center bg-black text-white font-medium tracking-wide px-20 py-2 cursor-pointer space-x-4 hover:bg-gray-800 shadow-md transition duration-300 linear"
+              >
+                <p style={{ fontSize: 16 }}>Se connecter</p>
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </>
   );
