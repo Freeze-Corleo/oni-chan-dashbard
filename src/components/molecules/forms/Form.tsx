@@ -1,5 +1,5 @@
-import Input from "../../atom/Input";
-import Label from "../../atom/Label";
+import Input from "../../atoms/Input";
+import Label from "../../atoms/Label";
 
 const RegisterForm = () => {
     const onChangeValueRegister = (
