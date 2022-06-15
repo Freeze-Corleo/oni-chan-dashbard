@@ -67,7 +67,7 @@ const Navigation = () => {
     <div className="relative z-10">
       <img
         src={process.env.PUBLIC_URL + '/img/wave.png'}
-        className="w-screen absolute"
+        className="w-screen absolute z-10"
       />
       <div className="grid grid-cols-2 px-10 py-4">
         <div className="z-50">

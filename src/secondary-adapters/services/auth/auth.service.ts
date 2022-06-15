@@ -41,3 +41,16 @@ export const validateEmail = async (_id: string, _code: string) => {
 
   return {response, error};
 }
+
+export const loginGoogle = async () => {
+  let response = null;
+  let error = null;
+
+  try {
+    response = await axiosConfig.post(`/oni-chan/auth/google`);
+  } catch(err) {
+    error = err;
+  }
+
+  return {response, error};
+}

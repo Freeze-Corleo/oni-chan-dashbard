@@ -17,5 +17,4 @@ export class ProductGateway implements IProductGateway {
   public async retrieve(): Promise<IProduct[] | null> {
     throw new Error("Method not implemented.");
   }
-
 }
