@@ -7,6 +7,7 @@ const axiosConfig = axios.create({
 		'Content-Type': 'application/json',
 		'Access-Control-Allow-Headers': '*',
 	},
+	withCredentials: true,
 	proxy: {
 		host: "http://localhost",
 		port: 420,

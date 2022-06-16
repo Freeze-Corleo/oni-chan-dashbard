@@ -19,9 +19,8 @@ export const register = async (_user: IUserRegister) => {
 export const login = async (_credentials: IUserLogin) => {
   let response = null;
   let error = null;
-
   try {
-    response = await axiosConfig.post(`/oni-chan/auth/login`, {_credentials});
+    response = await axiosConfig.post(`/oni-chan/auth/login`, {..._credentials});
   } catch (err) {
     error = err;
   }
@@ -35,19 +34,6 @@ export const validateEmail = async (_id: string, _code: string) => {
 
   try {
     response = await axiosConfig.post(`/oni-chan/auth/verify/${_id}/${_code}`);
-  } catch(err) {
-    error = err;
-  }
-
-  return {response, error};
-}
-
-export const loginGoogle = async () => {
-  let response = null;
-  let error = null;
-
-  try {
-    response = await axiosConfig.post(`/oni-chan/auth/google`);
   } catch(err) {
     error = err;
   }

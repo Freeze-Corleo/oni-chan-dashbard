@@ -74,5 +74,5 @@ export interface IUserRegister {
 
 export interface IUserLogin {
   email: string;
-  passowrd: string
+  password: string
 }

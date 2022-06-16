@@ -15,8 +15,4 @@ export class AuthenticationGateway {
   public async validateCode(_id: string, _code: string): Promise<void> {
     await auth.validateEmail(_id, _code);
   }
-
-  public async loginGoogle(): Promise<void> {
-    await auth.loginGoogle();
-  }
 }
