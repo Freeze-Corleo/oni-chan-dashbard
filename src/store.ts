@@ -7,6 +7,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { AppState } from './appState';
 
 import { productReducer as product} from './core-logic/reducers/productReducer';
+import { notificationReducer as notification } from './core-logic/reducers/notificationReducer';
+import { myUserReducer as myUser } from './core-logic/reducers/myUserReducer';
 
 import { ProductGateway } from './secondary-adapters/products/productGateway';
 
@@ -17,7 +19,9 @@ export interface Dependencies {
 // custom combine store to implmenent it with middlewares that will be used in actions
 export const configureStore = (dependencies: Partial<Dependencies>): ReduxStore => createStore(
   combineReducers({
-    product
+    product,
+    notification,
+    myUser
   }),
   composeWithDevTools(
     applyMiddleware(thunk.withExtraArgument(dependencies) as ThunkMiddleware<AppState, Action, any>),

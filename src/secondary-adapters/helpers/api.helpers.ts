@@ -7,7 +7,6 @@ const axiosConfig = axios.create({
 		'Content-Type': 'application/json',
 		'Access-Control-Allow-Headers': '*',
 	},
-	withCredentials: true,
 	proxy: {
 		host: "http://localhost",
 		port: 420,
@@ -15,15 +14,15 @@ const axiosConfig = axios.create({
 });
 
 export const withAuthorization = () => {
-	const token = Cookies.get('tokenart_jwt');
+	const token = Cookies.get('FREEZE_JWT');
 	if (token !== undefined) {
 		axiosConfig.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 	}
 };
 
 export const initializeJwtHeader = (token: string) => {
-	Cookies.set('tokenart_jwt', token, {
-		expires: 3600000000,
+	Cookies.set('FREEZE_JWT', token, {
+		expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3),
 	});
 
 	axiosConfig.defaults.headers.common['Authorization'] = `Bearer ${token}`;

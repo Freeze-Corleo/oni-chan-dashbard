@@ -1,12 +1,17 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import Label from '../../atoms/Label';
 import Input from '../../atoms/Input';
 import { IUserLogin } from '../../../appState';
 
 import { AuthenticationGateway } from '../../../secondary-adapters/auth/authGateway';
+import { displayToastNotification } from '../../../core-logic/usecases/notifications/notificationsUseCase';
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [emailLogin, setEmailLogin] = React.useState<boolean>(false);
   const _auth = new AuthenticationGateway();
   const [credentials, setCredentials] = React.useState<IUserLogin>({
@@ -27,8 +32,27 @@ const LoginForm = () => {
     });
   };
 
-  const userConnection = () => {
-    _auth.login(credentials);
+  const userConnection = async () => {
+    const { error } = await _auth.login(credentials);
+    if (!error) {
+      dispatch(
+        displayToastNotification({
+          text: 'Félicitation vous êtes connecté',
+          severityLevel: 'success',
+          severityTitle: 'Connexion faite',
+        })
+      );
+
+      setTimeout(() => navigate('/home'), 2000);
+    } else {
+      dispatch(
+        displayToastNotification({
+          text: 'Désolé une erreur est survenue',
+          severityLevel: 'error',
+          severityTitle: 'Erreur de connexion',
+        })
+      );
+    }
   };
 
   return (
@@ -110,6 +134,19 @@ const LoginForm = () => {
               >
                 <p style={{ fontSize: 16 }}>Se connecter</p>
               </button>
+              <a
+                href="/forgot-password"
+                className="text-center font-medium tracking-wide pt-8 hover:text-[#79b587] transition duration-300 linear"
+              >
+                Mots de passe oublié
+              </a>
+              <a
+                href="/register"
+                className="text-center font-medium tracking-wide pt-4 hover:text-[#79b587] transition duration-300 linear"
+              >
+                {' '}
+                Pas de compte ? Inscrivez vous{' '}
+              </a>
             </div>
           </>
         )}

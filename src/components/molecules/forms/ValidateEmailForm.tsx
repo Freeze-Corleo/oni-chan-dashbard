@@ -1,5 +1,11 @@
 import React from 'react';
+
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 import { AuthenticationGateway } from '../../../secondary-adapters/auth/authGateway';
+
+import { displayToastNotification } from '../../../core-logic/usecases/notifications/notificationsUseCase';
 
 const ValidateEmailForm = ({
   email,
@@ -8,11 +14,33 @@ const ValidateEmailForm = ({
   email: string | null;
   uuid: string | null;
 }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [code, setCode] = React.useState<string>('');
 
   const onSubmitAndVerify = async () => {
     const auth = new AuthenticationGateway();
-    uuid && (await auth.validateCode(uuid, code));
+    if (uuid) {
+      const { error } = await auth.validateCode(uuid, code);
+      if (!error) {
+        dispatch(
+          displayToastNotification({
+            text: 'Votre code de validation est bon',
+            severityLevel: 'success',
+            severityTitle: 'Code validé',
+          })
+        );
+        setTimeout(() => navigate({ pathname: '/home' }), 2000);
+      } else {
+        dispatch(
+          displayToastNotification({
+            text: 'Votre code de validation est incorrect',
+            severityLevel: 'error',
+            severityTitle: 'Code erroné',
+          })
+        );
+      }
+    }
   };
 
   const onChangeCode = (

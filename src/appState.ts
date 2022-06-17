@@ -3,9 +3,17 @@
  * global redux App state
  */
 export interface AppState {
+  myUser: {
+    isLoading: boolean;
+    data: IMyProfil | null
+  },
   product: {
     isLoading: boolean;
     data: IProduct | null;
+  },
+  notification: {
+    isLoading: boolean;
+    data: {}&{id:number}[] | null
   }
 }
 
@@ -75,4 +83,15 @@ export interface IUserRegister {
 export interface IUserLogin {
   email: string;
   password: string
+}
+
+/**
+ * User profil for authenticated datas
+ */
+export interface IMyProfil {
+  email: string;
+  phone: string;
+  verifyUser: string;
+  status: string;
+  profilUrl: string;
 }

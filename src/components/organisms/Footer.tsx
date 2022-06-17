@@ -15,16 +15,16 @@ export const LogoOniChan = () => {
           <rect x="253" y="4" width="130" height="150" />
         </clipPath>
       </defs>
-      <g clip-path="url(#clip0)" transform="translate(-253 -100)">
+      <g clipPath="url(#clip0)" transform="translate(-253 -100)">
         <text
           fill="#A2F5B5"
-          font-family="Adobe Clean Black,Adobe Clean Black_MSFontService,sans-serif"
-          font-weight="900"
-          font-size="35"
+          fontFamily="Adobe Clean Black,Adobe Clean Black_MSFontService,sans-serif"
+          fontWeight="900"
+          fontSize="35"
           transform="matrix(0.941667 0 0 0.941667 270.892 145)"
         >
           MatR
-          <tspan font-size="40" x="85" y="0">
+          <tspan fontSize="40" x="85" y="0">
             .
           </tspan>
         </text>
