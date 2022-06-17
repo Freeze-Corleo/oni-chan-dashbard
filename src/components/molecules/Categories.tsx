@@ -8,12 +8,12 @@ const Categories = () => {
         <p>Explorer par catégories</p>
       </div>
       <div className='grid grid-cols-3 gap-x-0 gap-y-8 mb-28 place-items-center'>
-        <Card img='/img/burger.jpg' />
-        <Card img='/img/pizza.jpg' />
-        <Card img='/img/burger.jpg' />
-        <Card img='/img/pizza.jpg' />
-        <Card img='/img/burger.jpg' />
-        <Card img='/img/pizza.jpg' />
+        <Card img='/img/burger.jpg' label='EQUILIBRÉ' />
+        <Card img='/img/pizza.jpg' label='PETITS PLATS' />
+        <Card img='/img/burger.jpg' label='EQUILIBRÉ' />
+        <Card img='/img/pizza.jpg' label='PETITS PLATS' />
+        <Card img='/img/burger.jpg' label='EQUILIBRÉ' />
+        <Card img='/img/pizza.jpg' label='PETITS PLATS'/>
       </div>
     </>
   );
