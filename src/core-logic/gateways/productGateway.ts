@@ -6,7 +6,7 @@ import { IProduct } from '../../appState';
  * /secondary-adapters/product
  */
 export interface IProductGateway {
-  retrieve(): Promise<IProduct[] | null>;
+  retrieve(): Promise<{response: IProduct[] | null, error: any }>;
   retrieveOne(_id: string): Promise<IProduct | null>;
   create(_product: IProduct): Promise<string | null>;
   update(_id: string, _product: IProduct): Promise<{product: IProduct | null, message: string}>;

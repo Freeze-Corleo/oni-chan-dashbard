@@ -6,7 +6,6 @@ import Footer from "../components/organisms/Footer";
 import Navigation from "../components/organisms/Navigation";
 import { connect } from 'react-redux';
 import { IProduct } from "../appState";
-import * as product from '../../src/secondary-adapters/services/products/products.service';
 import { useDispatch, useSelector } from 'react-redux';
 import { retrieveProductsInformations } from '../core-logic/usecases/products/productsUseCases';
 import { ProductGateway } from "../secondary-adapters/products/productGateway";
@@ -62,8 +61,9 @@ const menus = {
 const Restaurant = () => {
     const dispatch = useDispatch();
     const products = useSelector(selectProductReducer);
+    const _product = new ProductGateway();
     async function getAll(params: any) {
-        const {error} = await product.getAllProducts();
+        const {error} = await _product.retrieve();
         if(!error){
          dispatch(retrieveProductsInformations());
         }
@@ -132,17 +132,10 @@ const Restaurant = () => {
             )}
             
             </div>
-            {console.log(products.data)}
+            {console.log("mins",products.data)}
             <button onClick={getAll} >YYo </button>
             <Footer />
         </>
     )
 } 
-const mapStateToProps = function(state: IProduct[]) {
-    return {
-      products: state,
-    }
-  }
-export default connect(
-    mapStateToProps)
-  (Restaurant);
+export default Restaurant;

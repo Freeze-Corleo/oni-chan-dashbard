@@ -3,7 +3,8 @@ import { IProduct } from '../../../appState';
 
 // Service function for registering
 export const getAllProducts = async () => {
-  let response: IProduct[] | null = null;
+  let response: any;
+  
   let error = null;
 
   try {
