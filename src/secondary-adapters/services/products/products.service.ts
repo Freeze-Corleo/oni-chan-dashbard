@@ -7,7 +7,7 @@ export const getAllProducts = async () => {
   let error = null;
 
   try {
-    response = await axiosConfig.get(`/oni-chan/product/all`);
+    response = await axiosConfig.get(`/oni-chan/product/get-all`);
   } catch (err) {
     error = err;
   }

@@ -4,6 +4,13 @@ import MenuCard from "../components/atoms/MenuCard";
 import SearchInput from "../components/atoms/SearchInput";
 import Footer from "../components/organisms/Footer";
 import Navigation from "../components/organisms/Navigation";
+import { connect } from 'react-redux';
+import { IProduct } from "../appState";
+import * as product from '../../src/secondary-adapters/services/products/products.service';
+import { useDispatch, useSelector } from 'react-redux';
+import { retrieveProductsInformations } from '../core-logic/usecases/products/productsUseCases';
+import { ProductGateway } from "../secondary-adapters/products/productGateway";
+import { selectProductReducer } from "../view-model-generation/generateProductModel";
 
 const title = "Burger and co";
 const rating = "4.8/5 Excellent ( + 400 avis )";
@@ -50,7 +57,18 @@ const menus = {
     ],
 
 }
+
+
 const Restaurant = () => {
+    const dispatch = useDispatch();
+    const products = useSelector(selectProductReducer);
+    async function getAll(params: any) {
+        const {error} = await product.getAllProducts();
+        if(!error){
+         dispatch(retrieveProductsInformations());
+        }
+     }
+    
     return (
         <>
             <Navigation />
@@ -112,10 +130,19 @@ const Restaurant = () => {
                 <>
                 </>
             )}
+            
             </div>
+            {console.log(products.data)}
+            <button onClick={getAll} >YYo </button>
             <Footer />
         </>
     )
-}
-
-export default Restaurant;
+} 
+const mapStateToProps = function(state: IProduct[]) {
+    return {
+      products: state,
+    }
+  }
+export default connect(
+    mapStateToProps)
+  (Restaurant);

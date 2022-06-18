@@ -5,7 +5,7 @@ import * as actionCreator from './actionCreator';
 
 // Action that will be called in frontend, will disptach notification
 //  and will load the product list to the Product reducer.
-export const retrieveProductsInformations: ThunkResult<Promise<void>> = async (dispatch, getState, {productsInformationGateway}: {productsInformationGateway: IProductGateway}) => {
+export const retrieveProductsInformations = (): ThunkResult<Promise<void>> => async (dispatch, getState, {productsInformationGateway}: {productsInformationGateway: IProductGateway}) => {
   dispatch(actionCreator.Actions.retrieveProducts());
   const products = await productsInformationGateway.retrieve();
   dispatch(actionCreator.Actions.productsRetrieved(products));
