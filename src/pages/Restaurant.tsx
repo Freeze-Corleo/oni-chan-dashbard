@@ -132,7 +132,7 @@ const Restaurant = () => {
             )}
             
             </div>
-            {console.log("mins",products.data)}
+            {console.log("mins", products.data)}
             <button onClick={getAll} >YYo </button>
             <Footer />
         </>
