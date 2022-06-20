@@ -6,8 +6,6 @@ import * as actions from '../usecases/index';
 // with at least in this object id field
 export type IReducerState = {}&{id:number}[];
 
-
-
 export const data = (
   state: IReducerState = [],
   action: notificationActionCreator.Actions
