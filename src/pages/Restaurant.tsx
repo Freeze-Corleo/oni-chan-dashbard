@@ -6,11 +6,14 @@ import Footer from "../components/organisms/Footer";
 import Navigation from "../components/organisms/Navigation";
 import { useDispatch, useSelector } from 'react-redux';
 import { retrieveProductsInformations } from '../core-logic/usecases/products/productsUseCases';
+import { dispatchAddProduct } from "../core-logic/usecases/basket/basketUseCase";
 import { ProductGateway } from "../secondary-adapters/products/productGateway";
 import { selectProductReducer } from "../view-model-generation/generateProductModel";
+import { selectBasketReducer } from "../view-model-generation/generateBasketModel";
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { useState } from "react";
+import { Button } from "@mui/material";
 
 const title = "Burger and co";
 const rating = "4.8/5 Excellent ( + 400 avis )";
@@ -36,11 +39,13 @@ const menus = {
     menuAdulte: [
         {
             plat: "Pizza",
-            img: "/img/pizza.jpg"
+            img: "/img/pizza.jpg",
+            price: 7.5,
         },
         {
             plat: "Burger",
-            img: "/img/burger.jpg"
+            img: "/img/burger.jpg",
+            price: 12
         },
 
     ],
@@ -72,18 +77,27 @@ const style = {
 
 const Restaurant = () => {
     const [open, setOpen] = useState(false);
+    const [id, setId] = useState(0);
+    let prix = 0;
+    const addProduct = (img: string, name: string, price: number) => {
+        setId(id + 1);
+        dispatch(dispatchAddProduct({ id: id, img: img, name: name, price: price }));
+    }
     const [datas, setDatas] = useState({
         img: '',
         plat: '',
-     });
-    const handleOpen = (img: string, plat: string) => {
-        setDatas({img, plat});
+        price: 0,
+    });
+    const handleOpen = (img: string, plat: string, price: number) => {
+        setDatas({ img, plat, price });
         setOpen(true);
     }
     const handleClose = () => setOpen(false);
     const dispatch = useDispatch();
     const products = useSelector(selectProductReducer);
+    const basket = useSelector(selectBasketReducer);
     const _product = new ProductGateway();
+
     async function getAll(params: any) {
         const { error } = await _product.retrieve();
         if (!error) {
@@ -115,7 +129,7 @@ const Restaurant = () => {
                             {menus.menuAdulte.map(
                                 plat =>
                                     <>
-                                        <button onClick={ho => handleOpen(plat.img, plat.plat)}><MenuCard img={plat.img} label={plat.plat} /></button>
+                                        <button onClick={ho => handleOpen(plat.img, plat.plat, plat.price)}><MenuCard img={plat.img} label={plat.plat} /></button>
                                         <Modal
                                             open={open}
                                             onClose={handleClose}
@@ -124,9 +138,10 @@ const Restaurant = () => {
                                         >
                                             <Box sx={style}>
                                                 <MenuCard img={datas.img} label={datas.plat} />
+                                                <Button variant="outlined" onClick={price => addProduct(datas.img, datas.plat, datas.price)}>Primary</Button>
                                             </Box>
                                         </Modal>
-                                        
+
                                     </>
                             )}
                         </div>
@@ -167,8 +182,19 @@ const Restaurant = () => {
                 )}
 
             </div>
-            {console.log("mins", products.data)}
-            <button onClick={getAll} >YYo </button>
+            {basket.data?.map(product => {
+                prix += product.price;
+            })}
+            {basket.data && basket.data?.length > 1 ?
+                (
+                        <div className="lg:p-10 bg-green-50 fixed bottom-0 w-full z-50 text-center">
+                           Prix de votre panier : {prix} €
+                        </div>
+                ) : (
+                    <>
+                        
+                    </>
+                )}
             <Footer />
         </>
     )

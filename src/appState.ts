@@ -14,7 +14,11 @@ export interface AppState {
   notification: {
     isLoading: boolean;
     data: {}&{id:number}[] | null
-  }
+  },
+  basket: {
+    isLoading: boolean;
+    data: {}&{id:number, price: number, img: string, name: string}[] | null
+  },
 }
 
 /**
