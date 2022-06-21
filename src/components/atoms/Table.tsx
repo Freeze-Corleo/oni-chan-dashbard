@@ -2,8 +2,17 @@ import React from 'react';
 
 type ObjectArray = Object & { id: string }[];
 
+export interface ITableProps {
+  rowLabels: string[];
+  datas: ObjectArray;
+  redirection: (id: string) => void;
+  setSelected: React.Dispatch<string[]>;
+  selected: string[];
+  showSelects: boolean;
+}
+
 const formatData = (datas: ObjectArray) => {
-  const obj: ObjectArray | {} = {};
+  const obj: ObjectArray | { [key: string]: any } = {};
   datas.forEach((data) => {
     obj[data.id] = false;
   });
@@ -11,51 +20,51 @@ const formatData = (datas: ObjectArray) => {
   return obj;
 };
 
-const Table = ({
+/**
+ * This implement a dynamic table for rendering
+ * @param param0
+ * @returns
+ */
+const Table: React.FC<ITableProps> = ({
   rowLabels,
   datas,
   redirection,
   setSelected,
   selected,
-}: {
-  rowLabels: string[];
-  datas: ObjectArray;
-  redirection: (id: string) => void;
-  setSelected: React.Dispatch<string[]>;
-  selected: string[];
+  showSelects,
 }) => {
   const [selectAll, setSelectAll] = React.useState<boolean>(false);
   const [selectRow, setSelectRow] = React.useState(formatData(datas));
 
   const checkAll = () => {
-    const obj = {};
+    let obj: { [key: string]: boolean } = {};
     datas.forEach((data) => {
-      obj[data.id] = false;
+      obj = { ...obj, [data.id]: !selectRow[data.id] };
+      console.log(obj);
     });
-
     setSelectRow(obj);
   };
-
-  console.log(selectRow);
 
   return (
     <div className="">
       <table className="w-full ">
         <thead>
           <tr className="">
-            <th>
-              <input
-                type="checkbox"
-                checked={selectAll}
-                onClick={() => {
-                  setSelectAll(!selectAll);
-                  checkAll();
-                }}
-              />
-            </th>
+            {showSelects && (
+              <th>
+                <input
+                  type="checkbox"
+                  checked={selectAll}
+                  onClick={() => {
+                    setSelectAll(!selectAll);
+                    checkAll();
+                  }}
+                />
+              </th>
+            )}
             {rowLabels.map((label) => {
               return (
-                <th className="font-medium tracking-wide px-4 py-4 text-gray-600">
+                <th className="Table-head font-medium tracking-wide px-4 py-4 text-gray-600">
                   {label}
                 </th>
               );
@@ -63,29 +72,32 @@ const Table = ({
           </tr>
         </thead>
         <tbody>
-          {datas.map((data, index) => {
+          {datas.map((data: { [key: string]: any }, index) => {
             return (
-              <tr key={index} className="border-b border-gray-400">
-                <td className="px-4 py-4 text-center">
-                  <input
-                    type="checkbox"
-                    name={datas[index].id}
-                    checked={selectRow[datas[index].id]}
-                    onChange={(e) => {
-                      setSelected([...selected, datas[index].id]);
-                      setSelectRow({
-                        ...selectRow,
-                        [e.target.name]: !selectRow[e.target.name],
-                      });
-                    }}
-                  />
-                </td>
-                {Object.keys(data).map((keyData) => {
+              <tr key={index} className="border-b border-gray-200">
+                {showSelects && (
+                  <td className="px-4 py-4 text-center">
+                    <input
+                      className=""
+                      type="checkbox"
+                      name={datas[index].id}
+                      checked={selectRow[datas[index].id]}
+                      onChange={(e) => {
+                        setSelected([...selected, datas[index].id]);
+                        setSelectRow({
+                          ...selectRow,
+                          [e.target.name]: !selectRow[e.target.name],
+                        });
+                      }}
+                    />
+                  </td>
+                )}
+                {Object.keys(data).map((keyData: any) => {
                   if (keyData !== 'id') {
                     return (
                       <td
                         key={Math.random()}
-                        className="px-4 py-4 tracking-wide text-sm text-center"
+                        className="px-4 py-4 tracking-wide text-sm text-center font-medium"
                       >
                         {data[keyData]}
                       </td>

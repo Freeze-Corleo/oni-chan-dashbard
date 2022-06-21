@@ -10,7 +10,6 @@ const IndexAdminDashboard = () => {
   return (
     <AdminHomeRoot>
       <div className="bg-gray-100 h-screen">
-        <div className="w-full rounded-md shadow-lg py-4 px-8">yolo</div>
         <DashboardDisplayFastData />
         <DashboardCustomers />
         <DashboardHistoryCommands />

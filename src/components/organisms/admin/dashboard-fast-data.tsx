@@ -4,7 +4,7 @@ import DashboardCard from '../../molecules/admin/dashboard-card';
 
 const DashboardDisplayFastData = () => {
   return (
-    <div className="flex justify-between px-20 mt-8">
+    <div className="flex justify-between px-20 pt-8 space-x-10">
       <DashboardCard displayedData={'35000 €'} title={'Votre compte en banque'}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
