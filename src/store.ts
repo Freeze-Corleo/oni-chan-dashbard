@@ -9,13 +9,16 @@ import { AppState } from './appState';
 import { productReducer as product} from './core-logic/reducers/productReducer';
 import { notificationReducer as notification } from './core-logic/reducers/notificationReducer';
 import { myUserReducer as myUser } from './core-logic/reducers/myUserReducer';
+import { userReducer as user } from './core-logic/reducers/userReducer';
 
 import { ProductGateway } from './secondary-adapters/products/productGateway';
 import { AuthenticationGateway } from './secondary-adapters/auth/authGateway';
+import { UserGateway } from './secondary-adapters/users/userGateway';
 
 export interface Dependencies {
   productGateway: ProductGateway;
   authGateway: AuthenticationGateway;
+  userGateway: UserGateway;
 }
 
 // custom combine store to implmenent it with middlewares that will be used in actions
@@ -23,7 +26,8 @@ export const configureStore = (dependencies: Partial<Dependencies>): ReduxStore 
   combineReducers({
     product,
     notification,
-    myUser
+    myUser,
+    user
   }),
   composeWithDevTools(
     applyMiddleware(thunk.withExtraArgument(dependencies) as ThunkMiddleware<AppState, Action, any>),

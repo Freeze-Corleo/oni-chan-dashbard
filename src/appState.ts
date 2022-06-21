@@ -13,7 +13,11 @@ export interface AppState {
   },
   notification: {
     isLoading: boolean;
-    data: {}&{id:number}[] | null
+    data: {}&{id:number}[] | null;
+  },
+  user: {
+    isLoading: boolean;
+    data: IUser | null;
   }
 }
 
@@ -94,4 +98,31 @@ export interface IMyProfil {
   verifyUser: string;
   status: string;
   profilUrl: string;
+}
+
+export interface IAddress{
+  street:string;
+  number:string;
+  city:string;
+  zipCode:string;
+  uuid:string;
+  User:IUser;
+  userId:string;
+}
+
+export interface IUser {
+  email: string;
+  firstname: string;
+  lastname: string;
+  phone: string;
+  address: IAddress;
+  createdAt: Date;
+  updatedAt: Date;
+  googleAuth: boolean;
+  verifyUser: boolean;
+  status: string;
+  godFather: string;
+  profilUrl: string;
+  isBanned: boolean;
+  uuid: string;
 }
