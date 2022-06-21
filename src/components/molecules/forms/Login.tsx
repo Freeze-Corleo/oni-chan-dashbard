@@ -7,6 +7,7 @@ import Input from '../../atoms/Input';
 import { IUserLogin } from '../../../appState';
 
 import { AuthenticationGateway } from '../../../secondary-adapters/auth/authGateway';
+import { retrieveMyUserFromLogin } from '../../../core-logic/usecases/my-profil/myUserUseCase';
 import { displayToastNotification } from '../../../core-logic/usecases/notifications/notificationsUseCase';
 
 const LoginForm = () => {
@@ -33,6 +34,7 @@ const LoginForm = () => {
   };
 
   const userConnection = async () => {
+    dispatch(retrieveMyUserFromLogin(credentials));
     const { error } = await _auth.login(credentials);
     if (!error) {
       dispatch(
