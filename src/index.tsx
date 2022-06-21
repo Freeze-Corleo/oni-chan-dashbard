@@ -8,6 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import AppRoute from './routers/index';
 
+
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 

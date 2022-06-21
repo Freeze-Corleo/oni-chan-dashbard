@@ -10,6 +10,7 @@ import EmailVerification from '../pages/auth/EmailVerification';
 import App from '../App';
 import Home from '../pages/Home';
 import Restaurant from '../pages/Restaurant';
+import User from '../pages/User';
 
 const AppRoute = () => {
   return (
@@ -22,6 +23,7 @@ const AppRoute = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/verify-code" element={<EmailVerification />} />
       <Route path="/restaurant" element={<Restaurant />} />
+      <Route path="/user" element={<User/>} />
     </Routes>
   );
 };
