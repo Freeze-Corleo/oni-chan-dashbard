@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { selectMyProfilReducer } from '../../view-model-generation/generateMyProfilModel';
 
 import { LogoOniChan } from '../organisms/Footer';
 
@@ -63,6 +65,7 @@ const ProfilIcon = () => {
 };
 
 const Navigation = () => {
+  const user = useSelector(selectMyProfilReducer);
   return (
     <div className="relative z-10">
       <img

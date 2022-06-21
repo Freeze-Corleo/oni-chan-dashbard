@@ -15,18 +15,8 @@ export const retrieveMyUserFromLogin = (_credentials: IUserLogin): ThunkResult<P
   // Login gateway method
   const { error, jwtDecoded} = await authGateway.login(_credentials);
   if(!error && jwtDecoded !== null) {
+    console.log(jwtDecoded);
     dispatch(actionCreator.Actions.retrieveMyUserFromLogin(jwtDecoded));
-    dispatch(notificationActionCreator.Actions.addToast({
-      text: 'Félicitation vous êtes connecté',
-      severityLevel: 'success',
-      severityTitle: 'Connexion faite',
-    }))
-  } else {
-    dispatch(notificationActionCreator.Actions.addToast({
-      text: 'Désolé une erreur est survenue',
-      severityLevel: 'error',
-      severityTitle: 'Erreur de connexion',
-    }))
   }
 }
 
@@ -41,17 +31,6 @@ export const retrieveMyUserFromVerifyCode = (_id: string, _code: string): ThunkR
   const { error, jwtDecoded} = await authGateway.validateCode(_id, _code);
   if(!error && jwtDecoded !== null) {
     dispatch(actionCreator.Actions.retrieveMyUserFromLogin(jwtDecoded));
-    dispatch(notificationActionCreator.Actions.addToast({
-      text: 'Félicitation vous êtes connecté',
-      severityLevel: 'success',
-      severityTitle: 'Connexion faite',
-    }))
-  } else {
-    dispatch(notificationActionCreator.Actions.addToast({
-      text: 'Désolé une erreur est survenue',
-      severityLevel: 'error',
-      severityTitle: 'Erreur de connexion',
-    }))
   }
 }
 

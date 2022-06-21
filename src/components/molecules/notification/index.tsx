@@ -52,6 +52,7 @@ const Toasts: React.FC<any> = (): JSX.Element => {
   const onRemove = (id: string) => {
     dispatch(removeToastNotification(id));
   };
+
   return (
     <div className="relative">
       <ul className="fixed inset-x-0 top-4 z-50 ">

@@ -11,9 +11,11 @@ import { notificationReducer as notification } from './core-logic/reducers/notif
 import { myUserReducer as myUser } from './core-logic/reducers/myUserReducer';
 
 import { ProductGateway } from './secondary-adapters/products/productGateway';
+import { AuthenticationGateway } from './secondary-adapters/auth/authGateway';
 
 export interface Dependencies {
   productGateway: ProductGateway;
+  authGateway: AuthenticationGateway;
 }
 
 // custom combine store to implmenent it with middlewares that will be used in actions
