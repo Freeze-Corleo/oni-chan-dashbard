@@ -2,7 +2,7 @@ import React from 'react';
 
 export interface IButtonProps {
   label: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const Button: React.FC<IButtonProps> = ({ label = '', onClick }) => {

@@ -70,9 +70,9 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: 400,
     bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
     p: 4,
+    boxShadow: 24,
+    borderRadius: '69px',
 };
 
 const Restaurant = () => {
@@ -137,8 +137,11 @@ const Restaurant = () => {
                                             aria-describedby="modal-modal-description"
                                         >
                                             <Box sx={style}>
-                                                <MenuCard img={datas.img} label={datas.plat} />
-                                                <Button variant="outlined" onClick={price => addProduct(datas.img, datas.plat, datas.price)}>Primary</Button>
+                                                <div className="grid grid-cols-1 place-items-center mt-10">
+                                                <img className="rounded-lg w-full h-full" src={process.env.PUBLIC_URL +  datas.img } alt="" />
+                                                <p className="text-3xl m-5">{datas.plat}</p>
+                                                <Button variant="outlined" onClick={price => addProduct(datas.img, datas.plat, datas.price)}>Ajouter au panier</Button>
+                                                </div>
                                             </Box>
                                         </Modal>
 
@@ -187,12 +190,12 @@ const Restaurant = () => {
             })}
             {basket.data && basket.data?.length > 1 ?
                 (
-                        <div className="lg:p-10 bg-green-50 fixed bottom-0 w-full z-50 text-center">
-                           Prix de votre panier : {prix} €
-                        </div>
+                    <div className="lg:p-10 bg-green-50 fixed bottom-0 w-full z-50 text-center">
+                        Prix de votre panier : {prix} €
+                    </div>
                 ) : (
                     <>
-                        
+
                     </>
                 )}
             <Footer />
