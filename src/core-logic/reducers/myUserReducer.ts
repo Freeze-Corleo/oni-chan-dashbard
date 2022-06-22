@@ -17,13 +17,13 @@ export const data = (
 ) => {
   switch (action.type) {
     case actions.HYDRATE_MY_USER_FROM_VERIFY_CODE:
-      return {myProfil: action.payload}
+      return action.payload
     case actions.UPDATE_MY_USER:
-      return {myProfil: action.payload}
+      return action.payload
     case actions.HYDRATE_MY_USER_FROM_GOOGLE:
-      return {myProfil: action.payload}
+      return action.payload
     case actions.HYDRATE_MY_USER_FROM_LOGIN:
-      return {myProfil: action.payload}
+      return action.payload
     default: return state;
   }
 }

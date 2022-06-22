@@ -40,7 +40,6 @@ const Table: React.FC<ITableProps> = ({
     let obj: { [key: string]: boolean } = {};
     datas.forEach((data) => {
       obj = { ...obj, [data.id]: !selectRow[data.id] };
-      console.log(obj);
     });
     setSelectRow(obj);
   };

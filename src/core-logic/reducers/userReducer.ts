@@ -15,10 +15,9 @@ export const data = (
 ) => {
   switch (action.type) {
     case actions.SPECIFIC_USER_RETRIEVED:
-      return {
-        ...state,
-        user: action.payload
-      };
+      return action.payload;
+    case actions.SPECIFIC_USER_UPDATED:
+      return action.payload;
     default: return state;
   }
 }

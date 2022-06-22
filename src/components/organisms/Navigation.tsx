@@ -1,5 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 import { selectMyProfilReducer } from '../../view-model-generation/generateMyProfilModel';
 
 import { LogoOniChan } from '../organisms/Footer';
@@ -66,6 +68,7 @@ const ProfilIcon = () => {
 
 const Navigation = () => {
   const user = useSelector(selectMyProfilReducer);
+  console.log(user);
   return (
     <div className="relative z-10">
       <img
@@ -74,9 +77,9 @@ const Navigation = () => {
       />
       <div className="grid grid-cols-2 px-10 py-4">
         <div className="z-50">
-          <a href="/">
+          <Link to="/">
             <LogoOniChan />
-          </a>
+          </Link>
         </div>
         <div className="z-50 pt-2">
           <ul className="flex justify-end space-x-4">
@@ -93,14 +96,25 @@ const Navigation = () => {
                 Panier
               </div>
             </li>
-            <li>
-              <a href="/login">
-                <div className="px-4 py-2 bg-white flex items-center font-medium tracking-wide rounded-full cursor-pointer hover:bg-gray-200 transition duration-300 linear">
-                  {' '}
-                  <ProfilIcon /> Se connecter
-                </div>
-              </a>
-            </li>
+            {user.data === null ? (
+              <li>
+                <Link to="/login">
+                  <div className="px-4 py-2 bg-white flex items-center font-medium tracking-wide rounded-full cursor-pointer hover:bg-gray-200 transition duration-300 linear">
+                    {' '}
+                    <ProfilIcon /> Se connecter
+                  </div>
+                </Link>
+              </li>
+            ) : (
+              <li>
+                <Link to="/my-profil">
+                  <div className="px-4 py-2 bg-white flex items-center font-medium tracking-wide rounded-full cursor-pointer hover:bg-gray-200 transition duration-300 linear">
+                    {' '}
+                    <ProfilIcon /> Profil
+                  </div>
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>

@@ -40,6 +40,7 @@ const RegisterForm = () => {
           severityTitle: 'Mots de passe incorrect',
         })
       );
+      return;
     }
 
     if (!validateEmail(dataRegister.email)) {
@@ -50,6 +51,7 @@ const RegisterForm = () => {
           severityTitle: 'E-mail incorrect',
         })
       );
+      return;
     }
 
     const { response, error } = await _auth.register(dataRegister);
@@ -90,11 +92,11 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="grid place-content-center relative z-50">
-      <h1 className="py-16 flex justify-center font-medium text-3xl">
+    <div className="relative z-50 grid place-content-center">
+      <h1 className="flex justify-center py-16 text-3xl font-medium">
         S'inscrire
       </h1>
-      <div className="space-y-6 grid justify-items-start">
+      <div className="grid space-y-6 justify-items-start">
         <div className="w-2/3">
           <Label htmlfor="email" label="Email :" />
           <Input

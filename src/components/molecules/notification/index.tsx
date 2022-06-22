@@ -22,7 +22,7 @@ export const Toast: React.FC<IToastProps> = ({
   severityLevel = 'success',
   severityTitle = 'default title',
 }) => {
-  setTimeout(() => onDismissClickToast(id), 7000);
+  setTimeout(() => onDismissClickToast(id), 2000);
   return (
     <li className="ml-4 mb-4 w-full rounded-lg">
       <div className="flex">

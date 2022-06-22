@@ -98,6 +98,7 @@ export interface IMyProfil {
   verifyUser: string;
   status: string;
   profilUrl: string;
+  uuid: string;
 }
 
 export interface IAddress{
@@ -105,9 +106,9 @@ export interface IAddress{
   number:string;
   city:string;
   zipCode:string;
-  uuid:string;
-  User:IUser;
-  userId:string;
+  uuid?:string;
+  User?:IUser;
+  userId?:string;
 }
 
 export interface IUser {
@@ -115,14 +116,28 @@ export interface IUser {
   firstname: string;
   lastname: string;
   phone: string;
-  address: IAddress;
-  createdAt: Date;
-  updatedAt: Date;
-  googleAuth: boolean;
-  verifyUser: boolean;
+  address: IAddress[] | null;
+  createdAt: Date | null;
+  updatedAt: Date | null;
+  googleAuth: boolean | null;
+  verifyUser: boolean | null;
   status: string;
   godFather: string;
   profilUrl: string;
   isBanned: boolean;
   uuid: string;
+}
+
+export interface IPartnerRegister {
+  name: string;
+  address: string;
+  zipCode: string;
+  city: string;
+  siren: string;
+  activity: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  phone: string;
+  status: string;
 }
