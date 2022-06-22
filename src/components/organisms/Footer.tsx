@@ -39,7 +39,7 @@ export const LogoOniChan = () => {
  */
 const Footer = () => {
   return (
-    <div className="lg:p-10 relative z-50">
+    <div className="lg:p-10 relative z-40">
       <div className="bg-black grid grid-cols-3 rounded-3xl px-8">
         <div className="">
           <div className="py-4">
