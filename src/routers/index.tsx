@@ -12,7 +12,9 @@ import MyProfil from '../pages/my-profil';
 import RestaurantFeed from '../pages/Restaurants';
 
 import RegisterRestorer from '../pages/admin/register';
-import IndexAdminDashboard from '../pages/admin/index';
+import IndexAdminDashboard from '../pages/admin';
+
+import BackOffice from '../pages/back-office';
 
 const AppRoute = () => {
   return (
@@ -28,6 +30,7 @@ const AppRoute = () => {
       <Route path="/my-profil" element={<MyProfil />} />
       <Route path="/register-restaurant" element={<RegisterRestorer />} />
       <Route path="/feed" element={<RestaurantFeed />} />
+      <Route path="/back-office" element={<BackOffice />} />
     </Routes>
   );
 };

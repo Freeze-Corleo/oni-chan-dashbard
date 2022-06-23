@@ -22,6 +22,10 @@ export interface AppState {
   user: {
     isLoading: boolean;
     data: IUser | null;
+  },
+  partner: {
+    isLoading: boolean;
+    data: IPartner[] | null;
   }
 }
 
@@ -144,4 +148,19 @@ export interface IPartnerRegister {
   email: string;
   phone: string;
   status: string;
+}
+
+export interface IPartner {
+  name: string;
+  address: IAddress;
+  siren: string;
+  activity: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  phone: string;
+  status: string;
+  updatedAt: Date;
+  createdAt: Date;
+  id: string
 }

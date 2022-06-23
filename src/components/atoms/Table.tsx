@@ -5,7 +5,9 @@ type ObjectArray = Object & { id: string }[];
 export interface ITableProps {
   rowLabels: string[];
   datas: ObjectArray;
-  redirection: (id: string) => void;
+  redirection?: (id: string) => void;
+  isValidation?: boolean;
+  validation?: (state: string, id: string) => void;
   setSelected: React.Dispatch<string[]>;
   selected: string[];
   showSelects: boolean;
@@ -28,10 +30,12 @@ const formatData = (datas: ObjectArray) => {
 const Table: React.FC<ITableProps> = ({
   rowLabels,
   datas,
-  redirection,
+  redirection = () => {},
   setSelected,
   selected,
   showSelects,
+  isValidation = false,
+  validation = () => {},
 }) => {
   const [selectAll, setSelectAll] = React.useState<boolean>(false);
   const [selectRow, setSelectRow] = React.useState(formatData(datas));
@@ -63,7 +67,7 @@ const Table: React.FC<ITableProps> = ({
             )}
             {rowLabels.map((label) => {
               return (
-                <th className="Table-head font-medium tracking-wide px-4 py-4 text-gray-600">
+                <th className="px-4 py-4 font-medium tracking-wide text-gray-600 Table-head">
                   {label}
                 </th>
               );
@@ -96,30 +100,51 @@ const Table: React.FC<ITableProps> = ({
                     return (
                       <td
                         key={Math.random()}
-                        className="px-4 py-4 tracking-wide text-sm text-center font-medium"
+                        className="px-4 py-4 text-sm font-medium tracking-wide text-center"
                       >
                         {data[keyData]}
                       </td>
                     );
                   }
                 })}
-                <td
-                  className="cursor-pointer"
-                  onClick={() => {
-                    redirection(data.id);
-                  }}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24px"
-                    viewBox="0 0 24 24"
-                    width="24px"
-                    fill="#000000"
+                {isValidation ? (
+                  <div className="grid space-y-2 place-content-center">
+                    <button
+                      className="bg-[#24bf60] px-4 rounded-full font-medium hover:bg-[#1a8a45] transition duration-300 linear"
+                      onClick={() => {
+                        validation('verified', data.id);
+                      }}
+                    >
+                      Accepter
+                    </button>
+                    <button
+                      className="bg-[#f54f4e] px-4 rounded-full font-medium hover:bg-[#bd3e3e] transition duration-300 linear"
+                      onClick={() => {
+                        validation('refused', data.id);
+                      }}
+                    >
+                      Refuser
+                    </button>
+                  </div>
+                ) : (
+                  <td
+                    className="cursor-pointer"
+                    onClick={() => {
+                      redirection(data.id);
+                    }}
                   >
-                    <path d="M0 0h24v24H0V0z" fill="none" />
-                    <path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
-                  </svg>
-                </td>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="24px"
+                      viewBox="0 0 24 24"
+                      width="24px"
+                      fill="#000000"
+                    >
+                      <path d="M0 0h24v24H0V0z" fill="none" />
+                      <path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+                    </svg>
+                  </td>
+                )}
               </tr>
             );
           })}
