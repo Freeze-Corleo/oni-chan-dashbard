@@ -7,7 +7,6 @@ import { selectMyProfilReducer } from '../../view-model-generation/generateMyPro
 import { selectBasketReducer } from '../../view-model-generation/generateBasketModel';
 
 import { LogoOniChan } from '../organisms/Footer';
-import { Link } from 'react-router-dom';
 import Button from '../atoms/RegisterButton';
 
 const Panier = () => {

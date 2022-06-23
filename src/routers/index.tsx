@@ -13,12 +13,14 @@ import RestaurantFeed from '../pages/Restaurants';
 
 import RegisterRestorer from '../pages/admin/register';
 import IndexAdminDashboard from '../pages/admin/index';
+import CreateRestaurantAdmin from '../pages/admin/createRestaurant';
 
 const AppRoute = () => {
   return (
     <Routes>
       <Route path="/" element={<ProtectedRoutes />}></Route>
       <Route path="/admin" element={<IndexAdminDashboard />} />
+      <Route path="/admin/create-restaurant" element={  <CreateRestaurantAdmin />} />
       <Route path="/" element={<PublicRoutes />}></Route>
       <Route path="/home" element={<Home />} />
       <Route path="/login" element={<Login />} />
