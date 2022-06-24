@@ -1,7 +1,6 @@
 import axiosConfig from "../../helpers/api.helpers";
 import { IProduct } from '../../../appState';
 
-// Service function for registering
 export const getAllProducts = async () => {
   let response: any;
   let error: any = null;

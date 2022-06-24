@@ -26,6 +26,10 @@ export interface AppState {
   partner: {
     isLoading: boolean;
     data: IPartner[] | null;
+  },
+  restaurant: {
+    isLoading: boolean;
+    data: IRestaurant | null;
   }
 }
 
@@ -163,4 +167,16 @@ export interface IPartner {
   updatedAt: Date;
   createdAt: Date;
   id: string
+}
+
+export interface IRestaurant {
+  name: string;
+  rate: number;
+  deliveryPrice: number;
+  address: IAddress;
+  price: Number;
+  cookType: string;
+  products: IProduct[];
+  isAvailable: boolean;
+  uuid: string;
 }

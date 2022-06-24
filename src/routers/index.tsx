@@ -31,7 +31,8 @@ const AppRoute = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/verify-code" element={<EmailVerification />} />
-      <Route path="/restaurant" element={<Restaurant />} />
+      <Route path='/restaurants' element={<RestaurantFeed />} />  
+      <Route path="/restaurant/:id" element={<Restaurant />} />
       <Route path="/my-profil" element={<MyProfil />} />
       <Route path="/register-restaurant" element={<RegisterRestorer />} />
       <Route path="/feed" element={<RestaurantFeed />} />

@@ -12,13 +12,15 @@ import { myUserReducer as myUser } from './core-logic/reducers/myUserReducer';
 import {basketReducer as basket} from './core-logic/reducers/basketReducer'
 import { userReducer as user } from './core-logic/reducers/userReducer';
 import { partnerReducer as partner } from './core-logic/reducers/partnerReducer';
-
+import { restaurantReducer as restaurant } from './core-logic/reducers/restaurantReducer';
 import { ProductGateway } from './secondary-adapters/products/productGateway';
 import { AuthenticationGateway } from './secondary-adapters/auth/authGateway';
 import { UserGateway } from './secondary-adapters/users/userGateway';
 import { PartnerGateway } from './secondary-adapters/partners/partnerGateway';
+import { RestaurantGateway } from './secondary-adapters/restaurant/restaurantGateway'; 
 
 export interface Dependencies {
+  restaurantGateway: RestaurantGateway;
   productGateway: ProductGateway;
   authGateway: AuthenticationGateway;
   userGateway: UserGateway;
@@ -33,7 +35,8 @@ export const configureStore = (dependencies: Partial<Dependencies>): ReduxStore 
     myUser,
     basket,
     user,
-    partner
+    partner,
+    restaurant
   }),
   composeWithDevTools(
     applyMiddleware(thunk.withExtraArgument(dependencies) as ThunkMiddleware<AppState, Action, any>),
