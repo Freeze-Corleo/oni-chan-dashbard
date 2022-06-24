@@ -1,3 +1,4 @@
+import { IAddress, IRestaurant } from "../../../appState";
 import axiosConfig from "../../helpers/api.helpers";
 
 export const getAllRestaurants = async () => {
@@ -12,5 +13,37 @@ export const getAllRestaurants = async () => {
     }
   
     return {response, error};
+  }
+
+
+  export const getRestaurantByID = async (id: string) => {
+    let response: IRestaurant;
+    let error: any = null;
+    let adresse : IAddress = {
+      street:'',
+      number:'',
+      city:'',
+      zipCode:'',
+    }
+    let restaurant: IRestaurant = {
+      name: '',
+      rate: 0,
+      deliveryPrice: 0,
+      address: adresse,
+      price: 0,
+      cookType: '',
+      products: [],
+      isAvailable: true,
+      uuid: "",
+    };
+  
+    try {
+      response = await axiosConfig.get(`/oni-chan/restaurant/get-product/?id=` + id);
+      restaurant = response;
+    } catch (err) {
+      error = err;
+    }
+  
+    return restaurant;
   }
   

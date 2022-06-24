@@ -17,6 +17,8 @@ export const retrieveRestaurantsInformations = (): ThunkResult<Promise<void>> =>
 //  and will load the product to the Product reducer.
 export const retrieveRestaurantInformation = (_id: string): ThunkResult<Promise<void>> => async (dispatch, getState, { restaurantInfoGate }: {restaurantInfoGate: IRestaurantGateway}) => {
   dispatch(actionCreator.Actions.retrieveRestaurant());
+  restaurantInfoGate = new RestaurantGateway();
+  console.log("usecases")
   const restaurant = await restaurantInfoGate.retrieveOne(_id);
   dispatch(actionCreator.Actions.restaurantRetrieved(restaurant));
 }

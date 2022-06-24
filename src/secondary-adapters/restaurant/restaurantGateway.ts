@@ -4,7 +4,7 @@ import * as restaurant from '../services/restaurant/restaurant.service';
 
 export class RestaurantGateway implements IRestaurantGateway {
   public async retrieveOne(_id: string): Promise<IRestaurant | null> {
-    throw new Error("Method not implemented.");
+    return await restaurant.getRestaurantByID(_id);
   }
   public async create(_restaurant: IRestaurant): Promise<string | null> {
     throw new Error("Method not implemented.");

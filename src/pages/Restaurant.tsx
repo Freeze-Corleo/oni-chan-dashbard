@@ -8,12 +8,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { retrieveProductsInformations } from '../core-logic/usecases/products/productsUseCases';
 import { dispatchAddProduct } from "../core-logic/usecases/basket/basketUseCase";
 import { ProductGateway } from "../secondary-adapters/products/productGateway";
-import { selectProductReducer } from "../view-model-generation/generateProductModel";
+import { selectRestaurantReducer } from "../view-model-generation/generateRestaurantModel";
 import { selectBasketReducer } from "../view-model-generation/generateBasketModel";
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { useState } from "react";
 import { Button } from "@mui/material";
+import { retrieveRestaurantInformation } from "../core-logic/usecases/restaurant/restaurantUseCase";
+import { retrieveRestaurantsInformations } from "../core-logic/usecases/restaurant/restaurantUseCase";
 
 const title = "Burger and co";
 const rating = "4.8/5 Excellent ( + 400 avis )";
@@ -94,15 +96,12 @@ const Restaurant = () => {
     }
     const handleClose = () => setOpen(false);
     const dispatch = useDispatch();
-    const products = useSelector(selectProductReducer);
+    const restaurants = useSelector(selectRestaurantReducer);
     const basket = useSelector(selectBasketReducer);
-    const _product = new ProductGateway();
 
     async function getAll(params: any) {
-        const { error } = await _product.retrieve();
-        if (!error) {
-            dispatch(retrieveProductsInformations());
-        }
+            dispatch(retrieveRestaurantInformation("62b472a47db2c0636e779225"));
+          // dispatch(retrieveRestaurantsInformations());
     }
 
     return (
@@ -198,6 +197,8 @@ const Restaurant = () => {
 
                     </>
                 )}
+                <button onClick={getAll}>yo</button>
+                {console.log(restaurants)}
             <Footer />
         </>
     )
