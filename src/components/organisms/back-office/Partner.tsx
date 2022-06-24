@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Box, Icon, Modal } from '@mui/material';
 
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -7,37 +7,8 @@ import { selectPartnerWithoutAddr } from '../../../view-model-generation/generat
 import { retrievePartners } from '../../../core-logic/usecases/partners/partnersUseCase';
 
 import Table from '../../atoms/Table';
-
-const mock = [
-  {
-    label: 'Cyber',
-    createdAt: '01/02/3222',
-    status: 'active',
-    id: '17',
-    yolo: 'hannn',
-  },
-  {
-    label: 'Cyber',
-    createdAt: '01/02/3222',
-    status: 'active',
-    id: '12',
-    yolo: 'hannn',
-  },
-  {
-    label: 'Cyber',
-    createdAt: '01/02/3222',
-    status: 'active',
-    id: '123',
-    yolo: 'hannn',
-  },
-  {
-    label: 'Cyber',
-    createdAt: '01/02/3222',
-    status: 'active',
-    id: '1234',
-    yolo: 'hannn',
-  },
-];
+import Input from '../../../components/atoms/Input';
+import Button from '../../../components/atoms/RegisterButton';
 
 /**
  * Implement dashboard element that display
@@ -45,21 +16,55 @@ const mock = [
  * @returns {JSX.Element}
  */
 const DashboardPartners = () => {
-  const [isValidation, setIsValidation] = React.useState<boolean>(true);
+  const [credentials, setCredentials] = React.useState({
+    status: '',
+    id: '',
+    password: '',
+  });
+  const [open, setOpen] = React.useState(false);
   const partners = useSelector(selectPartnerWithoutAddr);
   const dispatch = useDispatch();
-  const [displayData, setDisplayData] = React.useState<{} | null>(null);
   const [selected, setSelected] = React.useState<string[]>([]);
 
-  const navigate = useNavigate();
+  const style = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    p: 6,
+    boxShadow: 24,
+    borderRadius: '69px',
+  };
 
   const validation = (state: string, id: string) => {
-    console.log(state, id);
+    if (state !== 'refused') {
+      setCredentials({ ...credentials, status: state, id });
+      setOpen(true);
+    } else {
+      // dispatch to change status to refused
+    }
   };
+
+  const createRestorer = () => {
+    console.log(credentials);
+  };
+
+  const handleClose = () => setOpen(false);
 
   React.useEffect(() => {
     dispatch(retrievePartners());
   }, []);
+
+  const onChangeInput = (
+    _event: React.ChangeEvent<{ name: string; value: string }>
+  ) => {
+    setCredentials({
+      ...credentials,
+      [_event.target.name]: _event.target.value,
+    });
+  };
 
   return (
     <div className="grid grid-cols-12 px-20 pt-8">
@@ -87,12 +92,32 @@ const DashboardPartners = () => {
               setSelected={setSelected}
               selected={selected}
               showSelects={false}
-              isValidation={isValidation}
               validation={validation}
             />
           )}
         </div>
       </div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style} className="space-y-6">
+          <Input
+            type="text"
+            nameInput="password"
+            placeholder="Entrez votre mots de passe"
+            onChangeFunction={onChangeInput}
+          />
+          <Button
+            label="Créer le restaurateur"
+            onClick={() => {
+              createRestorer();
+            }}
+          />
+        </Box>
+      </Modal>
     </div>
   );
 };

@@ -6,7 +6,6 @@ export interface ITableProps {
   rowLabels: string[];
   datas: ObjectArray;
   redirection?: (id: string) => void;
-  isValidation?: boolean;
   validation?: (state: string, id: string) => void;
   setSelected: React.Dispatch<string[]>;
   selected: string[];
@@ -34,7 +33,6 @@ const Table: React.FC<ITableProps> = ({
   setSelected,
   selected,
   showSelects,
-  isValidation = false,
   validation = () => {},
 }) => {
   const [selectAll, setSelectAll] = React.useState<boolean>(false);
@@ -107,8 +105,8 @@ const Table: React.FC<ITableProps> = ({
                     );
                   }
                 })}
-                {isValidation ? (
-                  <div className="grid space-y-2 place-content-center">
+                {data.status && data.status === 'pending' ? (
+                  <td className="grid space-y-2 place-content-center">
                     <button
                       className="bg-[#24bf60] px-4 rounded-full font-medium hover:bg-[#1a8a45] transition duration-300 linear"
                       onClick={() => {
@@ -125,7 +123,7 @@ const Table: React.FC<ITableProps> = ({
                     >
                       Refuser
                     </button>
-                  </div>
+                  </td>
                 ) : (
                   <td
                     className="cursor-pointer"
