@@ -1,13 +1,10 @@
 import Card from "../components/atoms/Card";
-import Input from "../components/atoms/Input";
 import MenuCard from "../components/atoms/MenuCard";
 import SearchInput from "../components/atoms/SearchInput";
 import Footer from "../components/organisms/Footer";
 import Navigation from "../components/organisms/Navigation";
 import { useDispatch, useSelector } from 'react-redux';
-import { retrieveProductsInformations } from '../core-logic/usecases/products/productsUseCases';
 import { dispatchAddProduct } from "../core-logic/usecases/basket/basketUseCase";
-import { ProductGateway } from "../secondary-adapters/products/productGateway";
 import { selectRestaurantReducer } from "../view-model-generation/generateRestaurantModel";
 import { selectBasketReducer } from "../view-model-generation/generateBasketModel";
 import Box from '@mui/material/Box';
@@ -15,55 +12,12 @@ import Modal from '@mui/material/Modal';
 import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { retrieveRestaurantInformation } from "../core-logic/usecases/restaurant/restaurantUseCase";
-import { retrieveRestaurantsInformations } from "../core-logic/usecases/restaurant/restaurantUseCase";
 
-const title = "Burger and co";
+
 const rating = "4.8/5 Excellent ( + 400 avis )";
 const km = "2.6 km - 15 min";
 const horaires = "Horaires : Ferme à 20h30";
 const detail = "Livraison offerte à partir de 30€";
-
-const menus = {
-    menuEnfant: [
-        {
-            plat: "Burger",
-            img: "/img/burger.jpg"
-        },
-        {
-            plat: "Pizza",
-            img: "/img/pizza.jpg"
-        },
-        {
-            plat: "Camion",
-            img: "/img/camion.png"
-        },
-    ],
-    menuAdulte: [
-        {
-            plat: "Pizza",
-            img: "/img/pizza.jpg",
-            price: 7.5,
-        },
-        {
-            plat: "Burger",
-            img: "/img/burger.jpg",
-            price: 12
-        },
-
-    ],
-    accompagnement: [
-        {
-            plat: "Courses",
-            img: "/img/les-courses.png"
-        },
-        {
-            plat: "Camion",
-            img: "/img/camion.png"
-        },
-
-    ],
-
-}
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -99,9 +53,10 @@ const Restaurant = () => {
     const restaurants = useSelector(selectRestaurantReducer);
     const basket = useSelector(selectBasketReducer);
     const rest: any = restaurants;
-
+    
     useEffect(() => {
-        dispatch(retrieveRestaurantInformation("62b6d9d09cfc820bf61741e7"));
+        //dispatch(retrieveRestaurantInformation("62b6d9d09cfc820bf61741e7"));
+        console.log("hey")
     }, []);
 
     return (
