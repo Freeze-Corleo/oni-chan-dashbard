@@ -12,7 +12,7 @@ import { selectRestaurantReducer } from "../view-model-generation/generateRestau
 import { selectBasketReducer } from "../view-model-generation/generateBasketModel";
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { retrieveRestaurantInformation } from "../core-logic/usecases/restaurant/restaurantUseCase";
 import { retrieveRestaurantsInformations } from "../core-logic/usecases/restaurant/restaurantUseCase";
@@ -87,22 +87,22 @@ const Restaurant = () => {
     }
     const [datas, setDatas] = useState({
         img: '',
-        plat: '',
+        title: '',
         price: 0,
     });
-    const handleOpen = (img: string, plat: string, price: number) => {
-        setDatas({ img, plat, price });
+    const handleOpen = (img: string, title: string, price: number) => {
+        setDatas({ img, title, price });
         setOpen(true);
     }
     const handleClose = () => setOpen(false);
     const dispatch = useDispatch();
     const restaurants = useSelector(selectRestaurantReducer);
     const basket = useSelector(selectBasketReducer);
+    const rest: any = restaurants;
 
-    async function getAll(params: any) {
-            dispatch(retrieveRestaurantInformation("62b472a47db2c0636e779225"));
-          // dispatch(retrieveRestaurantsInformations());
-    }
+    useEffect(() => {
+        dispatch(retrieveRestaurantInformation("62b6d9d09cfc820bf61741e7"));
+    }, []);
 
     return (
         <>
@@ -113,7 +113,7 @@ const Restaurant = () => {
                     <Card img='/img/burger.jpg' />
                 </div>
                 <div className="mt-20 justify-self-start space-y-4">
-                    <p className="font-bold text-5xl">{title}</p>
+                    <p className="font-bold text-5xl">{rest.data?.product.data.name}</p>
                     <p>{rating}</p>
                     <p>{km}</p>
                     <p>{horaires}</p>
@@ -121,14 +121,14 @@ const Restaurant = () => {
                 </div>
             </div>
             <div className="p-10">
-                {menus.menuAdulte ? (
+                {rest.data?.product.data.products.length > 0 ? (
                     <div className="pl-20">
-                        <div className="font-bold text-4xl mb-10">Menu adulte</div>
+                        <div className="font-bold text-4xl mb-10">Plats du restaurant</div>
                         <div className="grid grid-cols-3 place-items-center gap-10 mb-16">
-                            {menus.menuAdulte.map(
-                                plat =>
+                            {rest.data.product?.data.products.map(
+                                (plat: any) =>
                                     <>
-                                        <button onClick={ho => handleOpen(plat.img, plat.plat, plat.price)}><MenuCard img={plat.img} label={plat.plat} /></button>
+                                        <button onClick={ho => handleOpen(plat.imageUrl, plat.title, plat.price)}><MenuCard img={plat.imageUrl} label={plat.title} /></button>
                                         <Modal
                                             open={open}
                                             onClose={handleClose}
@@ -137,9 +137,12 @@ const Restaurant = () => {
                                         >
                                             <Box sx={style}>
                                                 <div className="grid grid-cols-1 place-items-center mt-10">
-                                                <img className="rounded-lg w-full h-full" src={process.env.PUBLIC_URL +  datas.img } alt="" />
-                                                <p className="text-3xl m-5">{datas.plat}</p>
-                                                <Button variant="outlined" onClick={price => addProduct(datas.img, datas.plat, datas.price)}>Ajouter au panier</Button>
+                                                    <img className="rounded-lg w-full h-full" src={process.env.PUBLIC_URL + datas.img} onError={({ currentTarget }) => {
+                                                        currentTarget.onerror = null;
+                                                        currentTarget.src = process.env.PUBLIC_URL + "/img/pizza.jpg";
+                                                    }} alt="" />
+                                                    <p className="text-3xl m-5">{datas.title}</p>
+                                                    <Button variant="outlined" onClick={price => addProduct(datas.img, datas.title, datas.price)}>Ajouter au panier</Button>
                                                 </div>
                                             </Box>
                                         </Modal>
@@ -150,44 +153,16 @@ const Restaurant = () => {
                     </div>
                 ) : (
                     <>
+                        <div className="font-bold text-4xl mb-10 text-center">Aucun plat trouvé dans le restaurant</div>
                     </>
                 )}
 
-                {menus.menuEnfant ? (
-                    <div className="pl-20">
-                        <div className="font-bold text-4xl mb-10">Menu enfant</div>
-                        <div className="grid grid-cols-3 place-items-center gap-10 mb-16">
-                            {menus.menuEnfant.map(
-                                plat =>
-                                    <MenuCard img={plat.img} label={plat.plat} />
-                            )}
-                        </div>
-                    </div>
-                ) : (
-                    <>
-                    </>
-                )}
-
-                {menus.accompagnement ? (
-                    <div className="pl-20">
-                        <div className="font-bold text-4xl mb-10">Accompagnements</div>
-                        <div className="grid grid-cols-3 place-items-center gap-10 mb-16">
-                            {menus.accompagnement.map(
-                                plat =>
-                                    <MenuCard img={plat.img} label={plat.plat} />
-                            )}
-                        </div>
-                    </div>
-                ) : (
-                    <>
-                    </>
-                )}
 
             </div>
             {basket.data?.map(product => {
                 prix += product.price;
             })}
-            {basket.data && basket.data?.length > 1 ?
+            {basket.data && basket.data?.length > 0 ?
                 (
                     <div className="lg:p-10 bg-green-50 fixed bottom-0 w-full z-50 text-center">
                         Prix de votre panier : {prix} €
@@ -197,8 +172,7 @@ const Restaurant = () => {
 
                     </>
                 )}
-                <button onClick={getAll}>yo</button>
-                {console.log(restaurants)}
+            {console.log(rest)}
             <Footer />
         </>
     )
