@@ -54,10 +54,11 @@ const Restaurant = () => {
   const restaurants = useSelector(selectRestaurantReducer);
   const basket = useSelector(selectBasketReducer);
   const rest: any = restaurants;
-
+  const url = window.location.pathname;
+  const last = url.split("/").pop() + "";
   useEffect(() => {
-    dispatch(retrieveRestaurantInformation('62b6d9d09cfc820bf61741e7'));
-  }, [rest]);
+    dispatch(retrieveRestaurantInformation(last));
+  }, []);
 
   return (
     <>

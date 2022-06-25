@@ -24,7 +24,7 @@ const RestaurantFeed = () => {
               <>
                 <div className='grid grid-cols-3 gap-x-6 gap-y-8 mb-28 mt-20 place-items-center'>
                   {restaurantData.restaurants?.data?.map((restaurant: any) => {
-                    return <><Link to={"/restaurant/id"} replace><Card img='/img/burger.jpg' label={restaurant.name ? restaurant.name : "Sans nom"}></Card></Link></>
+                    return <><Link to={`/restaurant/${restaurant._id}`} replace><Card img='/img/burger.jpg' label={restaurant.name ? restaurant.name : "Sans nom"}></Card></Link></>
                   })};
                 </div>
               </>
