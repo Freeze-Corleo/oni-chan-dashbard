@@ -17,6 +17,8 @@ import BackOffice from '../pages/back-office';
 import IndexAdminDashboard from '../pages/admin/index';
 import CreateRestaurantAdmin from '../pages/admin/createRestaurant';
 
+import PaymentHome from '../pages/payment';
+
 const AppRoute = () => {
   return (
     <Routes>
@@ -31,12 +33,13 @@ const AppRoute = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/verify-code" element={<EmailVerification />} />
-      <Route path='/restaurants' element={<RestaurantFeed />} />  
+      <Route path="/restaurants" element={<RestaurantFeed />} />
       <Route path="/restaurant/:id" element={<Restaurant />} />
       <Route path="/my-profil" element={<MyProfil />} />
       <Route path="/register-restaurant" element={<RegisterRestorer />} />
       <Route path="/feed" element={<RestaurantFeed />} />
       <Route path="/back-office" element={<BackOffice />} />
+      <Route path="/paiement" element={<PaymentHome />} />
     </Routes>
   );
 };
