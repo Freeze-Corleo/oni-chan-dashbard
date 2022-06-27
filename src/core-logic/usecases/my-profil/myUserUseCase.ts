@@ -4,6 +4,8 @@ import * as notificationActionCreator from '../notifications/actionCreator';
 
 import { IMyProfil, IUserLogin } from '../../../appState';
 
+import jwtDecode from 'jwt-decode';
+
 import { IAuthenticationGateway } from '../../gateways/authenticationGateway';
 import { logout } from '../../../secondary-adapters/services/user/users.service';
 
@@ -16,9 +18,14 @@ export const retrieveMyUserFromLogin = (_credentials: IUserLogin): ThunkResult<P
   // Login gateway method
   const { error, jwtDecoded} = await authGateway.login(_credentials);
   if(!error && jwtDecoded !== null) {
-    console.log(jwtDecoded);
     dispatch(actionCreator.Actions.retrieveMyUserFromLogin(jwtDecoded));
   }
+}
+
+export const retrieveMyUserFromCookie = (cookie: string): ThunkResult<Promise<void>> => async (dispatch, getState) => {
+  // Login gateway method
+  const jwtDecoded: IMyProfil = jwtDecode(cookie);
+  dispatch(actionCreator.Actions.retrieveMyUserFromLogin(jwtDecoded));
 }
 
 export const logoutUser = (_user: IMyProfil): ThunkResult<Promise<void>> => async (dispatch, getState) => {
@@ -44,4 +51,3 @@ export const retrieveMyUserFromVerifyCode = (_id: string, _code: string): ThunkR
 export const updateMyUser =  (_user: IMyProfil): ThunkResult<Promise<void>> => async (dispatch, getState) => {
   dispatch(actionCreator.Actions.updateMyUser(_user));
 }
-

@@ -22,12 +22,13 @@ import PaymentHome from '../pages/payment';
 const AppRoute = () => {
   return (
     <Routes>
-      <Route path="/" element={<ProtectedRoutes />}></Route>
-      <Route path="/admin" element={<IndexAdminDashboard />} />
-      <Route
-        path="/admin/create-restaurant"
-        element={<CreateRestaurantAdmin />}
-      />
+      <Route path="/" element={<ProtectedRoutes />}>
+        <Route path="/admin" element={<IndexAdminDashboard />} />
+        <Route
+          path="/admin/create-restaurant"
+          element={<CreateRestaurantAdmin />}
+        />
+      </Route>
       <Route path="/" element={<PublicRoutes />}></Route>
       <Route path="/home" element={<Home />} />
       <Route path="/login" element={<Login />} />

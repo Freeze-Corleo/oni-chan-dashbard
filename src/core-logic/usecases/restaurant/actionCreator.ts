@@ -16,6 +16,8 @@ export const Actions = {
   restaurantDeleted: (message: string) => createAction(_actions.RESTAURANT_DELETED, message),
   createRestaurant: () => createAction(_actions.CREATE_RESTAURANT),
   restaurantCreated: (message: string | null) => createAction(_actions.RESTAURANT_CREATED, message),
+  retrieveRestaurantByPartner: () => createAction(_actions.RETRIEVE_RESTAURANTS_BY_PARTNER),
+  restaurantByPartnerRetrieved: (restaurants: IRestaurant[] | null) => createAction(_actions.RESTAURANTS_BY_PARTNER_RETRIEVED, restaurants),
 };
 
 export type Actions = ActionsUnion<typeof Actions>;

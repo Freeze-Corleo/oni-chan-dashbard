@@ -6,11 +6,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import { selectMyProfilReducer } from '../../view-model-generation/generateMyProfilModel';
 import { selectBasketReducer } from '../../view-model-generation/generateBasketModel';
 
+import { retrieveMyUserFromCookie } from '../../core-logic/usecases/my-profil/myUserUseCase';
+
+import { useCookies } from 'react-cookie';
+
 import { LogoOniChan } from '../organisms/Footer';
 import Button from '../atoms/RegisterButton';
 
 import { logout } from '../../secondary-adapters/services/user/users.service';
-import { logoutUser } from '../../core-logic/usecases/my-profil/myUserUseCase'; 
+import { logoutUser } from '../../core-logic/usecases/my-profil/myUserUseCase';
 
 const Panier = () => {
   return (
@@ -72,9 +76,8 @@ const ProfilIcon = () => {
   );
 };
 
-
-
 const Navigation = () => {
+  const cookie: any = useCookies(['FREEZE_JWT']);
   const dispatch = useDispatch();
   const user = useSelector(selectMyProfilReducer);
   const basket = useSelector(selectBasketReducer);
@@ -93,7 +96,7 @@ const Navigation = () => {
   const navigate = useNavigate();
   const searchProfil = () => {
     navigate({
-      pathname: '/my-profil'
+      pathname: '/my-profil',
     });
   };
 
@@ -101,6 +104,10 @@ const Navigation = () => {
     dispatch(logoutUser(user.data));
     handleCloseProfil();
   };
+
+  React.useEffect(() => {
+    dispatch(retrieveMyUserFromCookie(cookie[0].FREEZE_JWT));
+  }, []);
 
   React.useEffect(() => {
     {
@@ -118,6 +125,8 @@ const Navigation = () => {
     setCount(Object.values(countAndProduct));
   }, [basket]);
 
+  React.useEffect(() => {});
+
   const styleProduct = {
     position: 'absolute' as 'absolute',
     top: '30%',
@@ -129,7 +138,6 @@ const Navigation = () => {
     borderRadius: '69px',
     p: 4,
   };
-
 
   const style = {
     position: 'absolute' as 'absolute',
@@ -151,9 +159,15 @@ const Navigation = () => {
       />
       <div className="grid grid-cols-2 px-10 py-4">
         <div className="z-50">
-          <Link to="/">
-            <LogoOniChan />
-          </Link>
+          {user.data?.status === 'restorer' ? (
+            <Link to="/admin">
+              <LogoOniChan />
+            </Link>
+          ) : (
+            <Link to="/home">
+              <LogoOniChan />
+            </Link>
+          )}
         </div>
         <div className="z-50 pt-2">
           <ul className="flex justify-end space-x-4">
@@ -269,37 +283,35 @@ const Navigation = () => {
                 </Link>
               </li>
             ) : (
-            <li>
-              <button onClick={handleOpenProfil}>
-                <div className="flex items-center px-4 py-2 font-medium tracking-wide transition duration-300 bg-white rounded-full cursor-pointer hover:bg-gray-200 linear">
-                  <ProfilIcon />
-                  Profil
-                </div>
-              </button>
-            
-              <Modal
-                open={openProfil}
-                onClose={handleCloseProfil}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <Box sx={style}>
-                  <div className="grid cols-1 gap-y-3 place-items-center">
-                    <p className="text-3xl font-bold">Votre espace</p>
+              <li>
+                <button onClick={handleOpenProfil}>
+                  <div className="flex items-center px-4 py-2 font-medium tracking-wide transition duration-300 bg-white rounded-full cursor-pointer hover:bg-gray-200 linear">
+                    <ProfilIcon />
+                    Profil
                   </div>
-              
-                  <div className="grid mt-8 cols-1 place-items-center">
-                    <Button label="Mon profil" onClick={searchProfil}/>
-                  </div>
-                     
-                  <div className="grid mt-8 cols-1 place-items-center">
-                    <Button label="Se déconnecter" onClick={handleLogout}/>
-                  </div>
-                  
-                </Box>
-              </Modal>
-            </li>
-              
+                </button>
+
+                <Modal
+                  open={openProfil}
+                  onClose={handleCloseProfil}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={style}>
+                    <div className="grid cols-1 gap-y-3 place-items-center">
+                      <p className="text-3xl font-bold">Votre espace</p>
+                    </div>
+
+                    <div className="grid mt-8 cols-1 place-items-center">
+                      <Button label="Mon profil" onClick={searchProfil} />
+                    </div>
+
+                    <div className="grid mt-8 cols-1 place-items-center">
+                      <Button label="Se déconnecter" onClick={handleLogout} />
+                    </div>
+                  </Box>
+                </Modal>
+              </li>
             )}
           </ul>
         </div>

@@ -1,6 +1,8 @@
 import React from 'react';
+import SVGIconChecked from '../svg/IconChecked';
+import SVGIconUnchecked from '../svg/IconUnchecked';
 
-type ObjectArray = Object & { id: string }[];
+type ObjectArray = Object & { _id: string }[];
 
 export interface ITableProps {
   rowLabels: string[];
@@ -15,7 +17,7 @@ export interface ITableProps {
 const formatData = (datas: ObjectArray) => {
   const obj: ObjectArray | { [key: string]: any } = {};
   datas.forEach((data) => {
-    obj[data.id] = false;
+    obj[data._id] = false;
   });
 
   return obj;
@@ -41,7 +43,7 @@ const Table: React.FC<ITableProps> = ({
   const checkAll = () => {
     let obj: { [key: string]: boolean } = {};
     datas.forEach((data) => {
-      obj = { ...obj, [data.id]: !selectRow[data.id] };
+      obj = { ...obj, [data._id]: !selectRow[data._id] };
     });
     setSelectRow(obj);
   };
@@ -81,10 +83,10 @@ const Table: React.FC<ITableProps> = ({
                     <input
                       className=""
                       type="checkbox"
-                      name={datas[index].id}
-                      checked={selectRow[datas[index].id]}
+                      name={datas[index]._id}
+                      checked={selectRow[datas[index]._id]}
                       onChange={(e) => {
-                        setSelected([...selected, datas[index].id]);
+                        setSelected([...selected, datas[index]._id]);
                         setSelectRow({
                           ...selectRow,
                           [e.target.name]: !selectRow[e.target.name],
@@ -94,7 +96,21 @@ const Table: React.FC<ITableProps> = ({
                   </td>
                 )}
                 {Object.keys(data).map((keyData: any) => {
-                  if (keyData !== 'id') {
+                  if (keyData === 'isAvailable') {
+                    return (
+                      <td
+                        key={Math.random()}
+                        className="flex justify-center px-4 py-4 text-sm font-medium tracking-wide text-center"
+                      >
+                        {data[keyData] ? (
+                          <SVGIconChecked className="text-green-800 fill-current" />
+                        ) : (
+                          <SVGIconUnchecked className="text-red-800 fill-current" />
+                        )}
+                      </td>
+                    );
+                  }
+                  if (keyData !== '_id') {
                     return (
                       <td
                         key={Math.random()}

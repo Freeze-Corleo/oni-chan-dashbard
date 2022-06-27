@@ -4,16 +4,30 @@ import AnalyticsNavigation from '../molecules/nav/admin/analyticSection';
 import ContentNavigation from '../molecules/nav/admin/contentSection';
 import SettingNavigation from '../molecules/nav/admin/settingSection';
 
+import { retrieveMyUserFromCookie } from '../../core-logic/usecases/my-profil/myUserUseCase';
+
+import { useCookies } from 'react-cookie';
+
+import { useSelector, useDispatch } from 'react-redux';
+
+import { selectMyProfilReducer } from '../../view-model-generation/generateMyProfilModel';
+
 const AdminNavigation = () => {
-  const [data, setData] = React.useState({ profilUrl: '' });
+  const dispatch = useDispatch();
+  const myUser = useSelector(selectMyProfilReducer);
+  const cookie: any = useCookies(['FREEZE_JWT']);
+
+  React.useEffect(() => {
+    dispatch(retrieveMyUserFromCookie(cookie[0].FREEZE_JWT));
+  }, []);
   return (
     <div className="grid h-screen px-8 py-8 shadow-xl bg-dark-main grid-row-5">
       <div>
         <div className="flex items-center">
           <div className="">
-            {data?.profilUrl?.length !== 0 ? (
+            {myUser?.data?.profilUrl?.length !== 0 ? (
               <img
-                src={data.profilUrl}
+                src={myUser.data?.profilUrl}
                 className="object-cover w-16 h-16 rounded-full"
                 alt="profil of a specific user"
               />
@@ -28,7 +42,7 @@ const AdminNavigation = () => {
               Have a good day ! &#129304;
             </p>
             <p className="text-lg font-medium tracking-wide text-white-grayish">
-              Léo Delpon
+              {myUser.data?.firstname} {myUser.data?.lastname}
             </p>
           </div>
         </div>

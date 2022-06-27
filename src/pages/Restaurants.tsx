@@ -7,12 +7,11 @@ import { retrieveRestaurantsInformations } from '../core-logic/usecases/restaura
 import { selectRestaurantReducer } from '../view-model-generation/generateRestaurantModel';
 
 const RestaurantFeed = () => {
-
   const [searchParams, setSearchParams] = useSearchParams(); //searchParams.get('search');
-  
+
   const dispatch = useDispatch();
   const restaurants = useSelector(selectRestaurantReducer);
-  const restaurantData: any = restaurants.data;
+  const restaurantData: any = restaurants;
 
   useEffect(() => {
     dispatch(retrieveRestaurantsInformations());
@@ -25,15 +24,26 @@ const RestaurantFeed = () => {
           <>
             {restaurantData && restaurantData?.restaurants?.data?.length > 0 ? (
               <>
-                <div className='grid grid-cols-3 gap-x-6 gap-y-8 mb-28 mt-20 place-items-center'>
+                <div className="grid grid-cols-3 mt-20 gap-x-6 gap-y-8 mb-28 place-items-center">
                   {restaurantData.restaurants?.data?.map((restaurant: any) => {
-                    return <><Link to={`/restaurant/${restaurant._id}`} replace><Card img='/img/burger.jpg' label={restaurant.name ? restaurant.name : "Sans nom"}></Card></Link></>
-                  })};
+                    return (
+                      <>
+                        <Link to={`/restaurant/${restaurant._id}`} replace>
+                          <Card
+                            img="/img/burger.jpg"
+                            label={
+                              restaurant.name ? restaurant.name : 'Sans nom'
+                            }
+                          ></Card>
+                        </Link>
+                      </>
+                    );
+                  })}
+                  ;
                 </div>
               </>
             ) : (
-              <>
-              </>
+              <></>
             )}
           </>
         </HomeRoot>

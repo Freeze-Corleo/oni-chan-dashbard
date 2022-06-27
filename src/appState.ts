@@ -29,7 +29,7 @@ export interface AppState {
   },
   restaurant: {
     isLoading: boolean;
-    data: IRestaurant | null;
+    data: IRestaurant[] | null;
   }
 }
 
@@ -111,6 +111,8 @@ export interface IMyProfil {
   status: string;
   profilUrl: string;
   uuid: string;
+  firstname: string;
+  lastname: string;
 }
 
 export interface IAddress{
@@ -172,17 +174,16 @@ export interface IPartner {
   status: string;
   updatedAt: Date;
   createdAt: Date;
-  id: string
+  _id: string
 }
 
 export interface IRestaurant {
   name: string;
   rate: number;
   deliveryPrice: number;
-  address: IAddress;
+  address: string;
   price: Number;
   cookType: string;
-  products: IProduct[];
   isAvailable: boolean;
-  uuid: string;
+  _id: string;
 }

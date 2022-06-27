@@ -39,11 +39,11 @@ export const LogoOniChan = () => {
  */
 const Footer = () => {
   return (
-    <div className="lg:p-10 relative z-40">
-      <div className="bg-black grid grid-cols-3 rounded-3xl px-8">
+    <div className="relative z-40 lg:p-10">
+      <div className="grid grid-cols-3 px-8 bg-black rounded-3xl">
         <div className="">
           <div className="py-4">
-            <a href="/">
+            <a href="/home">
               <LogoOniChan />
             </a>
           </div>
@@ -59,7 +59,7 @@ const Footer = () => {
           />
         </div>
         <div className="grid place-content-center">
-          <ul className="text-white space-y-6 tracking-wide font-normal text-md">
+          <ul className="space-y-6 font-normal tracking-wide text-white text-md">
             <li className="transition duration-300 linear hover:text-[#A2F5B5]">
               <a href="/help">Obtenir de l'aide</a>
             </li>
@@ -75,7 +75,7 @@ const Footer = () => {
           </ul>
         </div>
         <div className="grid place-content-center">
-          <ul className="text-white space-y-6 tracking-wide font-normal text-md">
+          <ul className="space-y-6 font-normal tracking-wide text-white text-md">
             <li className="transition duration-300 linear hover:text-[#A2F5B5]">
               <a href="/help">
                 &Eacute;conomisez sur votre promi&egrave;re commande !
@@ -85,7 +85,7 @@ const Footer = () => {
               <a href="/help">Obtenir de l'aide</a>
             </li>
           </ul>
-          <div className="flex space-x-4 py-4">
+          <div className="flex py-4 space-x-4">
             <a
               href="https://www.facebook.com/pierre.forques"
               target="_blank"

@@ -2,59 +2,61 @@ import { IAddress, IRestaurant } from "../../../appState";
 import axiosConfig from "../../helpers/api.helpers";
 
 export const getAllRestaurants = async () => {
-    let response: any;
-    let error: any = null;
-  
-    try {
-      response = await axiosConfig.get(`/oni-chan/restaurant/get-all`);
-      console.log(response);
-    } catch (err) {
-      error = err;
-    }
-  
-    return {response, error};
+  let response: any;
+  let error: any = null;
+
+  try {
+    response = await axiosConfig.get(`/oni-chan/restaurant/get-all`);
+    console.log(response);
+  } catch (err) {
+    error = err;
   }
 
+  return {response, error};
+}
 
-  export const getRestaurantByID = async (id: string) => {
-    let response: IRestaurant;
-    let error: any = null;
-    let adresse : IAddress = {
-      street:'',
-      number:'',
-      city:'',
-      zipCode:'',
-    }
-    let restaurant: IRestaurant = {
-      name: '',
-      rate: 0,
-      deliveryPrice: 0,
-      address: adresse,
-      price: 0,
-      cookType: '',
-      products: [],
-      isAvailable: true,
-      uuid: "",
-    };
-  
-    try {
-      response = await axiosConfig.get(`/oni-chan/restaurant/get-product/?id=` + id);
-      restaurant = response;
-    } catch (err) {
-      error = err;
-    }
-  
-    return restaurant;
+export const getRestaurantByID = async (id: string) => {
+  let response: IRestaurant;
+  let error: any = null;
+  let restaurant: IRestaurant = {
+    name: '',
+    rate: 0,
+    deliveryPrice: 0,
+    address: "",
+    price: 0,
+    cookType: '',
+    isAvailable: true,
+    _id: ''
+  };
+
+  try {
+    response = await axiosConfig.get(`/oni-chan/restaurant/get-product/?id=` + id);
+    restaurant = response;
+  } catch (err) {
+    error = err;
   }
 
-  export const createRestaurant = async (_restaurant: IRestaurant) => {
-    let error: any = null;
-    try {
-      await axiosConfig.post(`/oni-chan/restaurant/create`, {..._restaurant});
-    } catch (err) {
-      error = err;
-      return "Error" + error
-    }
-    return "Validation de la requête";
+  return restaurant;
+}
+
+export const createRestaurant = async (_restaurant: IRestaurant, _address: IAddress, _restorerId: string) => {
+  let response = null;
+  let error = null;
+  try {
+    response = await axiosConfig.post(`/oni-chan/restaurant/create/${_restorerId}`, {restaurant: _restaurant, address:_address});
+  } catch (err) {
+    error = err;
   }
-  
+  return {response, error};
+}
+
+export const getAllRestaurantsByPartner = async (_userId: string) => {
+  let response: any = null;
+  let error = null;
+  try {
+    response = await axiosConfig.get(`/oni-chan/restaurant/get-all/partner/${_userId}`);
+  } catch (err) {
+    error = err;
+  }
+  return {response, error};
+}

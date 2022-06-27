@@ -34,6 +34,8 @@ export const data = (
       return {
         ...state, message: action.payload
       }
+    case actions.RESTAURANTS_BY_PARTNER_RETRIEVED:
+      return action.payload
     default: return state;
   }
 }
