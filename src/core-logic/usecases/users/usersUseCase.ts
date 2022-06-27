@@ -6,6 +6,7 @@ import { IUserGateway } from '../../gateways/userGateway';
 import { IUser } from '../../../appState';
 
 import { displayToastNotification } from '../../../core-logic/usecases/notifications/notificationsUseCase';
+import { logout } from '../../../secondary-adapters/services/user/users.service';
 
 
 
@@ -14,6 +15,13 @@ export const retrieveSpecificUser = (_uuid: string): ThunkResult<Promise<void>> 
   dispatch(actionCreator.Actions.retrieveSpecificUser);
   const user = await (await userGateway.getUserById(_uuid)).response.data;
   dispatch(actionCreator.Actions.specificUserRetrieved(user.user));
+}
+
+export const deleteSpecificUser = (_uuid: string): ThunkResult<Promise<void>> => async (dispatch, getState, {userGateway}: {userGateway: IUserGateway}) => {
+  dispatch(actionCreator.Actions.deleteSpecificUser);
+  await userGateway.deleteUserById(_uuid);
+  dispatch(actionCreator.Actions.specificUserDeleted());
+
 }
 
 export const updateSpecificUser = (_uuid: string, _userModified: IUser): ThunkResult<Promise<void>> => async (dispatch, getState, {userGateway}: {userGateway: IUserGateway}) => {

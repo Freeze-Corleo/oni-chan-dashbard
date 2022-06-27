@@ -28,3 +28,14 @@ export const updateUser = async (_uuid: string, _userUpdated: IUser) => {
 
   return {response, error};
 }
+
+export const logout = async() => {
+  let response = null;
+  let error = null;
+
+  try {
+    response = await axiosConfig.post(`/oni-chan/auth/logout`);
+  } catch (err) {
+    error = err;
+  }
+}

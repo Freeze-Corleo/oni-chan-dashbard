@@ -5,7 +5,7 @@
 export interface AppState {
   myUser: {
     isLoading: boolean;
-    data: IMyProfil | null
+    data: IMyProfil
   },
   product: {
     isLoading: boolean;

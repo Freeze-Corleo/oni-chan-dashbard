@@ -9,7 +9,11 @@ export const Actions = {
   retrieveSpecificUser: () => createAction(_actions.RETRIEVE_SPECIFIC_USER),
   specificUserRetrieved: (_user: IUser) => createAction(_actions.SPECIFIC_USER_RETRIEVED, _user),
   updateSpecificUser: () => createAction(_actions.UPDATE_SPECIFIC_USER),
-  specificUserUpdated: (_user: IUser) => createAction(_actions.SPECIFIC_USER_UPDATED, _user)
+  specificUserUpdated: (_user: IUser) => createAction(_actions.SPECIFIC_USER_UPDATED, _user), 
+  
+  deleteSpecificUser: () => createAction(_actions.DELETE_SPECIFIC_USER),
+  specificUserDeleted: () => createAction(_actions.SPECIFIC_USER_DELETED),
+
 };
 
 export type Actions = ActionsUnion<typeof Actions>;
