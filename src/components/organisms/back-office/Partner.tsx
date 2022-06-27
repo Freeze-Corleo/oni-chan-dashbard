@@ -4,7 +4,11 @@ import { Box, Icon, Modal } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { selectPartnerWithoutAddr } from '../../../view-model-generation/generatePartnerModel';
-import { retrievePartners } from '../../../core-logic/usecases/partners/partnersUseCase';
+import {
+  retrievePartners,
+  createPartnership,
+  refusingParntership,
+} from '../../../core-logic/usecases/partners/partnersUseCase';
 
 import Table from '../../atoms/Table';
 import Input from '../../../components/atoms/Input';
@@ -43,12 +47,12 @@ const DashboardPartners = () => {
       setCredentials({ ...credentials, status: state, id });
       setOpen(true);
     } else {
-      // dispatch to change status to refused
+      dispatch(refusingParntership({ id: id, password: '', status: state }));
     }
   };
 
   const createRestorer = () => {
-    console.log(credentials);
+    dispatch(createPartnership(credentials));
   };
 
   const handleClose = () => setOpen(false);

@@ -1,4 +1,4 @@
-import { IPartner, IPartnerRegister } from "../../appState";
+import { IPartner, IPartnerApply, IPartnerRegister } from "../../appState";
 import { IPartnerGateway } from "../../core-logic/gateways/partnerGateway";
 import * as partner from '../services/partners/partner.service';
 
@@ -9,5 +9,9 @@ export class PartnerGateway implements IPartnerGateway{
   }
   public async applyPartnership(_partner: IPartnerRegister): Promise<{response: any, error: any}> {
     return partner.applyPartnerMembership(_partner);
+  }
+
+  public async createPartner(_partner: IPartnerApply): Promise<{response: any, error: any}> {
+    return partner.createPartner(_partner);
   }
 }
