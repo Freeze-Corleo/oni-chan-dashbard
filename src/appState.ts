@@ -154,6 +154,12 @@ export interface IPartnerRegister {
   status: string;
 }
 
+export interface IPartnerApply {
+  id: string;
+  password?: string;
+  status: string;
+}
+
 export interface IPartner {
   name: string;
   address: IAddress;

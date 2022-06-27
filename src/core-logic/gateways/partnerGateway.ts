@@ -1,4 +1,4 @@
-import { IPartner } from '../../appState';
+import { IPartner, IPartnerApply } from '../../appState';
 
 /**
  * Interface for Partner gateway that will be used to
@@ -7,4 +7,5 @@ import { IPartner } from '../../appState';
  */
 export interface IPartnerGateway {
   retrieve(): Promise<{response: IPartner[] | null, error: any }>;
+  createPartner(_partner: IPartnerApply): Promise<{response: IPartner | null, error: any}>;
 }
