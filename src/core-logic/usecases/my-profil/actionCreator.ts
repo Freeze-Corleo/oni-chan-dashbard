@@ -10,6 +10,9 @@ export const Actions = {
   updateMyUser: (_user: IMyProfil) => createAction(_actions.UPDATE_MY_USER, _user),
   retrieveMyUserFromLoginGoogle: (_user: IMyProfil) => createAction(_actions.HYDRATE_MY_USER_FROM_GOOGLE, _user),
   retrieveMyUserFromLogin: (_user: IMyProfil) => createAction(_actions.HYDRATE_MY_USER_FROM_LOGIN, _user),
+
+  logoutCurrentUser: (_user: IMyProfil) => createAction(_actions.LOGOUT_USER, _user),
+
 };
 
 export type Actions = ActionsUnion<typeof Actions>;

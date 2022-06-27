@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import Card from '../components/atoms/Card';
 import HomeRoot from '../components/organisms/HomeRoot';
 import { retrieveRestaurantsInformations } from '../core-logic/usecases/restaurant/restaurantUseCase';
 import { selectRestaurantReducer } from '../view-model-generation/generateRestaurantModel';
 
 const RestaurantFeed = () => {
+
+  const [searchParams, setSearchParams] = useSearchParams(); //searchParams.get('search');
+  
   const dispatch = useDispatch();
   const restaurants = useSelector(selectRestaurantReducer);
   const restaurantData: any = restaurants.data;

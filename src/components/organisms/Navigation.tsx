@@ -1,13 +1,16 @@
 import { Box, Modal, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { selectMyProfilReducer } from '../../view-model-generation/generateMyProfilModel';
 import { selectBasketReducer } from '../../view-model-generation/generateBasketModel';
 
 import { LogoOniChan } from '../organisms/Footer';
 import Button from '../atoms/RegisterButton';
+
+import { logout } from '../../secondary-adapters/services/user/users.service';
+import { logoutUser } from '../../core-logic/usecases/my-profil/myUserUseCase'; 
 
 const Panier = () => {
   return (
@@ -69,17 +72,34 @@ const ProfilIcon = () => {
   );
 };
 
+
+
 const Navigation = () => {
+  const dispatch = useDispatch();
   const user = useSelector(selectMyProfilReducer);
   const basket = useSelector(selectBasketReducer);
-  const [open, setOpen] = useState(false);
+  const [openProduct, setOpenProduct] = useState(false);
+  const [openProfil, setOpenProfil] = useState(false);
   const [count, setCount] = useState([]);
   const [product, setProduct] = useState(['']);
   const [countAndProduct, setCountAndProduct] = useState([]);
   const [prix, setPrix] = useState(0);
-  const handleClose = () => setOpen(false);
-  const handleOpen = () => {
-    setOpen(true);
+  const handleCloseProduct = () => setOpenProduct(false);
+  const handleOpenProduct = () => {
+    setOpenProduct(true);
+  };
+  const handleCloseProfil = () => setOpenProfil(false);
+  const handleOpenProfil = () => setOpenProfil(true);
+  const navigate = useNavigate();
+  const searchProfil = () => {
+    navigate({
+      pathname: '/my-profil'
+    });
+  };
+
+  const handleLogout = () => {
+    dispatch(logoutUser(user.data));
+    handleCloseProfil();
   };
 
   React.useEffect(() => {
@@ -98,11 +118,24 @@ const Navigation = () => {
     setCount(Object.values(countAndProduct));
   }, [basket]);
 
-  const style = {
+  const styleProduct = {
     position: 'absolute' as 'absolute',
     top: '30%',
     right: '0',
     transform: 'translate(-50%, -50%)',
+    width: 300,
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    borderRadius: '69px',
+    p: 4,
+  };
+
+
+  const style = {
+    position: 'absolute' as 'absolute',
+    top: '24%',
+    right: '0',
+    transform: 'translate(-10%, -50%)',
     width: 300,
     bgcolor: 'background.paper',
     boxShadow: 24,
@@ -132,19 +165,19 @@ const Navigation = () => {
               </div>
             </li>
             <li>
-              <button onClick={handleOpen}>
+              <button onClick={handleOpenProduct}>
                 <div className="flex items-center px-4 py-2 font-medium tracking-wide transition duration-300 bg-white rounded-full cursor-pointer hover:bg-gray-200 linear">
                   <Panier />
                   Panier
                 </div>
               </button>
               <Modal
-                open={open}
-                onClose={handleClose}
+                open={openProduct}
+                onClose={handleCloseProduct}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
               >
-                <Box sx={style}>
+                <Box sx={styleProduct}>
                   <div className="grid cols-1 gap-y-3 place-items-center">
                     <p className="text-3xl font-bold">Votre panier</p>
                     <svg
@@ -236,14 +269,37 @@ const Navigation = () => {
                 </Link>
               </li>
             ) : (
-              <li>
-                <Link to="/my-profil">
-                  <div className="flex items-center px-4 py-2 font-medium tracking-wide transition duration-300 bg-white rounded-full cursor-pointer hover:bg-gray-200 linear">
-                    {' '}
-                    <ProfilIcon /> Profil
+            <li>
+              <button onClick={handleOpenProfil}>
+                <div className="flex items-center px-4 py-2 font-medium tracking-wide transition duration-300 bg-white rounded-full cursor-pointer hover:bg-gray-200 linear">
+                  <ProfilIcon />
+                  Profil
+                </div>
+              </button>
+            
+              <Modal
+                open={openProfil}
+                onClose={handleCloseProfil}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <div className="grid cols-1 gap-y-3 place-items-center">
+                    <p className="text-3xl font-bold">Votre espace</p>
                   </div>
-                </Link>
-              </li>
+              
+                  <div className="grid mt-8 cols-1 place-items-center">
+                    <Button label="Mon profil" onClick={searchProfil}/>
+                  </div>
+                     
+                  <div className="grid mt-8 cols-1 place-items-center">
+                    <Button label="Se déconnecter" onClick={handleLogout}/>
+                  </div>
+                  
+                </Box>
+              </Modal>
+            </li>
+              
             )}
           </ul>
         </div>

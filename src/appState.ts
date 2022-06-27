@@ -5,7 +5,7 @@
 export interface AppState {
   myUser: {
     isLoading: boolean;
-    data: IMyProfil | null
+    data: IMyProfil
   },
   product: {
     isLoading: boolean;
@@ -151,6 +151,12 @@ export interface IPartnerRegister {
   lastname: string;
   email: string;
   phone: string;
+  status: string;
+}
+
+export interface IPartnerApply {
+  id: string;
+  password?: string;
   status: string;
 }
 

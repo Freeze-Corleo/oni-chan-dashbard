@@ -5,6 +5,7 @@ import * as notificationActionCreator from '../notifications/actionCreator';
 import { IMyProfil, IUserLogin } from '../../../appState';
 
 import { IAuthenticationGateway } from '../../gateways/authenticationGateway';
+import { logout } from '../../../secondary-adapters/services/user/users.service';
 
 /**
  * Will implement user data in myProfil reducer if login succeed
@@ -18,6 +19,11 @@ export const retrieveMyUserFromLogin = (_credentials: IUserLogin): ThunkResult<P
     console.log(jwtDecoded);
     dispatch(actionCreator.Actions.retrieveMyUserFromLogin(jwtDecoded));
   }
+}
+
+export const logoutUser = (_user: IMyProfil): ThunkResult<Promise<void>> => async (dispatch, getState) => {
+  dispatch(actionCreator.Actions.logoutCurrentUser(_user));
+  await logout();
 }
 
 /**
