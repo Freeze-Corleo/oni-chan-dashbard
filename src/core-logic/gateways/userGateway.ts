@@ -6,4 +6,5 @@ import { IUser } from '../../appState';
 export interface IUserGateway {
   getUserById(_uuid: string): Promise<{response: any, error: any}>,
   updateUser(_uuid: string, _user: IUser): Promise<{response: any, error: any}>
+  deleteUserById(_uuid: string): Promise<{response: any, error: any}>
 }

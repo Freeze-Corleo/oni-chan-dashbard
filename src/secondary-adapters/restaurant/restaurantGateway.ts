@@ -7,7 +7,7 @@ export class RestaurantGateway implements IRestaurantGateway {
     return await restaurant.getRestaurantByID(_id);
   }
   public async create(_restaurant: IRestaurant): Promise<string | null> {
-    throw new Error("Method not implemented.");
+    return await restaurant.createRestaurant(_restaurant);
   }
   public async update(_id: string, _restaurant: IRestaurant): Promise<{restaurant: IRestaurant | null, message: string}> {
     throw new Error("Method not implemented.");

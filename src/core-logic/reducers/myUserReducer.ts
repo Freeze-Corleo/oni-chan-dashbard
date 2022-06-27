@@ -24,6 +24,8 @@ export const data = (
       return action.payload
     case actions.HYDRATE_MY_USER_FROM_LOGIN:
       return action.payload
+    case actions.LOGOUT_USER:
+      return null;
     default: return state;
   }
 }

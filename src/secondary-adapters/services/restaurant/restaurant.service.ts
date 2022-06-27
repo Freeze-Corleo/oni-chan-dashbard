@@ -46,4 +46,15 @@ export const getAllRestaurants = async () => {
   
     return restaurant;
   }
+
+  export const createRestaurant = async (_restaurant: IRestaurant) => {
+    let error: any = null;
+    try {
+      await axiosConfig.post(`/oni-chan/restaurant/create`, {..._restaurant});
+    } catch (err) {
+      error = err;
+      return "Error" + error
+    }
+    return "Validation de la requête";
+  }
   

@@ -41,6 +41,7 @@ export const deleteRestaurantInformation = (_id: string): ThunkResult<Promise<vo
 
 export const createRestaurantInformation = (_restaurant: IRestaurant): ThunkResult<Promise<void>> =>  async (dispatch, getState, { restaurantInfoGate }: {restaurantInfoGate: IRestaurantGateway}) => {
   dispatch(actionCreator.Actions.createRestaurant());
+  restaurantInfoGate = new RestaurantGateway();
   const message = await restaurantInfoGate.create(_restaurant);
   dispatch(actionCreator.Actions.restaurantCreated(message));
 }
