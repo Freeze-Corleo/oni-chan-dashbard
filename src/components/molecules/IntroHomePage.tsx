@@ -13,8 +13,8 @@ const IntroPage = () => {
 
   const searchRestaurant = () => {
     navigate({
-      pathname: '/verify-code',
-      search: `?search=`,
+      pathname: '/feed',
+      search: `?search=`+search,
     });
   };
 
