@@ -11,12 +11,12 @@ export type IReducerState = {
 }
 
 export const data = (
-  state: IReducerState | null = null,
+  state: IProduct[] | null = null,
   action: retrievalProductActionCreator.Actions
 ) => {
   switch (action.type) {
     case actions.PRODUCTS_RETRIEVED:
-      return {...state, products: action.payload};
+      return action.payload;
     case actions.PRODUCT_RETRIEVED:
       return {
         ...state,
@@ -31,9 +31,12 @@ export const data = (
         ...state, message: action.payload
       }
     case actions.PRODUCT_CREATED:
-      return {
-        ...state, message: action.payload
+      if(state !== null) {
+        return [...state, action.payload]
+      } else {
+        return action.payload;
       }
+
     default: return state;
   }
 }

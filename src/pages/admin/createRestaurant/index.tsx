@@ -6,7 +6,7 @@ import Table from '../../../components/atoms/Table';
 import Input from '../../../components/atoms/Input';
 import Button from '../../../components/atoms/RegisterButton';
 import { getRestaurantsByPartner } from '../../../core-logic/usecases/restaurant/restaurantUseCase';
-import { selectRestaurantReducer } from '../../../view-model-generation/generateRestaurantModel';
+import { selecteRestaurantWithout } from '../../../view-model-generation/generateRestaurantModel';
 import { createRestaurantInformation } from '../../../core-logic/usecases/restaurant/restaurantUseCase';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -39,7 +39,7 @@ const INITIAL_STATE = {
  */
 const CreateRestaurantAdmin = () => {
   const dispatch = useDispatch();
-  const restaurants = useSelector(selectRestaurantReducer);
+  const restaurants = useSelector(selecteRestaurantWithout);
   const [restaurantData, setRestaurantData] = React.useState(INITIAL_STATE);
   const [selected, setSelected] = React.useState<string[]>([]);
   const myUser = useSelector(selectMyProfilReducer);
@@ -110,8 +110,6 @@ const CreateRestaurantAdmin = () => {
     myUser.data?.uuid && dispatch(getRestaurantsByPartner(myUser.data?.uuid));
   }, [myUser]);
 
-  console.log(restaurants);
-
   return (
     <AdminHomeRoot>
       <div className="grid grid-cols-12 px-20 mt-8">
@@ -125,7 +123,7 @@ const CreateRestaurantAdmin = () => {
             </button>
           </div>
           <div className="px-8">
-            {restaurants !== null && (
+            {restaurants && (
               <Table
                 rowLabels={[
                   'Nom du restaurant',

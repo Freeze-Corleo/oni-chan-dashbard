@@ -1,4 +1,4 @@
-import { IProduct } from "../../appState";
+import { IProductCreate, IProduct, ICustomizationCreate } from "../../appState";
 import { IProductGateway } from "../../core-logic/gateways/productGateway";
 import * as product from '../services/products/products.service';
 
@@ -6,8 +6,8 @@ export class ProductGateway implements IProductGateway {
   public async retrieveOne(_id: string): Promise<IProduct | null> {
     throw new Error("Method not implemented.");
   }
-  public async create(_product: IProduct): Promise<string | null> {
-    throw new Error("Method not implemented.");
+  public async create(_customizations: ICustomizationCreate[], _product: IProductCreate, _restaurantId: string, _categoryId: string): Promise<{response: any, error: any}> {
+    return await product.createProduct(_customizations, _product, _restaurantId, _categoryId);
   }
   public async update(_id: string, _product: IProduct): Promise<{product: IProduct | null, message: string}> {
     throw new Error("Method not implemented.");
@@ -15,7 +15,7 @@ export class ProductGateway implements IProductGateway {
   public async delete(_id: string): Promise<string> {
     throw new Error("Method not implemented.");
   }
-  public async retrieve(): Promise<{response: IProduct[] | null, error: any }> {
-    return await product.getAllProducts();
+  public async retrieveByCategory(_categoryId: string): Promise<{response: any, error: any }> {
+    return await product.getProductsByCategory(_categoryId);
   }
 }

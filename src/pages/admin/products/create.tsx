@@ -5,15 +5,20 @@ import { useParams } from 'react-router-dom';
 
 import AdminHomeRoot from '../../../components/organisms/AdminHomeRoot';
 
-import { ICategoryRetrieved } from '../../../appState';
+import { ICategoryRetrieved, IProductCreate } from '../../../appState';
 
 import CreateCategoryProduct from '../../../components/molecules/admin/product/CreateCategoryProduct';
 import CreateItemProductForm from '../../../components/molecules/admin/product/CreateItemProduct';
 import CreateMenuProductForm from '../../../components/molecules/admin/product/CreateMenuProduct';
 
 import { retrieveCategories } from '../../../core-logic/usecases/category/categoryUseCase';
+import { retrieveProductsInformations } from '../../../core-logic/usecases/products/productsUseCases';
+import { createProductInformation } from '../../../core-logic/usecases/products/productsUseCases';
 
-import { selectCategoryProductReducer } from '../../../view-model-generation/generateProductModel';
+import {
+  selectCategoryProductReducer,
+  selectProductReducer,
+} from '../../../view-model-generation/generateProductModel';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -32,15 +37,24 @@ const CreateProductsFromSpecificRestaurant = () => {
     React.useState<string>('');
   const dispatch = useDispatch();
   const categories = useSelector(selectCategoryProductReducer);
+  const products = useSelector(selectProductReducer);
   const [open, setOpen] = React.useState<boolean>(false);
   const [addItem, setAddItem] = React.useState<boolean>(false);
-  const [product, setProduct] = React.useState({});
+  const [product, setProduct] = React.useState<IProductCreate>({
+    imageUrl: '',
+    itemDescription: '',
+    price: '',
+    title: '',
+  });
   const [customField, setCustomFields] = React.useState<
     {
       title: string;
       minPermitted: string;
       maxPermitted: string;
     }[]
+  >([]);
+  const [customItemField, setCustomItemField] = React.useState<
+    { title: string; price: string }[]
   >([]);
 
   const onAddElement = (_element: {
@@ -49,6 +63,13 @@ const CreateProductsFromSpecificRestaurant = () => {
     maxPermitted: string;
   }) => {
     setCustomFields([...customField, _element]);
+  };
+
+  const onAddCustomFieldElement = (_element: {
+    title: string;
+    price: string;
+  }) => {
+    setCustomItemField([...customItemField, _element]);
   };
 
   const params = useParams();
@@ -61,9 +82,17 @@ const CreateProductsFromSpecificRestaurant = () => {
   }, []);
 
   const createProduct = () => {
-    console.log(customField);
-    console.log(product);
+    dispatch(
+      createProductInformation(
+        customField,
+        product,
+        params?.id ?? '',
+        clickFocusCategory
+      )
+    );
   };
+
+  const deleteProduct = (_productId: string) => {};
 
   return (
     <AdminHomeRoot>
@@ -77,12 +106,14 @@ const CreateProductsFromSpecificRestaurant = () => {
                   categories?.data?.map((category: ICategoryRetrieved) => {
                     return (
                       <div
+                        key={category._id}
                         className={`flex justify-center w-full py-3 font-medium transition duration-300  cursor-pointer hover:bg-gray-200 ${
                           clickFocusCategory === category._id
                             ? 'border-l-4 border-green-700 bg-gray-200'
                             : 'border-y border-gray-200'
                         }`}
                         onClick={() => {
+                          dispatch(retrieveProductsInformations(category._id));
                           setClickFocusCategory(category._id);
                         }}
                       >
@@ -110,7 +141,41 @@ const CreateProductsFromSpecificRestaurant = () => {
           </div>
 
           <div className="flex flex-col justify-between col-span-3 border-gray-200 border-x-2">
-            <div className="h-full px-8 pt-8"></div>
+            <div className="h-full pt-8">
+              {products && products.length !== 0 ? (
+                products.map((product) => {
+                  return (
+                    <div className="px-8 py-2 transition duration-300 border-gray-200 cursor-pointer border-y-2 hover:bg-gray-200">
+                      <div className="flex items-center justify-between">
+                        <img
+                          src={product.imageUrl}
+                          className="object-cover w-12 h-12 rounded-full"
+                          alt={`produit ${product.title} à ${product.price} €`}
+                        />
+                        <div className="px-8">
+                          <p>
+                            {product.title} ({product.price} €)
+                          </p>
+                          <p>{product.itemDescription}</p>
+                        </div>
+                        <button
+                          onClick={() => {
+                            deleteProduct(product._id);
+                          }}
+                          className="flex items-center justify-center w-5 h-5 font-medium text-white bg-red-600 rounded-full hover:bg-red-800"
+                        >
+                          x
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <p className="px-8 font-medium">
+                  Pas encore de produits pour cette catégorie
+                </p>
+              )}
+            </div>
             <div
               onClick={() => {
                 setAddItem(true);
@@ -129,7 +194,12 @@ const CreateProductsFromSpecificRestaurant = () => {
                   setProduct={setProduct}
                 />
               ) : (
-                <CreateMenuProductForm categoryId={clickFocusCategory} />
+                <CreateMenuProductForm
+                  onAddCustomFieldElement={onAddCustomFieldElement}
+                  categoryId={clickFocusCategory}
+                  onAddElement={onAddElement}
+                  setProduct={setProduct}
+                />
               )}
             </div>
             <div
