@@ -10,6 +10,7 @@ import { displayToastNotification } from '../../../core-logic/usecases/notificat
 //  and will load the product list to the Product reducer.
 export const retrieveRestaurantsInformations = (): ThunkResult<Promise<void>> => async (dispatch, getState, {restaurantsInformationGateway}: {restaurantsInformationGateway: IRestaurantGateway}) => {
   dispatch(actionCreator.Actions.retrieveRestaurants());
+  restaurantsInformationGateway = new RestaurantGateway();
   const restaurants = await restaurantsInformationGateway.retrieve();
   dispatch(actionCreator.Actions.restaurantsRetrieved(restaurants.response));
 }
@@ -19,7 +20,6 @@ export const retrieveRestaurantsInformations = (): ThunkResult<Promise<void>> =>
 export const retrieveRestaurantInformation = (_id: string): ThunkResult<Promise<void>> => async (dispatch, getState, { restaurantInfoGate }: {restaurantInfoGate: IRestaurantGateway}) => {
   dispatch(actionCreator.Actions.retrieveRestaurant());
   restaurantInfoGate = new RestaurantGateway();
-  console.log("usecases")
   const restaurant = await restaurantInfoGate.retrieveOne(_id);
   dispatch(actionCreator.Actions.restaurantRetrieved(restaurant));
 }
