@@ -47,20 +47,9 @@ export interface IProduct {
   title: string;
   price: string;
   itemDescription?: string;
-  category: ICategoryProduct;
+  category: string;
   imageUrl: string;
   customizationsList: ICustomization[];
-  alleric: IAllergic[];
-}
-
-// allergy labels to be add dynamically
-export interface IAllergic {
-  title: string;
-}
-
-// Can be pizza category or "Entrée" or whatever
-export interface ICategoryProduct {
-  title: string;
 }
 
 // If single product, options will be null

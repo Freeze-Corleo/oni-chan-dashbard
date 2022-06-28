@@ -12,7 +12,7 @@ export const data = (
 ) => {
   switch (action.type) {
     case actions.CATEGORY_CREATED:
-      return action.payload;
+      return [...state, action.payload];
     case actions.CATEGORIES_RETRIEVED:
       return action.payload;
     default: return state;

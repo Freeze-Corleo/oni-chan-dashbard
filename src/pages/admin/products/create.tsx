@@ -7,9 +7,9 @@ import AdminHomeRoot from '../../../components/organisms/AdminHomeRoot';
 
 import { ICategoryRetrieved } from '../../../appState';
 
-import CreateCategoryProduct from '../../../components/molecules/forms/CreateCategoryProduct';
-import CreateItemProductForm from '../../../components/molecules/forms/CreateItemProduct';
-import CreateMenuProductForm from '../../../components/molecules/forms/CreateMenuProduct';
+import CreateCategoryProduct from '../../../components/molecules/admin/product/CreateCategoryProduct';
+import CreateItemProductForm from '../../../components/molecules/admin/product/CreateItemProduct';
+import CreateMenuProductForm from '../../../components/molecules/admin/product/CreateMenuProduct';
 
 import { retrieveCategories } from '../../../core-logic/usecases/category/categoryUseCase';
 
@@ -34,6 +34,22 @@ const CreateProductsFromSpecificRestaurant = () => {
   const categories = useSelector(selectCategoryProductReducer);
   const [open, setOpen] = React.useState<boolean>(false);
   const [addItem, setAddItem] = React.useState<boolean>(false);
+  const [product, setProduct] = React.useState({});
+  const [customField, setCustomFields] = React.useState<
+    {
+      title: string;
+      minPermitted: string;
+      maxPermitted: string;
+    }[]
+  >([]);
+
+  const onAddElement = (_element: {
+    title: string;
+    minPermitted: string;
+    maxPermitted: string;
+  }) => {
+    setCustomFields([...customField, _element]);
+  };
 
   const params = useParams();
   const handleClose = () => {
@@ -44,21 +60,28 @@ const CreateProductsFromSpecificRestaurant = () => {
     dispatch(retrieveCategories(params?.id ?? ''));
   }, []);
 
-  console.log(categories);
+  const createProduct = () => {
+    console.log(customField);
+    console.log(product);
+  };
 
   return (
     <AdminHomeRoot>
       <>
-        <div className="grid flex-col h-full grid-cols-12 pl-12">
+        <div className="grid flex-col h-full grid-cols-12 pl-12 font-montserrat">
           <div className="flex flex-col justify-between col-span-2 overflow-hidden grow">
             <div className="pt-8">
               {' '}
               <div>
-                {categories &&
+                {categories?.data &&
                   categories?.data?.map((category: ICategoryRetrieved) => {
                     return (
                       <div
-                        className="flex justify-center w-full py-3 font-medium transition duration-300 border-gray-200 cursor-pointer border-y hover:bg-gray-200"
+                        className={`flex justify-center w-full py-3 font-medium transition duration-300  cursor-pointer hover:bg-gray-200 ${
+                          clickFocusCategory === category._id
+                            ? 'border-l-4 border-green-700 bg-gray-200'
+                            : 'border-y border-gray-200'
+                        }`}
                         onClick={() => {
                           setClickFocusCategory(category._id);
                         }}
@@ -69,7 +92,7 @@ const CreateProductsFromSpecificRestaurant = () => {
                   })}
               </div>
               <span
-                className="flex items-center justify-center w-full px-8 py-4 font-medium tracking-wide text-white transition duration-300 cursor-pointer bg-dark-main hover:bg-dark-hover"
+                className="flex items-center justify-center w-full px-8 py-4 text-sm font-medium tracking-wide text-white transition duration-300 cursor-pointer bg-dark-main hover:bg-dark-hover"
                 onClick={() => setOpen(true)}
               >
                 {' '}
@@ -80,28 +103,41 @@ const CreateProductsFromSpecificRestaurant = () => {
               onClick={() => {
                 setAddItem(false);
               }}
-              className="flex items-center justify-center w-full px-8 py-4 font-medium tracking-wide text-white transition duration-300 cursor-pointer bg-dark-main hover:bg-dark-hover"
+              className="flex items-center justify-center w-full px-8 py-4 text-sm font-medium tracking-wide text-white transition duration-300 cursor-pointer bg-dark-main hover:bg-dark-hover"
             >
               + Ajouter un menu
             </div>
           </div>
 
           <div className="flex flex-col justify-between col-span-3 border-gray-200 border-x-2">
-            <div className="h-full px-8 pt-8">leo</div>
+            <div className="h-full px-8 pt-8"></div>
             <div
               onClick={() => {
                 setAddItem(true);
               }}
-              className="flex items-center justify-center w-full px-8 py-4 font-medium tracking-wide text-white transition duration-300 cursor-pointer bg-dark-main hover:bg-dark-hover"
+              className="flex items-center justify-center w-full px-8 py-4 text-sm font-medium tracking-wide text-white transition duration-300 cursor-pointer bg-dark-main hover:bg-dark-hover"
             >
               + Ajouter un item
             </div>
           </div>
           <div className="flex flex-col justify-between col-span-7">
             <div className="px-8 pt-8">
-              {addItem ? <CreateItemProductForm /> : <CreateMenuProductForm />}
+              {addItem ? (
+                <CreateItemProductForm
+                  categoryId={clickFocusCategory}
+                  onAddElement={onAddElement}
+                  setProduct={setProduct}
+                />
+              ) : (
+                <CreateMenuProductForm categoryId={clickFocusCategory} />
+              )}
             </div>
-            <div className="flex items-center justify-center w-full px-8 py-4 font-medium tracking-wide text-white transition duration-300 cursor-pointer bg-dark-main hover:bg-dark-hover">
+            <div
+              onClick={() => {
+                createProduct();
+              }}
+              className="flex items-center justify-center w-full px-8 py-4 text-sm font-medium tracking-wide text-white transition duration-300 cursor-pointer bg-dark-main hover:bg-dark-hover"
+            >
               Sauvegarder
             </div>
           </div>
