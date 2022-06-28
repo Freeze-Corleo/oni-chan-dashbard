@@ -1,12 +1,12 @@
 import React from 'react';
-import Input from '../../atoms/Input';
-import Button from '../../../components/atoms/RegisterButton';
+import Input from '../../../atoms/Input';
+import Button from '../../../atoms/RegisterButton';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { createCategory } from '../../../core-logic/usecases/category/categoryUseCase';
+import { createCategory } from '../../../../core-logic/usecases/category/categoryUseCase';
 
-import { ICategoryCreate } from '../../../appState';
+import { ICategoryCreate } from '../../../../appState';
 
 export interface ICreateCategoryProductProps {
   restaurantId: string;
