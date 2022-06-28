@@ -20,6 +20,7 @@ import ProductIndex from '../pages/admin/products';
 import CreateProductsFromSpecificRestaurant from '../pages/admin/products/create';
 
 import PaymentHome from '../pages/payment';
+import Test from '../pages/Test';
 
 const AppRoute = () => {
   return (
@@ -48,6 +49,7 @@ const AppRoute = () => {
       <Route path="/feed" element={<RestaurantFeed />} />
       <Route path="/back-office" element={<BackOffice />} />
       <Route path="/paiement" element={<PaymentHome />} />
+      <Route path="/test" element={<Test />} />
     </Routes>
   );
 };
