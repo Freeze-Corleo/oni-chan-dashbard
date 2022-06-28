@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import socketIOClient from "socket.io-client";
-const ENDPOINT = "http://127.0.0.1:4001";
+import React, { useState, useEffect } from 'react';
+import io from 'socket.io-client';
 
 const Restaurant = () => {
-  const [response, setResponse] = useState("");
- 
+  const [response, setResponse] = useState('');
+
   useEffect(() => {
-    const socket = socketIOClient(ENDPOINT);
-    socket.on("FromAPI", data => {
+    const socket = io('ws://localhost:6969');
+
+    socket.on('FromAPI', (data) => {
       setResponse(data);
     });
-  }, []);
+  }, [setResponse]);
 
   return (
     <p>
