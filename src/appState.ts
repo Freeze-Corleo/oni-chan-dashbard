@@ -31,6 +31,10 @@ export interface AppState {
     isLoading: boolean;
     data: IRestaurant[] | null;
   }
+  category: {
+    isLoading: boolean;
+    data: ICategoryRetrieved[] | null;
+  }
 }
 
 /**
@@ -189,6 +193,10 @@ export interface IRestaurant {
 }
 
 // CategoryProducts
+
+export interface ICategoryRetrieved extends ICategoryCreate {
+  _id: string;
+}
 
 export interface ICategoryCreate extends ICategory {
   restaurantId: string

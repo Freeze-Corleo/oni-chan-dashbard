@@ -30,9 +30,9 @@ export const createCategory = (_categoryData: ICategoryCreate): ThunkResult<Prom
   }
 }
 
-export const retrieveCategories = (): ThunkResult<Promise<void>> => async (dispatch, getState, {categoryGateway}: {categoryGateway: ICategoryGateway}) => {
+export const retrieveCategories = (_restaurantId: string): ThunkResult<Promise<void>> => async (dispatch, getState, {categoryGateway}: {categoryGateway: ICategoryGateway}) => {
   dispatch(actionCreator.Actions.retrieveCategories());
-  const {response, error} = await categoryGateway.retrieveCategories();
+  const {response, error} = await categoryGateway.retrieveCategories(_restaurantId);
   if(!error) {
     dispatch(actionCreator.Actions.categoriesRetrieved(response));
   }

@@ -9,8 +9,8 @@ export class CategoryGateway implements ICategoryGateway {
     const {response, error} = await category.createCategoryProduct(_categoryData.title, _categoryData.restaurantId);
     return {response, error};
   }
-  async retrieveCategories(): Promise<{ response: ICategoryCreate[]; error: any; }> {
-    const {response, error} = await category.getCategoriesProduct();
+  async retrieveCategories(_restaurantId: string): Promise<{ response: ICategoryCreate[]; error: any; }> {
+    const {response, error} = await category.getCategoriesProduct(_restaurantId);
 
     return {response, error};
   }

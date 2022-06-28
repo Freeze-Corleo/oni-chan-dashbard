@@ -16,12 +16,12 @@ export const getAllProducts = async () => {
 }
 
 
-export const createCategoryProduct = async (name: string, restaurantId: string) => {
+export const createCategoryProduct = async (title: string, restaurantId: string) => {
   let response: any;
   let error: any = null;
-
+  console.log(title);
   try {
-    response = await axiosConfig.post(`/oni-chan/category-product/create`,{name, restaurantId});
+    response = await axiosConfig.post(`/oni-chan/category-product/create`,{title, restaurantId});
     response = response.data;
   } catch (err) {
     error = err;
@@ -30,12 +30,12 @@ export const createCategoryProduct = async (name: string, restaurantId: string) 
   return {response, error};
 }
 
-export const getCategoriesProduct = async () => {
+export const getCategoriesProduct = async (_restaurantId: string) => {
   let response: any;
   let error: any = null;
 
   try {
-    response = await axiosConfig.post(`/oni-chan/category-product/get-all`);
+    response = await axiosConfig.get(`/oni-chan/category-product/get-all/${_restaurantId}`);
     response = response.data;
   } catch (err) {
     error = err;

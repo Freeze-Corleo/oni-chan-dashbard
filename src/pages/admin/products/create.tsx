@@ -5,11 +5,15 @@ import { useParams } from 'react-router-dom';
 
 import AdminHomeRoot from '../../../components/organisms/AdminHomeRoot';
 
+import { ICategoryRetrieved } from '../../../appState';
+
 import CreateCategoryProduct from '../../../components/molecules/forms/CreateCategoryProduct';
 import CreateItemProductForm from '../../../components/molecules/forms/CreateItemProduct';
 import CreateMenuProductForm from '../../../components/molecules/forms/CreateMenuProduct';
 
-import { selectMyProfilReducer } from '../../../view-model-generation/generateMyProfilModel';
+import { retrieveCategories } from '../../../core-logic/usecases/category/categoryUseCase';
+
+import { selectCategoryProductReducer } from '../../../view-model-generation/generateProductModel';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -24,22 +28,46 @@ const style = {
 };
 
 const CreateProductsFromSpecificRestaurant = () => {
+  const [clickFocusCategory, setClickFocusCategory] =
+    React.useState<string>('');
+  const dispatch = useDispatch();
+  const categories = useSelector(selectCategoryProductReducer);
   const [open, setOpen] = React.useState<boolean>(false);
   const [addItem, setAddItem] = React.useState<boolean>(false);
-  const dispatch = useDispatch();
+
   const params = useParams();
   const handleClose = () => {
     setOpen(false);
   };
 
+  React.useEffect(() => {
+    dispatch(retrieveCategories(params?.id ?? ''));
+  }, []);
+
+  console.log(categories);
+
   return (
     <AdminHomeRoot>
       <>
-        <div className="grid flex-col h-full grid-cols-12 pl-20">
+        <div className="grid flex-col h-full grid-cols-12 pl-12">
           <div className="flex flex-col justify-between col-span-2 overflow-hidden grow">
             <div className="pt-8">
               {' '}
-              <div>category</div>
+              <div>
+                {categories &&
+                  categories?.data?.map((category: ICategoryRetrieved) => {
+                    return (
+                      <div
+                        className="flex justify-center w-full py-3 font-medium transition duration-300 border-gray-200 cursor-pointer border-y hover:bg-gray-200"
+                        onClick={() => {
+                          setClickFocusCategory(category._id);
+                        }}
+                      >
+                        {category.title}
+                      </div>
+                    );
+                  })}
+              </div>
               <span
                 className="flex items-center justify-center w-full px-8 py-4 font-medium tracking-wide text-white transition duration-300 cursor-pointer bg-dark-main hover:bg-dark-hover"
                 onClick={() => setOpen(true)}
