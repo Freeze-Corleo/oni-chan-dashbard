@@ -126,7 +126,7 @@ const Table: React.FC<ITableProps> = ({
                     <button
                       className="bg-[#24bf60] px-4 rounded-full font-medium hover:bg-[#1a8a45] transition duration-300 linear"
                       onClick={() => {
-                        validation('verified', data.id);
+                        validation('verified', data._id);
                       }}
                     >
                       Accepter
@@ -134,7 +134,7 @@ const Table: React.FC<ITableProps> = ({
                     <button
                       className="bg-[#f54f4e] px-4 rounded-full font-medium hover:bg-[#bd3e3e] transition duration-300 linear"
                       onClick={() => {
-                        validation('refused', data.id);
+                        validation('refused', data._id);
                       }}
                     >
                       Refuser
@@ -144,7 +144,7 @@ const Table: React.FC<ITableProps> = ({
                   <td
                     className="cursor-pointer"
                     onClick={() => {
-                      redirection(data.id);
+                      redirection(data._id);
                     }}
                   >
                     <svg

@@ -187,3 +187,13 @@ export interface IRestaurant {
   isAvailable: boolean;
   _id: string;
 }
+
+// CategoryProducts
+
+export interface ICategoryCreate extends ICategory {
+  restaurantId: string
+}
+
+export interface ICategory {
+  title: string;
+}

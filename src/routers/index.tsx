@@ -16,6 +16,8 @@ import RegisterRestorer from '../pages/admin/register';
 import BackOffice from '../pages/back-office';
 import IndexAdminDashboard from '../pages/admin/index';
 import CreateRestaurantAdmin from '../pages/admin/createRestaurant';
+import ProductIndex from '../pages/admin/products';
+import CreateProductsFromSpecificRestaurant from '../pages/admin/products/create';
 
 import PaymentHome from '../pages/payment';
 
@@ -27,6 +29,11 @@ const AppRoute = () => {
         <Route
           path="/admin/create-restaurant"
           element={<CreateRestaurantAdmin />}
+        />
+        <Route path="/admin/create-product" element={<ProductIndex />} />
+        <Route
+          path="/admin/create-product/:id"
+          element={<CreateProductsFromSpecificRestaurant />}
         />
       </Route>
       <Route path="/" element={<PublicRoutes />}></Route>

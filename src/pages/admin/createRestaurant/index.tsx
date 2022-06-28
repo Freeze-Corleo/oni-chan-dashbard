@@ -1,4 +1,4 @@
-import { Box, Icon, Modal } from '@mui/material';
+import { Box, Modal } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -9,7 +9,6 @@ import { getRestaurantsByPartner } from '../../../core-logic/usecases/restaurant
 import { selectRestaurantReducer } from '../../../view-model-generation/generateRestaurantModel';
 import { createRestaurantInformation } from '../../../core-logic/usecases/restaurant/restaurantUseCase';
 import { useDispatch, useSelector } from 'react-redux';
-import { IAddress } from '../../../appState';
 
 import { retrieveMyUserFromCookie } from '../../../core-logic/usecases/my-profil/myUserUseCase';
 
