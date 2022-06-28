@@ -10,5 +10,5 @@ export interface IProductGateway {
   retrieveOne(_id: string): Promise<IProduct | null>;
   create(_customizations: ICustomizationCreate[], _product: IProductCreate, _restaurantId: string, _categoryId: string): Promise<{response: any, error: any}>;
   update(_id: string, _product: IProduct): Promise<{product: IProduct | null, message: string}>;
-  delete(_id: string): Promise<string>
+  delete(_id: string, _restaurantId: string): Promise<{response: any, error: any}>
 }

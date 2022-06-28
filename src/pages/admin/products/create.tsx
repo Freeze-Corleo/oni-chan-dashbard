@@ -12,8 +12,12 @@ import CreateItemProductForm from '../../../components/molecules/admin/product/C
 import CreateMenuProductForm from '../../../components/molecules/admin/product/CreateMenuProduct';
 
 import { retrieveCategories } from '../../../core-logic/usecases/category/categoryUseCase';
-import { retrieveProductsInformations } from '../../../core-logic/usecases/products/productsUseCases';
-import { createProductInformation } from '../../../core-logic/usecases/products/productsUseCases';
+import {
+  createProductInformation,
+  deleteProductInformation,
+  retrieveProductsInformations,
+} from '../../../core-logic/usecases/products/productsUseCases';
+import { displayToastNotification } from '../../../core-logic/usecases/notifications/notificationsUseCase';
 
 import {
   selectCategoryProductReducer,
@@ -82,17 +86,29 @@ const CreateProductsFromSpecificRestaurant = () => {
   }, []);
 
   const createProduct = () => {
-    dispatch(
-      createProductInformation(
-        customField,
-        product,
-        params?.id ?? '',
-        clickFocusCategory
-      )
-    );
+    if (clickFocusCategory.length === 0) {
+      dispatch(
+        displayToastNotification({
+          text: 'Vous devez en premier séléctionner une catégorie',
+          severityLevel: 'error',
+          severityTitle: 'Erreur de création',
+        })
+      );
+    } else {
+      dispatch(
+        createProductInformation(
+          customField,
+          product,
+          params?.id ?? '',
+          clickFocusCategory
+        )
+      );
+    }
   };
 
-  const deleteProduct = (_productId: string) => {};
+  const deleteProduct = (_productId: string) => {
+    dispatch(deleteProductInformation(_productId, params?.id ?? ''));
+  };
 
   return (
     <AdminHomeRoot>

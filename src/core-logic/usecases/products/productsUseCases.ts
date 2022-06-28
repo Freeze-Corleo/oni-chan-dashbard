@@ -33,10 +33,12 @@ export const updateProductInformation = (_id: string, _product: IProduct): Thunk
 
 // Action that will be called in frontend, will disptach notification
 //  and will load the product to the Product reducer.
-export const deleteProductInformation = (_id: string): ThunkResult<Promise<void>> => async (dispatch, getState, { productInfoGate }: {productInfoGate: IProductGateway}) => {
-  dispatch(actionCreator.Actions.deleteProduct(_id));
-  const message: string = await productInfoGate.delete(_id);
-  dispatch(actionCreator.Actions.productDeleted(message));
+export const deleteProductInformation = (_id: string, _restaurantId: string): ThunkResult<Promise<void>> => async (dispatch, getState, { productGateway }: {productGateway: IProductGateway}) => {
+  dispatch(actionCreator.Actions.deleteProduct());
+  const {response, error} = await productGateway.delete(_id, _restaurantId);
+  if(!error) {
+    dispatch(actionCreator.Actions.productDeleted(response.data));
+  }
 }
 
 export const createProductInformation = (_customizations: ICustomizationCreate[], _product: IProductCreate, _restaurantId: string, _categoryId: string): ThunkResult<Promise<void>> =>  async (dispatch, getState, { productGateway }: {productGateway: IProductGateway}) => {

@@ -15,6 +15,21 @@ export const getAllProducts = async () => {
   return {response, error};
 }
 
+
+export const deleteAProduct = async (_productId: string, _restaurantId: string) => {
+  let response: any;
+  let error: any = null;
+
+  try {
+    response = await axiosConfig.delete(`/oni-chan/product/delete-product/${_productId}/${_restaurantId}`);
+    response = response.data;
+  } catch (err) {
+    error = err;
+  }
+
+  return {response, error};
+}
+
 export const createProduct = async (_customizations: ICustomizationCreate[], _product: IProductCreate, _restaurantId: string, _categoryId: string) => {
   let response: any;
   let error: any = null;

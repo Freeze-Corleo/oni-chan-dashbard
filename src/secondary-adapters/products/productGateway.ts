@@ -12,8 +12,8 @@ export class ProductGateway implements IProductGateway {
   public async update(_id: string, _product: IProduct): Promise<{product: IProduct | null, message: string}> {
     throw new Error("Method not implemented.");
   }
-  public async delete(_id: string): Promise<string> {
-    throw new Error("Method not implemented.");
+  public async delete(_id: string, _restaurantId: string): Promise<{response: any, error: any}> {
+    return await product.deleteAProduct(_id, _restaurantId);
   }
   public async retrieveByCategory(_categoryId: string): Promise<{response: any, error: any }> {
     return await product.getProductsByCategory(_categoryId);

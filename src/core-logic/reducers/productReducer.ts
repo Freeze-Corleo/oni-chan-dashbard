@@ -27,8 +27,11 @@ export const data = (
         ...state, message: action.payload.message, product: action.payload.product
       }
     case actions.PRODUCT_DELETED:
-      return {
-        ...state, message: action.payload
+      if(state) {
+        const newState = state?.filter(product => product._id !== action.payload);
+        return newState;
+      } else {
+        return state;
       }
     case actions.PRODUCT_CREATED:
       if(state !== null) {
