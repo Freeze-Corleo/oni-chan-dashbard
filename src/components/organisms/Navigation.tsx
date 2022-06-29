@@ -101,7 +101,7 @@ const Navigation = () => {
   };
 
   const handleLogout = () => {
-    dispatch(logoutUser(user.data));
+    dispatch(logoutUser());
     handleCloseProfil();
   };
 

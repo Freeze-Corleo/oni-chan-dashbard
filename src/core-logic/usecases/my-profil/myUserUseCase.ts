@@ -28,8 +28,8 @@ export const retrieveMyUserFromCookie = (cookie: string): ThunkResult<Promise<vo
   dispatch(actionCreator.Actions.retrieveMyUserFromLogin(jwtDecoded));
 }
 
-export const logoutUser = (_user: IMyProfil): ThunkResult<Promise<void>> => async (dispatch, getState) => {
-  dispatch(actionCreator.Actions.logoutCurrentUser(_user));
+export const logoutUser = (): ThunkResult<Promise<void>> => async (dispatch, getState) => {
+  dispatch(actionCreator.Actions.logoutCurrentUser());
   await logout();
 }
 

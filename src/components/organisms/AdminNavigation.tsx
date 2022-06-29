@@ -21,7 +21,7 @@ const AdminNavigation = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await dispatch(logoutUser(myUser.data));
+    await dispatch(logoutUser());
     navigate({
       pathname: '/home',
     });
