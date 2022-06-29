@@ -26,7 +26,8 @@ export const getRestaurantByID = async (id: string) => {
     price: 0,
     cookType: '',
     isAvailable: true,
-    _id: ''
+    _id: '',
+    imageUrl: '',
   };
 
   try {

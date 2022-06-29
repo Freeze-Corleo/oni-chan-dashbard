@@ -30,6 +30,7 @@ const INITIAL_STATE = {
   cookType: '',
   isAvailable: true,
   uuid: '',
+  imageUrl: '',
 };
 
 /**
@@ -94,6 +95,7 @@ const CreateRestaurantAdmin = () => {
           isAvailable: restaurantData.isAvailable,
           address: '',
           _id: '',
+          imageUrl: restaurantData.imageUrl,
         },
         {
           city: restaurantData.city,
@@ -104,6 +106,15 @@ const CreateRestaurantAdmin = () => {
         myUser.data?.uuid
       )
     );
+  };
+
+  const onPreviewImage = async (event: any) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+
+    reader.onload = (e: any) => {
+      setRestaurantData({ ...restaurantData, imageUrl: e.target.result });
+    };
   };
 
   useEffect(() => {
@@ -150,12 +161,38 @@ const CreateRestaurantAdmin = () => {
               aria-describedby="modal-modal-description"
             >
               <Box sx={style} className="space-y-6">
-                <Input
-                  type="text"
-                  nameInput="name"
-                  placeholder="Nom du restaurant"
-                  onChangeFunction={onChangeInputRestaurant}
-                />
+                <div className="flex space-x-4">
+                  <div className="py-4">
+                    <p className="pb-2 pl-2 font-medium">Image du menu</p>
+                    <div className="flex items-center space-x-5">
+                      {restaurantData?.imageUrl ? (
+                        <img
+                          src={restaurantData.imageUrl}
+                          className="object-cover w-20 h-20 rounded-full"
+                          alt="profil of a specific user"
+                        />
+                      ) : (
+                        <div className="flex items-center justify-center object-cover w-20 h-20 text-xl font-medium text-white bg-black rounded-full">
+                          N
+                        </div>
+                      )}
+                      <label className="inline-flex items-center px-10 py-3 text-sm font-medium text-center text-white transition duration-300 bg-black rounded-full shadow-2xl cursor-pointer hover:bg-gray-800 linear">
+                        Changer de photo
+                      </label>
+                      <input
+                        type="file"
+                        className="absolute opacity-0 cursor-pointer"
+                        onChange={onPreviewImage}
+                      />
+                    </div>
+                  </div>
+                  <Input
+                    type="text"
+                    nameInput="name"
+                    placeholder="Nom du restaurant"
+                    onChangeFunction={onChangeInputRestaurant}
+                  />
+                </div>
                 <Input
                   type="text"
                   nameInput="address"

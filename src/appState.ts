@@ -193,6 +193,7 @@ export interface IRestaurant {
   cookType: string;
   isAvailable: boolean;
   _id: string;
+  imageUrl: string;
 }
 
 export interface IRestaurantRetrieve {
