@@ -28,4 +28,8 @@ export const initializeJwtHeader = (token: string) => {
 	axiosConfig.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
+export const eraseJwtHeader = (token: string) => {
+	Cookies.remove(token);
+};
+
 export default axiosConfig;

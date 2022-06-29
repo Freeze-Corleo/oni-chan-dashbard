@@ -1,6 +1,7 @@
 import axiosConfig from "../../helpers/api.helpers";
 
 import { IUser } from '../../../appState';
+import { eraseJwtHeader } from "../../helpers/api.helpers";
 
 // Service function for registering
 export const getUserById = async (_uuid: string) => {
@@ -35,6 +36,7 @@ export const logout = async() => {
 
   try {
     response = await axiosConfig.post(`/oni-chan/auth/logout`);
+    eraseJwtHeader('FREEZE_JWT');
   } catch (err) {
     error = err;
   }
