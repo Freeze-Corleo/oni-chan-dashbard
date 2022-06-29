@@ -1,7 +1,7 @@
 import { IUser } from '../../appState';
 import { IUserGateway } from '../../core-logic/gateways/userGateway';
 
-import { getUserById, updateUser } from '../services/user/users.service';
+import { getUserById, updateUser, deleteAccount } from '../services/user/users.service';
 
 export class UserGateway implements IUserGateway {
 
@@ -14,6 +14,6 @@ export class UserGateway implements IUserGateway {
   }
 
   async deleteUserById(_uuid: string): Promise<{ response: any; error: any; }> {
-    throw new Error('Method not implemented.');
+    return deleteAccount(_uuid);
   }
 }

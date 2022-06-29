@@ -1,5 +1,6 @@
 import { ThunkResult } from '../../../store';
 import * as actionCreator from './actionCreator';
+import * as actionUserCreator from '../my-profil/actionCreator';
 
 import { IUserGateway } from '../../gateways/userGateway';
 
@@ -21,7 +22,6 @@ export const deleteSpecificUser = (_uuid: string): ThunkResult<Promise<void>> =>
   dispatch(actionCreator.Actions.deleteSpecificUser);
   await userGateway.deleteUserById(_uuid);
   dispatch(actionCreator.Actions.specificUserDeleted());
-
 }
 
 export const updateSpecificUser = (_uuid: string, _userModified: IUser): ThunkResult<Promise<void>> => async (dispatch, getState, {userGateway}: {userGateway: IUserGateway}) => {
@@ -49,9 +49,12 @@ export const updateSpecificUser = (_uuid: string, _userModified: IUser): ThunkRe
 
 export const deleteMyAccount = (_uuid: string): ThunkResult<Promise<void>> => async (dispatch, getState, {userGateway}: {userGateway: IUserGateway}) => {
   dispatch(actionCreator.Actions.specificUserDeleted);
+
   const {response, error} = await userGateway.deleteUserById(_uuid);
+
   if(!error) {
     eraseJwtHeader("FREEZE_JWT");
+    dispatch(actionUserCreator.Actions.logoutCurrentUser());
     dispatch(
       displayToastNotification({
         text: 'Votre compte a bien été supprimé',

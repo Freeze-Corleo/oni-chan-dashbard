@@ -40,4 +40,19 @@ export const logout = async() => {
   } catch (err) {
     error = err;
   }
+  return {response, error};
+
+}
+
+export const deleteAccount = async(_uuid: string) => {
+  let response = null;
+  let error = null;
+
+  try {
+    response = await axiosConfig.delete(`/oni-chan/user/delete`, { params: { id: _uuid } });
+  } catch (err) {
+    error = err;
+  }
+  return {response, error};
+
 }
