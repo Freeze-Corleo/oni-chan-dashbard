@@ -16,6 +16,7 @@ import {
 } from '../../../core-logic/usecases/users/usersUseCase';
 
 import { IUser } from '../../../appState';
+import { useNavigate } from 'react-router-dom';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -89,8 +90,10 @@ const MyProfil = () => {
     setOpen(false);
   };
 
+  const navigate = useNavigate();
   const deleteAccount = () => {
-    dispatch(deleteMyAccount("il te faut l'id du mec en question"));
+    dispatch(deleteMyAccount(myUser.data.uuid));
+    setTimeout(() => navigate('/home'), 2000);
   };
 
   return (
