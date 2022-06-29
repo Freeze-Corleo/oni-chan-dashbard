@@ -46,7 +46,7 @@ const CreateRestaurantAdmin = () => {
   const myUser = useSelector(selectMyProfilReducer);
   const cookie: any = useCookies(['FREEZE_JWT']);
   const navigate = useNavigate();
-
+  console.log(restaurants);
   const redirection = (id: string) => {
     navigate('/admin/restaurant/' + id);
   };

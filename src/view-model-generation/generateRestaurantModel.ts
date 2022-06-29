@@ -9,7 +9,7 @@ export const selectRestaurantReducer = (state: AppState) => state.restaurant.dat
 export const selecteRestaurantWithout = (state: AppState) => {
   const newRestaurants: IRestaurantRetrieve[] | null = [];
   state.restaurant.data?.forEach((restaurant) => {
-    const data = pick(restaurant, "name", "rate", "deliveryPrice", "address", "city", "zipCode", "price", "cookType", "isAvailable", "_id", 'imageUrl') as IRestaurantRetrieve;
+    const data = pick(restaurant, "name", "rate", "deliveryPrice", "address", "city", "zipCode", "price", "cookType", "isAvailable", "_id") as IRestaurantRetrieve;
     newRestaurants.push(data)
   })
   return newRestaurants;

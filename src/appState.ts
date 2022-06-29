@@ -17,7 +17,7 @@ export interface AppState {
   },
   basket: {
     isLoading: boolean;
-    data: {}&{id:string, price: number, img: string, name: string}[] | null
+    data: {qteTotal: number, totalPrice: number, restaurantName: string, products: {qte: number, product: IProduct}[]} | null;
   },
   user: {
     isLoading: boolean;

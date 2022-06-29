@@ -45,7 +45,6 @@ const Element: React.FC<IElementProps> = ({
       test={test}
     />,
   ]);
-  console.log(test);
 
   const [elementField, setElementField] = React.useState<{
     title: string;

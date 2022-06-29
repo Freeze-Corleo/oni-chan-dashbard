@@ -21,7 +21,6 @@ const PersonalInfoForm: React.FC<IPersonnalInfoForm> = ({
   onPreviewImage,
   onUpdateUserInformations,
 }) => {
-  console.log(data);
   return (
     <>
       <div className="relative z-50 py-16">

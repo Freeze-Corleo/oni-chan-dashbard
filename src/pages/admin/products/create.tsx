@@ -110,6 +110,8 @@ const CreateProductsFromSpecificRestaurant = () => {
     dispatch(deleteProductInformation(_productId, params?.id ?? ''));
   };
 
+  console.log(products);
+
   return (
     <AdminHomeRoot>
       <>
@@ -161,18 +163,22 @@ const CreateProductsFromSpecificRestaurant = () => {
               {products && products.length !== 0 ? (
                 products.map((product) => {
                   return (
-                    <div className="px-8 py-2 transition duration-300 border-gray-200 cursor-pointer border-y-2 hover:bg-gray-200">
+                    <div className="px-8 py-4 transition duration-300 border-gray-200 cursor-pointer border-y-2 hover:bg-gray-200">
                       <div className="flex items-center justify-between">
-                        <img
-                          src={product.imageUrl}
-                          className="object-cover w-12 h-12 rounded-full"
-                          alt={`produit ${product.title} à ${product.price} €`}
-                        />
-                        <div className="px-8">
+                        <div className="">
+                          <img
+                            src={product.imageUrl}
+                            className="object-cover w-12 h-12 rounded-full"
+                            alt={`produit ${product.title} à ${product.price} €`}
+                          />
+                        </div>
+                        <div className="px-2">
                           <p>
                             {product.title} ({product.price} €)
                           </p>
-                          <p>{product.itemDescription}</p>
+                          <p className="text-sm">
+                            {product?.itemDescription?.substring(0, 48)}...
+                          </p>
                         </div>
                         <button
                           onClick={() => {

@@ -39,9 +39,9 @@ const Paiement: React.FC<{}> = (): JSX.Element => {
     if (user.data && basket) {
       const productsId: string[] = [];
       const paymentIntent = new PaymentGateway();
-      basket.data?.forEach((product) => {
-        productsId.push(product.id);
-      });
+      // basket.data?.forEach((product) => {
+      //   productsId.push(product.id);
+      // });
       paymentIntent
         .createPaymentIntent({
           userId: user?.data?.uuid,

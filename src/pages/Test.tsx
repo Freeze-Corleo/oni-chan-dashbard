@@ -1,6 +1,6 @@
-const ENDPOINT = "http://localhost:6969/";
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
+const ENDPOINT = 'http://localhost:6969/';
 
 const Restaurant = () => {
   const [response, setResponse] = useState('');

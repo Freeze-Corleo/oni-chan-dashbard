@@ -2,7 +2,7 @@ import { Box, Modal, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-
+import SVGIconBasket from '../svg/IconBasket';
 import { selectMyProfilReducer } from '../../view-model-generation/generateMyProfilModel';
 import { selectBasketReducer } from '../../view-model-generation/generateBasketModel';
 
@@ -13,7 +13,6 @@ import { useCookies } from 'react-cookie';
 import { LogoOniChan } from '../organisms/Footer';
 import Button from '../atoms/RegisterButton';
 
-import { logout } from '../../secondary-adapters/services/user/users.service';
 import { logoutUser } from '../../core-logic/usecases/my-profil/myUserUseCase';
 
 const Panier = () => {
@@ -109,23 +108,6 @@ const Navigation = () => {
     dispatch(retrieveMyUserFromCookie(cookie[0].FREEZE_JWT));
   }, []);
 
-  React.useEffect(() => {
-    {
-      basket.data?.map((product) => {
-        setPrix(prix + product.price);
-      });
-    }
-    setCountAndProduct(
-      basket.data?.reduce((a: any, e: any) => {
-        a[e.name] = ++a[e.name] || 1;
-        return a;
-      }, {})
-    );
-    console.log("oy", countAndProduct, basket)
-    setProduct(Object.keys(countAndProduct));
-    setCount(Object.values(countAndProduct));
-  }, [basket]);
-
   React.useEffect(() => {});
 
   const styleProduct = {
@@ -151,7 +133,7 @@ const Navigation = () => {
     borderRadius: '69px',
     p: 4,
   };
-
+  console.log(basket);
   return (
     <div className="relative z-10">
       <img
@@ -183,7 +165,7 @@ const Navigation = () => {
               <button onClick={handleOpenProduct}>
                 <div className="flex items-center px-4 py-2 font-medium tracking-wide transition duration-300 bg-white rounded-full cursor-pointer hover:bg-gray-200 linear">
                   <Panier />
-                  Panier
+                  Panier ({basket?.qteTotal ?? 0})
                 </div>
               </button>
               <Modal
@@ -194,83 +176,35 @@ const Navigation = () => {
               >
                 <Box sx={styleProduct}>
                   <div className="grid cols-1 gap-y-3 place-items-center">
-                    <p className="text-3xl font-bold">Votre panier</p>
-                    <svg
-                      className="w-10 h-20"
-                      id="Calque_1"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 133.21 114.17"
-                    >
-                      <g
-                        id="Icon_ionic-ios-basket"
-                        transform="translate(-2.249 -4.5)"
-                      >
-                        <path
-                          id="Tracé_4"
-                          d="M105.82,92.08h14.63l5.2-22.42h-19.83v22.42Z"
-                        />
-                        <path
-                          id="Tracé_5"
-                          d="M105.82,114.17h.15c5.34,0,10.02-3.61,11.39-8.77l1.78-7.71h-13.31v16.48Z"
-                        />
-                        <path
-                          id="Tracé_6"
-                          d="M69.4,97.67h30.84v16.5h-30.84v-16.5Z"
-                        />
-                        <path
-                          id="Tracé_7"
-                          d="M12.8,92.08h14.56v-22.42H7.59l5.21,22.42Z"
-                        />
-                        <path
-                          id="Tracé_8"
-                          d="M32.98,38.06h30.84v26.02h-30.84v-26.02Z"
-                        />
-                        <path
-                          id="Tracé_9"
-                          d="M69.4,38.06h30.84v26.02h-30.84v-26.02Z"
-                        />
-                        <path
-                          id="Tracé_10"
-                          d="M15.91,105.34c1.32,5.18,5.98,8.81,11.33,8.83h.15v-16.49H14.1l1.81,7.66Z"
-                        />
-                        <path
-                          id="Tracé_11"
-                          d="M32.98,97.67h30.84v16.5h-30.84v-16.5Z"
-                        />
-                        <path
-                          id="Tracé_12"
-                          d="M69.4,69.66h30.84v22.42h-30.84v-22.42Z"
-                        />
-                        <path
-                          id="Tracé_13"
-                          d="M32.98,69.66h30.84v22.42h-30.84v-22.42Z"
-                        />
-                        <path
-                          id="Tracé_14"
-                          d="M128.44,38.06h-14.23V9.51c-.02-5.25-4.27-9.5-9.52-9.51H28.52c-5.25,.02-9.5,4.27-9.51,9.51v28.54H4.77C2.14,38.05,0,40.18,0,42.81c0,.36,.04,.72,.12,1.08l5.86,20.19H27.36V12.49c.01-2.29,1.86-4.14,4.15-4.15H101.68c2.29,.01,4.14,1.86,4.15,4.15v51.6h21.41l5.84-20.2c.59-2.56-1.01-5.12-3.57-5.71-.35-.08-.71-.12-1.07-.12Z"
-                        />
-                      </g>
-                    </svg>
-                    <p className="text-xl font-bold">Burger and co</p>
-                    <p className="text-base font-bold place-self-end">
-                      {prix} €
+                    <p className="text-3xl font-bold">
+                      Votre panier ({basket?.qteTotal ?? 0})
+                    </p>
+                    <SVGIconBasket className="w-10" />
+                    <p className="text-xl font-bold pb-8">
+                      {basket?.restaurantName ? basket.restaurantName : ''}
                     </p>
                   </div>
-                  <div className="flex flex-row justify-start pl-5 mt-3 space-x-4">
-                    <div className="flex-col space-y-4">
-                      <>{console.log("é",count, product)}</>
-                      {count.map((c) => {
-                        return <p className="bg-[#EFEFEF] rounded">{c + 1}</p>;
+                  {count && product && (
+                    <div className="mt-3 space-y-4">
+                      {basket?.products.map((product) => {
+                        return (
+                          <div className="flex items-center">
+                            <div className="bg-gray-500 w-6 h-6 rounded-full items-center flex justify-center font-normal text-sm text-white">
+                              {product.qte}
+                            </div>
+                            <div className="pl-2 font-medium">
+                              {product.product.title} ({product.product.price}{' '}
+                              €)
+                            </div>
+                          </div>
+                        );
                       })}
                     </div>
-                    <div className="flex-col space-y-4">
-                      {product.map((p) => {
-                        return <p>{p}</p>;
-                      })}
-                    </div>
-                  </div>
+                  )}
                   <div className="grid mt-8 cols-1 place-items-center">
-                    <Button label="Commander" />
+                    <Button
+                      label={`Commander ${basket?.totalPrice.toFixed(2)} €`}
+                    />
                   </div>
                 </Box>
               </Modal>
