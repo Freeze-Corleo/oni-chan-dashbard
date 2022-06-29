@@ -48,7 +48,7 @@ const CreateRestaurantAdmin = () => {
   const navigate = useNavigate();
 
   const redirection = (id: string) => {
-    navigate('/admin/commands/' + id);
+    navigate('/admin/restaurant/' + id);
   };
 
   const [open, setOpen] = useState(false);
@@ -163,16 +163,16 @@ const CreateRestaurantAdmin = () => {
               <Box sx={style} className="space-y-6">
                 <div className="flex space-x-4">
                   <div className="py-4">
-                    <p className="pb-2 pl-2 font-medium">Image du menu</p>
+                    <p className="pb-2 pl-2 font-medium">Image du restaurant</p>
                     <div className="flex items-center space-x-5">
                       {restaurantData?.imageUrl ? (
                         <img
                           src={restaurantData.imageUrl}
-                          className="object-cover w-20 h-20 rounded-full"
+                          className="object-cover w-12 h-12 rounded-full"
                           alt="profil of a specific user"
                         />
                       ) : (
-                        <div className="flex items-center justify-center object-cover w-20 h-20 text-xl font-medium text-white bg-black rounded-full">
+                        <div className="flex items-center justify-center object-cover w-12 h-12 text-xl font-medium text-white bg-black rounded-full">
                           N
                         </div>
                       )}
@@ -186,13 +186,13 @@ const CreateRestaurantAdmin = () => {
                       />
                     </div>
                   </div>
-                  <Input
-                    type="text"
-                    nameInput="name"
-                    placeholder="Nom du restaurant"
-                    onChangeFunction={onChangeInputRestaurant}
-                  />
                 </div>
+                <Input
+                  type="text"
+                  nameInput="name"
+                  placeholder="Nom du restaurant"
+                  onChangeFunction={onChangeInputRestaurant}
+                />
                 <Input
                   type="text"
                   nameInput="address"

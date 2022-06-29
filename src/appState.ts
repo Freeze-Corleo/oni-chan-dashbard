@@ -207,6 +207,7 @@ export interface IRestaurantRetrieve {
   cookType: string;
   isAvailable: boolean;
   _id: string;
+  imageUrl: string;
 }
 
 // CategoryProducts
