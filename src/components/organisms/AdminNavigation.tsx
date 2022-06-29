@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import AnalyticsNavigation from '../molecules/nav/admin/analyticSection';
 import ContentNavigation from '../molecules/nav/admin/contentSection';
@@ -12,10 +12,20 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { selectMyProfilReducer } from '../../view-model-generation/generateMyProfilModel';
 
+import { logoutUser } from '../../core-logic/usecases/my-profil/myUserUseCase';
+import { useNavigate } from 'react-router-dom';
 const AdminNavigation = () => {
   const dispatch = useDispatch();
   const myUser = useSelector(selectMyProfilReducer);
   const cookie: any = useCookies(['FREEZE_JWT']);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await dispatch(logoutUser());
+    navigate({
+      pathname: '/home',
+    });
+  };
 
   React.useEffect(() => {
     dispatch(retrieveMyUserFromCookie(cookie[0].FREEZE_JWT));
@@ -66,7 +76,9 @@ const AdminNavigation = () => {
               d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
             />
           </svg>
-          <h3 className="pl-3 text-sm tracking-wide">Log out</h3>
+          <h3 className="pl-3 text-sm tracking-wide" onClick={handleLogout}>
+            Log out
+          </h3>
         </div>
       </div>
     </div>

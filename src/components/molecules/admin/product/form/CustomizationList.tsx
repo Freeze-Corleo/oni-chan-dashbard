@@ -92,7 +92,7 @@ const CutomizationListForm: React.FC<ICustomizationListFormProps> = ({
           <div className="flex items-center py-2 space-x-4" key={index}>
             {element}
             {index + 1 === dynamicElements.length ? (
-              <div>
+              <div className="mt-6">
                 <div
                   onClick={() => addNewElement()}
                   className="flex items-center justify-center w-6 h-6 font-medium text-white bg-black rounded-full cursor-pointer"
@@ -101,7 +101,7 @@ const CutomizationListForm: React.FC<ICustomizationListFormProps> = ({
                 </div>
               </div>
             ) : (
-              <div>
+              <div className="mt-6">
                 <div
                   onClick={() => deleteElement(index)}
                   className="flex items-center justify-center w-6 h-6 font-medium text-white bg-black rounded-full cursor-pointer"

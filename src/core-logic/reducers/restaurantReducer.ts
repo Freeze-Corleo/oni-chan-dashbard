@@ -5,13 +5,10 @@ import * as actions from '../usecases/index';
 
 
 export type IReducerState = {
-  message: string | null,
-  restaurant: IRestaurant | null,
-  restaurants: IRestaurant[] | null,
 }
 
 export const data = (
-  state: IReducerState | null = null,
+  state: any | null = null,
   action: retrievalRestaurantActionCreator.Actions
 ) => {
   switch (action.type) {
@@ -31,9 +28,7 @@ export const data = (
         ...state, message: action.payload
       }
     case actions.RESTAURANT_CREATED:
-      return {
-        ...state, message: action.payload
-      }
+      return [...state, action.payload];
     case actions.RESTAURANTS_BY_PARTNER_RETRIEVED:
       return action.payload
     default: return state;

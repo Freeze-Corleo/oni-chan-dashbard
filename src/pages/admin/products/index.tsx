@@ -6,7 +6,7 @@ import Table from '../../../components/atoms/Table';
 import Input from '../../../components/atoms/Input';
 import Button from '../../../components/atoms/RegisterButton';
 import { getRestaurantsByPartner } from '../../../core-logic/usecases/restaurant/restaurantUseCase';
-import { selectRestaurantReducer } from '../../../view-model-generation/generateRestaurantModel';
+import { selecteRestaurantWithout } from '../../../view-model-generation/generateRestaurantModel';
 import { createRestaurantInformation } from '../../../core-logic/usecases/restaurant/restaurantUseCase';
 import { useDispatch, useSelector } from 'react-redux';
 import { IAddress } from '../../../appState';
@@ -40,7 +40,7 @@ const INITIAL_STATE = {
  */
 const ProductIndex = () => {
   const dispatch = useDispatch();
-  const restaurants = useSelector(selectRestaurantReducer);
+  const restaurants = useSelector(selecteRestaurantWithout);
   const [restaurantData, setRestaurantData] = React.useState(INITIAL_STATE);
   const [selected, setSelected] = React.useState<string[]>([]);
   const myUser = useSelector(selectMyProfilReducer);

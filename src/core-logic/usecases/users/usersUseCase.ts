@@ -6,7 +6,7 @@ import { IUserGateway } from '../../gateways/userGateway';
 import { IUser } from '../../../appState';
 
 import { displayToastNotification } from '../../../core-logic/usecases/notifications/notificationsUseCase';
-import { logout } from '../../../secondary-adapters/services/user/users.service';
+import { eraseJwtHeader } from '../../../secondary-adapters/helpers/api.helpers';
 
 
 
@@ -42,6 +42,29 @@ export const updateSpecificUser = (_uuid: string, _userModified: IUser): ThunkRe
         text: 'Une erreur est survenue lors de la modification',
         severityLevel: 'error',
         severityTitle: 'Modification non réussie',
+      })
+    );
+  }
+}
+
+export const deleteMyAccount = (_uuid: string): ThunkResult<Promise<void>> => async (dispatch, getState, {userGateway}: {userGateway: IUserGateway}) => {
+  dispatch(actionCreator.Actions.specificUserDeleted);
+  const {response, error} = await userGateway.deleteUserById(_uuid);
+  if(!error) {
+    eraseJwtHeader("FREEZE_JWT");
+    dispatch(
+      displayToastNotification({
+        text: 'Votre compte a bien été supprimé',
+        severityLevel: 'success',
+        severityTitle: 'Suppression faite !',
+      })
+    );
+  } else {
+    dispatch(
+      displayToastNotification({
+        text: 'Une erreur est survenue lors de la suppression',
+        severityLevel: 'error',
+        severityTitle: 'Supression non réussie',
       })
     );
   }

@@ -6,7 +6,7 @@ import Table from '../../../components/atoms/Table';
 import Input from '../../../components/atoms/Input';
 import Button from '../../../components/atoms/RegisterButton';
 import { getRestaurantsByPartner } from '../../../core-logic/usecases/restaurant/restaurantUseCase';
-import { selectRestaurantReducer } from '../../../view-model-generation/generateRestaurantModel';
+import { selecteRestaurantWithout } from '../../../view-model-generation/generateRestaurantModel';
 import { createRestaurantInformation } from '../../../core-logic/usecases/restaurant/restaurantUseCase';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -30,6 +30,7 @@ const INITIAL_STATE = {
   cookType: '',
   isAvailable: true,
   uuid: '',
+  imageUrl: '',
 };
 
 /**
@@ -39,7 +40,7 @@ const INITIAL_STATE = {
  */
 const CreateRestaurantAdmin = () => {
   const dispatch = useDispatch();
-  const restaurants = useSelector(selectRestaurantReducer);
+  const restaurants = useSelector(selecteRestaurantWithout);
   const [restaurantData, setRestaurantData] = React.useState(INITIAL_STATE);
   const [selected, setSelected] = React.useState<string[]>([]);
   const myUser = useSelector(selectMyProfilReducer);
@@ -47,7 +48,7 @@ const CreateRestaurantAdmin = () => {
   const navigate = useNavigate();
 
   const redirection = (id: string) => {
-    navigate('/admin/commands/' + id);
+    navigate('/admin/restaurant/' + id);
   };
 
   const [open, setOpen] = useState(false);
@@ -94,6 +95,7 @@ const CreateRestaurantAdmin = () => {
           isAvailable: restaurantData.isAvailable,
           address: '',
           _id: '',
+          imageUrl: restaurantData.imageUrl,
         },
         {
           city: restaurantData.city,
@@ -106,11 +108,18 @@ const CreateRestaurantAdmin = () => {
     );
   };
 
+  const onPreviewImage = async (event: any) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+
+    reader.onload = (e: any) => {
+      setRestaurantData({ ...restaurantData, imageUrl: e.target.result });
+    };
+  };
+
   useEffect(() => {
     myUser.data?.uuid && dispatch(getRestaurantsByPartner(myUser.data?.uuid));
   }, [myUser]);
-
-  console.log(restaurants);
 
   return (
     <AdminHomeRoot>
@@ -125,7 +134,7 @@ const CreateRestaurantAdmin = () => {
             </button>
           </div>
           <div className="px-8">
-            {restaurants !== null && (
+            {restaurants && (
               <Table
                 rowLabels={[
                   'Nom du restaurant',
@@ -152,6 +161,32 @@ const CreateRestaurantAdmin = () => {
               aria-describedby="modal-modal-description"
             >
               <Box sx={style} className="space-y-6">
+                <div className="flex space-x-4">
+                  <div className="py-4">
+                    <p className="pb-2 pl-2 font-medium">Image du restaurant</p>
+                    <div className="flex items-center space-x-5">
+                      {restaurantData?.imageUrl ? (
+                        <img
+                          src={restaurantData.imageUrl}
+                          className="object-cover w-12 h-12 rounded-full"
+                          alt="profil of a specific user"
+                        />
+                      ) : (
+                        <div className="flex items-center justify-center object-cover w-12 h-12 text-xl font-medium text-white bg-black rounded-full">
+                          N
+                        </div>
+                      )}
+                      <label className="inline-flex items-center px-10 py-3 text-sm font-medium text-center text-white transition duration-300 bg-black rounded-full shadow-2xl cursor-pointer hover:bg-gray-800 linear">
+                        Changer de photo
+                      </label>
+                      <input
+                        type="file"
+                        className="absolute opacity-0 cursor-pointer"
+                        onChange={onPreviewImage}
+                      />
+                    </div>
+                  </div>
+                </div>
                 <Input
                   type="text"
                   nameInput="name"

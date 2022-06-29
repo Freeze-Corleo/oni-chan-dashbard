@@ -44,7 +44,7 @@ export const createRestaurantInformation = (_restaurant: IRestaurant, _address: 
   dispatch(actionCreator.Actions.createRestaurant());
   const {response, error} = await restaurantGateway.create(_restaurant, _address, _restorerId);
   if(!error) {
-    dispatch(actionCreator.Actions.restaurantCreated(response));
+    dispatch(actionCreator.Actions.restaurantCreated(response.data));
     dispatch(
       displayToastNotification({
         text: 'Le restaurant a été crée avec succès',

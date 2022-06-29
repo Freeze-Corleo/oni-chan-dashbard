@@ -9,7 +9,7 @@ export interface AppState {
   },
   product: {
     isLoading: boolean;
-    data: IProduct | null;
+    data: IProduct[] | null;
   },
   notification: {
     isLoading: boolean;
@@ -29,7 +29,7 @@ export interface AppState {
   },
   restaurant: {
     isLoading: boolean;
-    data: IRestaurant[] | null;
+    data: IRestaurantRetrieve[] | null;
   }
   category: {
     isLoading: boolean;
@@ -41,6 +41,19 @@ export interface AppState {
  * Product interface flow
  */
 
+export interface IProductCreate {
+  imageUrl: string;
+  itemDescription: string;
+  price: string;
+  title: string;
+}
+
+export interface ICustomizationCreate {
+  title: string;
+  minPermitted: string;
+  maxPermitted: string;
+}
+
 // A product can be either a basic product
 // like a hamburger or a complete menu
 export interface IProduct {
@@ -50,6 +63,7 @@ export interface IProduct {
   category: string;
   imageUrl: string;
   customizationsList: ICustomization[];
+  _id: string;
 }
 
 // If single product, options will be null
@@ -179,6 +193,21 @@ export interface IRestaurant {
   cookType: string;
   isAvailable: boolean;
   _id: string;
+  imageUrl: string;
+}
+
+export interface IRestaurantRetrieve {
+  name: string;
+  rate: number;
+  deliveryPrice: number;
+  address: string;
+  city: string;
+  zipCode: string;
+  price: number;
+  cookType: string;
+  isAvailable: boolean;
+  _id: string;
+  imageUrl: string;
 }
 
 // CategoryProducts
