@@ -17,7 +17,7 @@ export const retrieveRestaurantsInformations = (): ThunkResult<Promise<void>> =>
 
 // Action that will be called in frontend, will disptach notification
 //  and will load the product to the Product reducer.
-export const retrieveRestaurantInformation = (_id: string): ThunkResult<Promise<void>> => async (dispatch, getState, { restaurantInfoGate }: {restaurantInfoGate: IRestaurantGateway}) => {
+export const retrieveRestaurantInformation = (_id: string | undefined): ThunkResult<Promise<void>> => async (dispatch, getState, { restaurantInfoGate }: {restaurantInfoGate: IRestaurantGateway}) => {
   dispatch(actionCreator.Actions.retrieveRestaurant());
   restaurantInfoGate = new RestaurantGateway();
   const restaurant = await restaurantInfoGate.retrieveOne(_id);
@@ -34,8 +34,9 @@ export const updateRestaurantInformation = (_id: string, _restaurant: IRestauran
 
 // Action that will be called in frontend, will disptach notification
 //  and will load the product to the Product reducer.
-export const deleteRestaurantInformation = (_id: string): ThunkResult<Promise<void>> => async (dispatch, getState, { restaurantGateway }: {restaurantGateway: IRestaurantGateway}) => {
+export const deleteRestaurantInformation = (_id: string | undefined): ThunkResult<Promise<void>> => async (dispatch, getState, { restaurantGateway }: {restaurantGateway: IRestaurantGateway}) => {
   dispatch(actionCreator.Actions.deleteRestaurant(_id));
+  restaurantGateway = new RestaurantGateway();
   const message: string = await restaurantGateway.delete(_id);
   dispatch(actionCreator.Actions.restaurantDeleted(message));
 }
