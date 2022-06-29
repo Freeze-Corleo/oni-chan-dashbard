@@ -20,8 +20,8 @@ const AdminNavigation = () => {
   const cookie: any = useCookies(['FREEZE_JWT']);
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    dispatch(logoutUser(myUser.data));
+  const handleLogout = async () => {
+    await dispatch(logoutUser(myUser.data));
     navigate({
       pathname: '/home',
     });
@@ -76,7 +76,9 @@ const AdminNavigation = () => {
               d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
             />
           </svg>
-          <h3 className="pl-3 text-sm tracking-wide" onClick={handleLogout}>Log out</h3>
+          <h3 className="pl-3 text-sm tracking-wide" onClick={handleLogout}>
+            Log out
+          </h3>
         </div>
       </div>
     </div>
