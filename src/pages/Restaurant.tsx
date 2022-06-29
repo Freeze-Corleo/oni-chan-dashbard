@@ -13,10 +13,7 @@ import { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
 import { retrieveRestaurantInformation } from '../core-logic/usecases/restaurant/restaurantUseCase';
 
-const rating = '4.8/5 Excellent ( + 400 avis )';
-const km = '2.6 km - 15 min';
-const horaires = 'Horaires : Ferme à 20h30';
-const detail = 'Livraison offerte à partir de 30€';
+
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -66,22 +63,20 @@ const Restaurant = () => {
       <div className="grid grid-cols-2 gap-0 place-items-center mt-20 mb-10 p-20">
         <SearchInput />
         <div className="mt-28">
-          <Card img="/img/burger.jpg" />
+          <Card img={"/img/burger.jpg"} />
         </div>
         <div className="mt-20 justify-self-start space-y-4">
-          <p className="font-bold text-5xl">{rest.data?.product?.data?.name}</p>
-          <p>{rating}</p>
-          <p>{km}</p>
-          <p>{horaires}</p>
-          <p>{detail}</p>
+          <p className="font-bold text-5xl">{rest?.product?.data?.name}</p>
+          <p>{rest?.product?.data?.city}, {rest?.product?.data?.address} {rest?.product?.data?.zipCode}</p>
+          <p>{rest?.product?.data?.cookType}</p>
         </div>
       </div>
       <div className="p-10">
-        {rest?.data?.product?.data?.products?.length > 0 ? (
+        {rest?.product?.data?.products?.length > 0 ? (
           <div className="pl-20">
             <div className="font-bold text-4xl mb-10">Plats du restaurant</div>
             <div className="grid grid-cols-3 place-items-center gap-10 mb-16">
-              {rest.data.product?.data?.products?.map((plat: any) => (
+              {rest?.product?.data?.products?.map((plat: any) => (
                 <>
                   <button
                     onClick={(ho) =>
@@ -108,7 +103,7 @@ const Restaurant = () => {
                           }}
                           alt=""
                         />
-                        <p className="text-3xl m-5">{datas.title}</p>
+                        <p className="text-3xl m-5">{datas.title}, {datas.price} €</p>
                         <Button
                           variant="outlined"
                           onClick={(price) =>
@@ -142,7 +137,7 @@ const Restaurant = () => {
       ) : (
         <></>
       )}
-      {console.log(rest)}
+      {console.log(rest?.product?.data)}
       <Footer />
     </>
   );

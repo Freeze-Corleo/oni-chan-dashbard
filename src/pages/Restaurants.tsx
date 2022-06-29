@@ -29,7 +29,8 @@ const RestaurantFeed = () => {
             {restaurantData && restaurantData?.restaurants?.data?.length > 0 ? (
               <>
                 {isParameter.length > 1 ? (
-                  <> <div className="grid grid-cols-3 mt-20 gap-x-6 gap-y-8 mb-28 place-items-center">
+                  <> 
+                  <div className="grid grid-cols-3 mt-20 gap-x-6 gap-y-8 mb-28 place-items-center z-10">
                     {restaurantData.restaurants?.data?.filter((resto: any) => resto.cookType === last).map((restaurant: any) => {
                       return (
                         <>
@@ -49,7 +50,7 @@ const RestaurantFeed = () => {
                   </>
                 ) : (
                   <>
-                    <div className="grid grid-cols-3 mt-20 gap-x-6 gap-y-8 mb-28 place-items-center">
+                    <div className="grid grid-cols-3 mt-20 gap-x-6 gap-y-8 mb-28 place-items-center z-10">
                       {restaurantData.restaurants?.data?.map((restaurant: any) => {
                         return (
                           <>

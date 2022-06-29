@@ -117,10 +117,11 @@ const Navigation = () => {
     }
     setCountAndProduct(
       basket.data?.reduce((a: any, e: any) => {
-        a[e.name] = ++a[e.name] || 0;
+        a[e.name] = ++a[e.name] || 1;
         return a;
       }, {})
     );
+    console.log("oy", countAndProduct, basket)
     setProduct(Object.keys(countAndProduct));
     setCount(Object.values(countAndProduct));
   }, [basket]);
@@ -257,6 +258,7 @@ const Navigation = () => {
                   </div>
                   <div className="flex flex-row justify-start pl-5 mt-3 space-x-4">
                     <div className="flex-col space-y-4">
+                      <>{console.log("é",count, product)}</>
                       {count.map((c) => {
                         return <p className="bg-[#EFEFEF] rounded">{c + 1}</p>;
                       })}
