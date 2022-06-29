@@ -19,6 +19,7 @@ import CreateRestaurantAdmin from '../pages/admin/createRestaurant';
 import RestaurantIdAdmin from '../pages/admin/createRestaurant/restaurant';
 import ProductIndex from '../pages/admin/products';
 import CreateProductsFromSpecificRestaurant from '../pages/admin/products/create';
+import SuccessPage from '../pages/payment/success';
 
 import PaymentHome from '../pages/payment';
 import Test from '../pages/Test';
@@ -52,6 +53,7 @@ const AppRoute = () => {
       <Route path="/back-office" element={<BackOffice />} />
       <Route path="/paiement" element={<PaymentHome />} />
       <Route path="/test" element={<Test />} />
+      <Route path="/success" element={<SuccessPage />} />
     </Routes>
   );
 };

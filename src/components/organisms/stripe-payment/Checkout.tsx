@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   PaymentElement,
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
 import { useNavigate } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
+
+import { useSelector } from 'react-redux';
+import { selectBasketReducer } from '../../../view-model-generation/generateBasketModel';
 
 interface ICheckoutProps {
   offer?: any;
@@ -17,7 +20,7 @@ interface ICheckoutProps {
 }
 
 const Checkout = (props: ICheckoutProps) => {
-  const [cookies] = useCookies(['API_TOKEN']);
+  const basket = useSelector(selectBasketReducer);
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
@@ -48,8 +51,6 @@ const Checkout = (props: ICheckoutProps) => {
 
         const clientSecret = res.paymentIntent?.client_secret;
 
-        console.log(clientSecret);
-
         if (!clientSecret) {
           alert('No client secret found!');
           return;
@@ -66,7 +67,7 @@ const Checkout = (props: ICheckoutProps) => {
                   setMessage('Paiement réussi!');
 
                   // si le paiement est réussi on fait un truc
-
+                  navigate('/success');
                   break;
                 case 'processing':
                   setMessage('Votre paiement est en cours de traitement.');
@@ -101,18 +102,64 @@ const Checkout = (props: ICheckoutProps) => {
 
   return (
     <>
-      <form id="payment-form" onSubmit={handleSubmit}>
-        <PaymentElement id="payment-element" />
-        {/* Show any error or success messages */}
-        {message && (
-          <div
-            id="payment-message"
-            className="pt-4 font-medium text-danger-red"
-          >
-            {message}
+      <div className="grid grid-cols-2">
+        <div>
+          <div className="title-wrap">
+            <div className="title font-medium px-20 py-8">
+              Étape 2 sur 2{' '}
+              <span className="main-title font-bold">
+                Configurez votre carte de paiement
+              </span>
+            </div>
           </div>
-        )}
-      </form>
+          <form id="payment-form" onSubmit={handleSubmit}>
+            <PaymentElement id="payment-element" />
+            {/* Show any error or success messages */}
+            {message && (
+              <div
+                id="payment-message"
+                className="pt-4 font-medium text-danger-red"
+              >
+                {message}
+              </div>
+            )}
+            <div className="w-[550px] text-xs py-8 px-2">
+              <p>
+                En cliquant sur le bouton « Activer ma Licence » ci-dessous,
+                vous acceptez nos{' '}
+                <Link to="/cgu">Conditions d’utilisation</Link>, reconnaissez
+                avoir plus de 18 ans et prenez acte de la{' '}
+                <Link to="/confition-utilisation">
+                  Déclaration de confidentialité
+                </Link>
+                . Vous acceptez que votre achat ne soit pas remboursable et
+                renoncez à votre droit de rétractation.
+              </p>
+            </div>
+            <button className="px-8 py-4 bg-black text-white font-medium rounded-full hover:bg-gray-800 transition duration-300 cursor-pointer">
+              Acheter
+            </button>
+          </form>
+        </div>
+        <div className="py-8 px-20">
+          <div className="font-bold">R&eacute;capitulatif de la commande</div>
+          <div className="space-y-6 pt-8">
+            {basket?.products.map((product) => {
+              return (
+                <div className="flex items-center" key={product.product._id}>
+                  <div className="bg-gray-500 w-6 h-6 rounded-full items-center flex justify-center font-normal text-sm text-white">
+                    {product.qte}
+                  </div>
+                  <div className="pl-2 font-medium">
+                    {product.product.title} ({product.product.price} €)
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div className="pt-4 font-medium">Total : {basket?.totalPrice} €</div>
+        </div>
+      </div>
 
       <div id="modal" hidden={!modalConfirmOpen}>
         <div

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import HomeRoot from '../components/organisms/HomeRoot';
 import HomeContent from './content/HomeContent';
 

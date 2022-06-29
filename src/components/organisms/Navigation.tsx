@@ -133,7 +133,7 @@ const Navigation = () => {
     borderRadius: '69px',
     p: 4,
   };
-  console.log(basket);
+
   return (
     <div className="relative z-10">
       <img
@@ -154,13 +154,13 @@ const Navigation = () => {
         </div>
         <div className="z-50 pt-2">
           <ul className="flex justify-end space-x-4">
-            <li>
+            <Link to="/register-restaurant">
               <div className="flex items-center px-4 py-2 font-medium tracking-wide transition duration-300 bg-white rounded-full cursor-pointer hover:bg-gray-200 linear">
                 {' '}
                 <Partnership />
                 Devenir partenaire
               </div>
-            </li>
+            </Link>
             <li>
               <button onClick={handleOpenProduct}>
                 <div className="flex items-center px-4 py-2 font-medium tracking-wide transition duration-300 bg-white rounded-full cursor-pointer hover:bg-gray-200 linear">
@@ -188,7 +188,10 @@ const Navigation = () => {
                     <div className="mt-3 space-y-4">
                       {basket?.products.map((product) => {
                         return (
-                          <div className="flex items-center">
+                          <div
+                            className="flex items-center"
+                            key={product.product._id}
+                          >
                             <div className="bg-gray-500 w-6 h-6 rounded-full items-center flex justify-center font-normal text-sm text-white">
                               {product.qte}
                             </div>
@@ -204,6 +207,9 @@ const Navigation = () => {
                   <div className="grid mt-8 cols-1 place-items-center">
                     <Button
                       label={`Commander ${basket?.totalPrice.toFixed(2)} €`}
+                      onClick={() => {
+                        navigate('/paiement');
+                      }}
                     />
                   </div>
                 </Box>

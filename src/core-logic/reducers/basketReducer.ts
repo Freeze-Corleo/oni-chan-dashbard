@@ -15,7 +15,22 @@ export const data = (
 ) => {
   switch (action.type) {
     case actions.REMOVE_PRODUCT_FROM_BASKET:
-      // return state.filter((product) => product.id !== +action.payload);
+      const removeId: string = action.payload;
+      if(state.products.length > 0) {
+        state.products.map((prod) => {
+          if(prod.product._id === removeId) {
+            if(prod.qte > 1) {
+              prod.qte -= 1;
+            }
+            if(prod.qte === 1) {
+              state.products = state.products.filter(prod => prod.product._id !== removeId);
+            }
+          }
+          return state;
+        })
+      } else {
+        state = {qteTotal: 0, totalPrice: 0, restaurantName: '', products: []};
+      }
       return state;
     case actions.ADD_PRODUCT_IN_BASKET:
       const payload = action.payload as IPayloadBasket;

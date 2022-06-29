@@ -29,24 +29,25 @@ interface IPaiementProps {
 const Paiement: React.FC<{}> = (): JSX.Element => {
   const user = useSelector(selectMyProfilReducer);
   const basket = useSelector(selectBasketReducer);
+  const [test, setTest] = React.useState(false);
   const [clientSecret, setClientSecret] = React.useState<{
     client_secret: string;
     total_price: number;
   }>({ client_secret: '', total_price: 0 });
 
   React.useEffect(() => {
-    console.log(user, basket);
     if (user.data && basket) {
       const productsId: string[] = [];
       const paymentIntent = new PaymentGateway();
-      // basket.data?.forEach((product) => {
-      //   productsId.push(product.id);
-      // });
+      basket.products.map((prod) => {
+        productsId.push(prod.product._id);
+      });
       paymentIntent
         .createPaymentIntent({
           userId: user?.data?.uuid,
           productsId: productsId,
-          provider: 'stripe',
+          provider: 'Stripe',
+          totalPrice: +basket.totalPrice,
         })
         .then(
           ({
@@ -100,12 +101,12 @@ const Paiement: React.FC<{}> = (): JSX.Element => {
   };
 
   return (
-    <div className="App">
+    <div className="App pt-40 relative z-50">
       {clientSecret?.client_secret.length > 0 && (
         <Elements options={options} stripe={stripePromise}>
           <Checkout
             offer={clientSecret?.total_price}
-            priceLabel={'YOLO'}
+            priceLabel={basket?.totalPrice.toString()}
             setClientSecret={setClientSecret}
           />
         </Elements>
@@ -114,4 +115,4 @@ const Paiement: React.FC<{}> = (): JSX.Element => {
   );
 };
 
-export default Paiement;
+export default React.memo(Paiement);
