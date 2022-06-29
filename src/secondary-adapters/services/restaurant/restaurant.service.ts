@@ -30,7 +30,7 @@ export const getRestaurantByID = async (id: string) => {
   };
 
   try {
-    response = await axiosConfig.get(`/oni-chan/restaurant/get-product/?id=` + id);
+    response = await axiosConfig.get(`/oni-chan/restaurant/get/` + id);
     restaurant = response;
   } catch (err) {
     error = err;
