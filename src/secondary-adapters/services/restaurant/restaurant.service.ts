@@ -90,7 +90,7 @@ export const updateRestaurant = async (id: string | undefined, _restaurant: IRes
     imageUrl: '',
   };
   try {
-    response = await axiosConfig.put(`/oni-chan/restaurant/update/` + id, {_restaurant});
+    response = await axiosConfig.put(`/oni-chan/restaurant/update/` + id, {restaurant: _restaurant});
     restaurant = response;
   } catch (err) {
     error = err;
