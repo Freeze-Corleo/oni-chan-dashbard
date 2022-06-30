@@ -5,12 +5,12 @@ import { IProduct } from '../../appState';
 
 // Reducer's state will have a type of array of object
 // with at least in this object id field
-export type IReducerState = {qteTotal: number, totalPrice: number, restaurantName: string, products: {qte: number, product: IProduct}[]};
+export type IReducerState = {restoId: string, qteTotal: number, totalPrice: number, restaurantName: string, products: {qte: number, product: IProduct}[]};
 
-export type IPayloadBasket = {id: number, product: IProduct, restaurantName: string};
+export type IPayloadBasket = {id: number, product: IProduct, restaurantName: string, restoId: string};
 
 export const data = (
-  state: IReducerState = {qteTotal: 0, totalPrice: 0, restaurantName: '', products: []},
+  state: IReducerState = {restoId: "", qteTotal: 0, totalPrice: 0, restaurantName: '', products: []},
   action: basketActionCreator.Actions
 ) => {
   switch (action.type) {
@@ -21,22 +21,29 @@ export const data = (
           if(prod.product._id === removeId) {
             if(prod.qte > 1) {
               prod.qte -= 1;
+              state.qteTotal -= 1;
+              state.totalPrice -= +prod.product.price;
+              return state;
             }
             if(prod.qte === 1) {
+              state.totalPrice -= +prod.product.price;
+              state.qteTotal -= 1;
               state.products = state.products.filter(prod => prod.product._id !== removeId);
+              return state;
             }
           }
-          return state;
         })
       } else {
-        state = {qteTotal: 0, totalPrice: 0, restaurantName: '', products: []};
+        state = {restoId: "", qteTotal: 0, totalPrice: 0, restaurantName: '', products: []};
       }
+      return state;
+    case actions.RETRIEVE_PRODUCTS_FROM_BASKET:
       return state;
     case actions.ADD_PRODUCT_IN_BASKET:
       const payload = action.payload as IPayloadBasket;
       state.totalPrice += +payload.product.price;
       state.restaurantName = payload.restaurantName;
-
+      state.restoId = payload.restoId;
       if(state.products.length > 0) {
         state.products.forEach((prod) => {
           if(prod.product._id === payload.product._id) {

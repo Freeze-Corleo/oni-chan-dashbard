@@ -17,7 +17,7 @@ export interface AppState {
   },
   basket: {
     isLoading: boolean;
-    data: {qteTotal: number, totalPrice: number, restaurantName: string, products: {qte: number, product: IProduct}[]} | null;
+    data: {restoId: string, qteTotal: number, totalPrice: number, restaurantName: string, products: {qte: number, product: IProduct}[]} | null;
   },
   user: {
     isLoading: boolean;
@@ -30,11 +30,15 @@ export interface AppState {
   restaurant: {
     isLoading: boolean;
     data: IRestaurantRetrieve[] | null;
-  }
+  },
+  command: {
+    isLoading: boolean;
+    data: ICommand[] | null;
+  },
   category: {
     isLoading: boolean;
     data: ICategoryRetrieved[] | null;
-  }
+  },
 }
 
 /**
@@ -120,6 +124,7 @@ export interface IMyProfil {
   uuid: string;
   firstname: string;
   lastname: string;
+  address: string;
 }
 
 export interface IAddress{
@@ -222,4 +227,34 @@ export interface ICategoryCreate extends ICategory {
 
 export interface ICategory {
   title: string;
+}
+
+export interface ICommandCreate {
+  price: number;
+  products: string[];
+  restaurantId: string;
+  address: string
+  delivery: string;
+  userId: string;
+  isAccepted: boolean;
+  isReceived: boolean;
+  deleted: boolean;
+}
+
+export interface ICommand {
+  price: number;
+  products: IProduct[];
+  restaurantId: IRestaurant;
+  address: string;
+  city: string;
+  zipCode: string;
+  delivery: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  phone: string;
+  isAccepted: boolean;
+  isReceived: boolean;
+  deleted: boolean;
+  uuid: string;
 }

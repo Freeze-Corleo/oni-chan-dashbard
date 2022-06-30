@@ -6,7 +6,8 @@ import * as _actions from '../index';
 // especially the notifications data
 export const Actions = {
   addProduct: (options: {}) => createAction(_actions.ADD_PRODUCT_IN_BASKET, options),
-  removeProduct: (id: string) => createAction(_actions.REMOVE_PRODUCT_FROM_BASKET, id)
+  removeProduct: (id: string) => createAction(_actions.REMOVE_PRODUCT_FROM_BASKET, id),
+  retrieveProduct: () => createAction(_actions.RETRIEVE_PRODUCTS_FROM_BASKET)
 };
 
 export type Actions = ActionsUnion<typeof Actions>;

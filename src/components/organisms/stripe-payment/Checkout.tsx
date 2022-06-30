@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 import {
   PaymentElement,
   useElements,
@@ -7,8 +8,14 @@ import {
 } from '@stripe/react-stripe-js';
 import { useNavigate } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
+import { retrieveMyUserFromCookie } from '../../../core-logic/usecases/my-profil/myUserUseCase';
+import { createCommand } from '../../../core-logic/usecases/command/commandUseCase';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { selectMyProfilReducer } from '../../../view-model-generation/generateMyProfilModel';
 import { selectBasketReducer } from '../../../view-model-generation/generateBasketModel';
+
+import { ICommandCreate } from '../../../appState';
 
 interface ICheckoutProps {
   offer?: any;
@@ -20,7 +27,10 @@ interface ICheckoutProps {
 }
 
 const Checkout = (props: ICheckoutProps) => {
+  const cookie: any = useCookies(['FREEZE_JWT']);
+  const dispatch = useDispatch();
   const basket = useSelector(selectBasketReducer);
+  const user = useSelector(selectMyProfilReducer);
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
@@ -51,6 +61,8 @@ const Checkout = (props: ICheckoutProps) => {
 
         const clientSecret = res.paymentIntent?.client_secret;
 
+        console.log(clientSecret);
+
         if (!clientSecret) {
           alert('No client secret found!');
           return;
@@ -65,8 +77,25 @@ const Checkout = (props: ICheckoutProps) => {
               switch (paymentIntent.status) {
                 case 'succeeded':
                   setMessage('Paiement réussi!');
-
-                  // si le paiement est réussi on fait un truc
+                  if (basket) {
+                    let productsId: any[] = [];
+                    basket?.products.map((pro) =>
+                      productsId.push(pro.product._id)
+                    );
+                    const data: ICommandCreate = {
+                      price: basket?.totalPrice,
+                      products: productsId,
+                      restaurantId: basket?.restoId,
+                      address: user.data.address,
+                      userId: user.data.uuid,
+                      delivery: '',
+                      isAccepted: false,
+                      isReceived: false,
+                      deleted: false,
+                    };
+                    console.log(data);
+                    dispatch(createCommand(data));
+                  }
                   navigate('/success');
                   break;
                 case 'processing':
@@ -81,24 +110,17 @@ const Checkout = (props: ICheckoutProps) => {
               }
             }
           })
-          .catch(() => {
+          .catch((error) => {
+            console.error(error);
             alert("Le paiement a écouché d'une manière inattendue!");
           });
       });
-
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
-    // if (error.type === "card_error" || error.type === "validation_error") {
-    //   setMessage(error.message);
-    // } else {
-    //   setMessage("An unexpected error occured.");
-    // }
-
     setIsLoading(false);
   };
+
+  React.useEffect(() => {
+    dispatch(retrieveMyUserFromCookie(cookie[0].FREEZE_JWT));
+  }, []);
 
   return (
     <>
@@ -112,7 +134,7 @@ const Checkout = (props: ICheckoutProps) => {
               </span>
             </div>
           </div>
-          <form id="payment-form" onSubmit={handleSubmit}>
+          <div id="payment-form">
             <PaymentElement id="payment-element" />
             {/* Show any error or success messages */}
             {message && (
@@ -125,10 +147,9 @@ const Checkout = (props: ICheckoutProps) => {
             )}
             <div className="w-[550px] text-xs py-8 px-2">
               <p>
-                En cliquant sur le bouton « Activer ma Licence » ci-dessous,
-                vous acceptez nos{' '}
-                <Link to="/cgu">Conditions d’utilisation</Link>, reconnaissez
-                avoir plus de 18 ans et prenez acte de la{' '}
+                En cliquant sur le bouton « Acheter » ci-dessous, vous acceptez
+                nos <Link to="/cgu">Conditions d’utilisation</Link>,
+                reconnaissez avoir plus de 18 ans et prenez acte de la{' '}
                 <Link to="/confition-utilisation">
                   Déclaration de confidentialité
                 </Link>
@@ -136,10 +157,15 @@ const Checkout = (props: ICheckoutProps) => {
                 renoncez à votre droit de rétractation.
               </p>
             </div>
-            <button className="px-8 py-4 bg-black text-white font-medium rounded-full hover:bg-gray-800 transition duration-300 cursor-pointer">
+            <button
+              onClick={() => {
+                handleSubmit();
+              }}
+              className="px-8 py-4 bg-black text-white font-medium rounded-full hover:bg-gray-800 transition duration-300 cursor-pointer"
+            >
               Acheter
             </button>
-          </form>
+          </div>
         </div>
         <div className="py-8 px-20">
           <div className="font-bold">R&eacute;capitulatif de la commande</div>

@@ -4,7 +4,7 @@ const Label = ({
   htmlfor = '',
   label = '',
 }: {
-  htmlfor: string;
+  htmlfor?: string;
   label: string;
 }) => {
   return (
