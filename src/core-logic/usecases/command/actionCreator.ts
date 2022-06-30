@@ -10,6 +10,9 @@ export const Actions = {
   commandCreated: (commandCreated: ICommand) => createAction(_actions.COMMAND_CREATED, commandCreated),
   retrieveCommands: () => createAction(_actions.RETRIEVE_COMMANDS),
   commandsRetrieved: (commands: ICommand[] | null) => createAction(_actions.COMMANDS_RETRIEVED, commands),
+  retrieveHistoByUser: () => createAction(_actions.RETRIEVE_HISTO_BY_USER),
+  histoByUserRetrieved: (commands: ICommand[] | null) => createAction(_actions.HISTO_BY_USER_RETRIEVED, commands),
+
   retrieveCommandsFromRestaurant: () => createAction(_actions.RETRIEVE_COMMANDS_FROM_RESTO),
   commandsFromRestaurantsRetrieved: (_commands: ICommand[]) => createAction(_actions.COMMANDS_FROM_RESTO_RETRIEVED, _commands),
   deleteSpecificCommand: (_id: string) => createAction(_actions.DELETE_COMMAND, _id)

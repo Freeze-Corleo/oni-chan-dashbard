@@ -29,6 +29,13 @@ export const retrieveCommandsInformations = (): ThunkResult<Promise<void>> => as
   dispatch(actionCreator.Actions.commandsRetrieved(commands.response));
 }
 
+export const retrieveHistoCommandByUser = (_id: string, person: string): ThunkResult<Promise<void>> => async (dispatch, getState, {commandsInformationGateway}: {commandsInformationGateway: ICommandGateway}) => {
+  dispatch(actionCreator.Actions.retrieveHistoByUser());
+  commandsInformationGateway = new CommandGateway();
+  const commands = await commandsInformationGateway.retrieveHistoryCommands(_id, person);
+  dispatch(actionCreator.Actions.histoByUserRetrieved(commands.response));
+}
+
 export const deleteACommand = (_commandId: string): ThunkResult<Promise<void>> => async (dispatch, getState, {commandGateway}:{commandGateway : ICommandGateway}) => {
   const {response, error} = await commandGateway.deleteCommand(_commandId);
   if(!error) {

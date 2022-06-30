@@ -74,6 +74,7 @@ export const deleteRestaurant = async (_id: string | undefined) => {
   return "Restaurant deleted";
 }
 
+ 
 export const getStatisticsById = async (_userId: string) => {
   let response: any = null;
   let error = null;
