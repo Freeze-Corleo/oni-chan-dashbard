@@ -7,6 +7,10 @@ import { selectMyProfilReducer } from '../../view-model-generation/generateMyPro
 import { selectBasketReducer } from '../../view-model-generation/generateBasketModel';
 
 import { retrieveMyUserFromCookie } from '../../core-logic/usecases/my-profil/myUserUseCase';
+import {
+  dispatchRemoveProduct,
+  retrieveProductsFromBasket,
+} from '../../core-logic/usecases/basket/basketUseCase';
 
 import { useCookies } from 'react-cookie';
 
@@ -82,10 +86,6 @@ const Navigation = () => {
   const basket = useSelector(selectBasketReducer);
   const [openProduct, setOpenProduct] = useState(false);
   const [openProfil, setOpenProfil] = useState(false);
-  const [count, setCount] = useState([]);
-  const [product, setProduct] = useState(['']);
-  const [countAndProduct, setCountAndProduct] = useState([]);
-  const [prix, setPrix] = useState(0);
   const handleCloseProduct = () => setOpenProduct(false);
   const handleOpenProduct = () => {
     setOpenProduct(true);
@@ -110,12 +110,17 @@ const Navigation = () => {
 
   React.useEffect(() => {});
 
+  const onDeleteProduct = (_id: string) => {
+    dispatch(dispatchRemoveProduct(_id));
+    dispatch(retrieveProductsFromBasket);
+  };
+
   const styleProduct = {
     position: 'absolute' as 'absolute',
     top: '30%',
     right: '0',
     transform: 'translate(-50%, -50%)',
-    width: 300,
+    width: 400,
     bgcolor: 'background.paper',
     boxShadow: 24,
     borderRadius: '69px',
@@ -127,7 +132,7 @@ const Navigation = () => {
     top: '24%',
     right: '0',
     transform: 'translate(-10%, -50%)',
-    width: 300,
+    width: 400,
     bgcolor: 'background.paper',
     boxShadow: 24,
     borderRadius: '69px',
@@ -184,20 +189,30 @@ const Navigation = () => {
                       {basket?.restaurantName ? basket.restaurantName : ''}
                     </p>
                   </div>
-                  {count && product && (
+                  {basket && (
                     <div className="mt-3 space-y-4">
                       {basket?.products.map((product) => {
                         return (
                           <div
-                            className="flex items-center"
+                            className="flex items-center justify-between"
                             key={product.product._id}
                           >
-                            <div className="bg-gray-500 w-6 h-6 rounded-full items-center flex justify-center font-normal text-sm text-white">
-                              {product.qte}
+                            <div className="flex space-x-2">
+                              <div className="bg-gray-500 w-6 h-6 rounded-full items-center flex justify-center font-normal text-sm text-white">
+                                {product.qte}
+                              </div>
+                              <div className="pl-2 font-medium">
+                                {product.product.title} ({product.product.price}{' '}
+                                €)
+                              </div>
                             </div>
-                            <div className="pl-2 font-medium">
-                              {product.product.title} ({product.product.price}{' '}
-                              €)
+                            <div
+                              onClick={() => {
+                                onDeleteProduct(product.product._id);
+                              }}
+                              className="bg-red-800 hover:bg-red-600 transition duration-300 w-4 h-4 rounded-full cursor-pointer text-white font-medium flex items-center justify-center"
+                            >
+                              -
                             </div>
                           </div>
                         );

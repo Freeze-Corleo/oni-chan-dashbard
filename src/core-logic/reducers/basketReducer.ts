@@ -21,16 +21,23 @@ export const data = (
           if(prod.product._id === removeId) {
             if(prod.qte > 1) {
               prod.qte -= 1;
+              state.qteTotal -= 1;
+              state.totalPrice -= +prod.product.price;
+              return state;
             }
             if(prod.qte === 1) {
+              state.totalPrice -= +prod.product.price;
+              state.qteTotal -= 1;
               state.products = state.products.filter(prod => prod.product._id !== removeId);
+              return state;
             }
           }
-          return state;
         })
       } else {
         state = {qteTotal: 0, totalPrice: 0, restaurantName: '', products: []};
       }
+      return state;
+    case actions.RETRIEVE_PRODUCTS_FROM_BASKET:
       return state;
     case actions.ADD_PRODUCT_IN_BASKET:
       const payload = action.payload as IPayloadBasket;

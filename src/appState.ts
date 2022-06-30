@@ -30,11 +30,15 @@ export interface AppState {
   restaurant: {
     isLoading: boolean;
     data: IRestaurantRetrieve[] | null;
-  }
+  },
   category: {
     isLoading: boolean;
     data: ICategoryRetrieved[] | null;
-  }
+  },
+  // command: {
+  //   isLoading: boolean;
+  //   data: ICommandCreate | null;
+  // }
 }
 
 /**
@@ -222,4 +226,30 @@ export interface ICategoryCreate extends ICategory {
 
 export interface ICategory {
   title: string;
+}
+
+export interface ICommandCreate {
+  price: number;
+  products: string[];
+  restaurantId: string;
+  address: string
+  delivery: string;
+  userId: string;
+  isAccepted: boolean;
+  isReceived: boolean;
+  deleted: boolean;
+}
+
+export interface ICommand {
+  price: number;
+  products: IProduct[];
+  restaurantId: string;
+  address: string;
+  city: string;
+  zipCode: string;
+  delivery: string;
+  userId: string;
+  isAccepted: boolean;
+  isReceived: boolean;
+  deleted: boolean;
 }

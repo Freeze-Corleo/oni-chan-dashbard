@@ -26,3 +26,8 @@ export const dispatchRemoveProduct =  (id: string): ThunkResult<Promise<void>> =
     })
   );
 }
+
+export const retrieveProductsFromBasket = (): ThunkResult<Promise<void>> => async (dispatch, get) => {
+  console.log('hannnn');
+  dispatch(actionCreator.Actions.retrieveProduct);
+}

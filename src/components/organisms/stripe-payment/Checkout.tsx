@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 import {
   PaymentElement,
   useElements,
@@ -7,7 +8,10 @@ import {
 } from '@stripe/react-stripe-js';
 import { useNavigate } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
+import { retrieveMyUserFromCookie } from '../../../core-logic/usecases/my-profil/myUserUseCase';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { selectMyProfilReducer } from '../../../view-model-generation/generateMyProfilModel';
 import { selectBasketReducer } from '../../../view-model-generation/generateBasketModel';
 
 interface ICheckoutProps {
@@ -20,7 +24,10 @@ interface ICheckoutProps {
 }
 
 const Checkout = (props: ICheckoutProps) => {
+  const cookie: any = useCookies(['FREEZE_JWT']);
+  const dispatch = useDispatch();
   const basket = useSelector(selectBasketReducer);
+  const user = useSelector(selectMyProfilReducer);
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
@@ -51,6 +58,8 @@ const Checkout = (props: ICheckoutProps) => {
 
         const clientSecret = res.paymentIntent?.client_secret;
 
+        console.log(clientSecret);
+
         if (!clientSecret) {
           alert('No client secret found!');
           return;
@@ -65,8 +74,6 @@ const Checkout = (props: ICheckoutProps) => {
               switch (paymentIntent.status) {
                 case 'succeeded':
                   setMessage('Paiement réussi!');
-
-                  // si le paiement est réussi on fait un truc
                   navigate('/success');
                   break;
                 case 'processing':
@@ -100,6 +107,10 @@ const Checkout = (props: ICheckoutProps) => {
     setIsLoading(false);
   };
 
+  React.useEffect(() => {
+    dispatch(retrieveMyUserFromCookie(cookie[0].FREEZE_JWT));
+  }, []);
+
   return (
     <>
       <div className="grid grid-cols-2">
@@ -112,7 +123,7 @@ const Checkout = (props: ICheckoutProps) => {
               </span>
             </div>
           </div>
-          <form id="payment-form" onSubmit={handleSubmit}>
+          <div id="payment-form">
             <PaymentElement id="payment-element" />
             {/* Show any error or success messages */}
             {message && (
@@ -125,10 +136,9 @@ const Checkout = (props: ICheckoutProps) => {
             )}
             <div className="w-[550px] text-xs py-8 px-2">
               <p>
-                En cliquant sur le bouton « Activer ma Licence » ci-dessous,
-                vous acceptez nos{' '}
-                <Link to="/cgu">Conditions d’utilisation</Link>, reconnaissez
-                avoir plus de 18 ans et prenez acte de la{' '}
+                En cliquant sur le bouton « Acheter » ci-dessous, vous acceptez
+                nos <Link to="/cgu">Conditions d’utilisation</Link>,
+                reconnaissez avoir plus de 18 ans et prenez acte de la{' '}
                 <Link to="/confition-utilisation">
                   Déclaration de confidentialité
                 </Link>
@@ -136,10 +146,15 @@ const Checkout = (props: ICheckoutProps) => {
                 renoncez à votre droit de rétractation.
               </p>
             </div>
-            <button className="px-8 py-4 bg-black text-white font-medium rounded-full hover:bg-gray-800 transition duration-300 cursor-pointer">
+            <button
+              onClick={() => {
+                handleSubmit();
+              }}
+              className="px-8 py-4 bg-black text-white font-medium rounded-full hover:bg-gray-800 transition duration-300 cursor-pointer"
+            >
               Acheter
             </button>
-          </form>
+          </div>
         </div>
         <div className="py-8 px-20">
           <div className="font-bold">R&eacute;capitulatif de la commande</div>
