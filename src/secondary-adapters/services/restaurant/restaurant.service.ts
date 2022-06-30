@@ -62,14 +62,38 @@ export const getAllRestaurantsByPartner = async (_userId: string) => {
   return {response, error};
 }
 
-export const deleteRestaurant = async (id: string | undefined) => {
+export const deleteRestaurant = async (_id: string | undefined) => {
   let error: any = null;
  
   try {
-   await axiosConfig.delete(`/oni-chan/restaurant/delete/` + id);
+   await axiosConfig.delete(`/oni-chan/restaurant/delete/` + _id);
   } catch (err) {
     error = err;
   }
 
   return "Restaurant deleted";
+}
+
+export const updateRestaurant = async (id: string | undefined, _restaurant: IRestaurant) => {
+  let response: IRestaurant;
+  let error: any = null;
+  let message: string = 'Restaurant updated';
+  let restaurant: IRestaurant = {
+    name: '',
+    rate: 0,
+    deliveryPrice: 0,
+    address: "",
+    price: 0,
+    cookType: '',
+    isAvailable: true,
+    _id: '',
+    imageUrl: '',
+  };
+  try {
+    response = await axiosConfig.put(`/oni-chan/restaurant/update/` + id, {_restaurant});
+    restaurant = response;
+  } catch (err) {
+    error = err;
+  }
+  return {restaurant, message};
 }

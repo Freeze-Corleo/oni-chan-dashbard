@@ -9,8 +9,8 @@ export class RestaurantGateway implements IRestaurantGateway {
   public async create(_restaurant: IRestaurant, _address: IAddress, _restorerId: string): Promise<{response: any, error: any}> {
     return await restaurant.createRestaurant(_restaurant, _address, _restorerId);
   }
-  public async update(_id: string, _restaurant: IRestaurant): Promise<{restaurant: IRestaurant | null, message: string}> {
-    throw new Error("Method not implemented.");
+  public async update(_id: string | undefined, _restaurant: IRestaurant): Promise<{restaurant: IRestaurant | null, message: string}> {
+    return await restaurant.updateRestaurant(_id, _restaurant);
   }
   public async delete(_id: string | undefined): Promise<string> {
     return await restaurant.deleteRestaurant(_id);
