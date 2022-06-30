@@ -14,6 +14,8 @@ export const data = (
   switch (action.type) {
     case actions.COMMAND_CREATED:
       return [action.payload];
+    case actions.COMMANDS_RETRIEVED:
+      return {...state, commands: action.payload};
     default: return state;
   }
 }

@@ -15,3 +15,17 @@ export const createCommand = async (_command: ICommandCreate) => {
 
   return {response, error};
 }
+
+export const getAllCommands = async () => {
+  let response: any;
+  let error: any = null;
+
+  try {
+    response = await axiosConfig.get(`/oni-chan/command/get-all`);
+    console.log(response);
+  } catch (err) {
+    error = err;
+  }
+
+  return {response, error};
+}

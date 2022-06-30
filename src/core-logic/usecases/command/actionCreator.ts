@@ -7,7 +7,9 @@ import { ICommand } from '../../../appState';
 // especially the partners data
 export const Actions = {
   createCommand: () => createAction(_actions.CREATE_COMMAND),
-  commandCreated: (commandCreated: ICommand) => createAction(_actions.COMMAND_CREATED, commandCreated)
+  commandCreated: (commandCreated: ICommand) => createAction(_actions.COMMAND_CREATED, commandCreated),
+  retrieveCommands: () => createAction(_actions.RETRIEVE_COMMANDS),
+  commandsRetrieved: (commands: ICommand[] | null) => createAction(_actions.COMMANDS_RETRIEVED, commands),
 };
 
 export type Actions = ActionsUnion<typeof Actions>;

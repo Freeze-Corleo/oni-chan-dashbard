@@ -31,6 +31,10 @@ export interface AppState {
     isLoading: boolean;
     data: IRestaurantRetrieve[] | null;
   },
+  command: {
+    isLoading: boolean;
+    data: ICommand[] | null;
+  },
   category: {
     isLoading: boolean;
     data: ICategoryRetrieved[] | null;

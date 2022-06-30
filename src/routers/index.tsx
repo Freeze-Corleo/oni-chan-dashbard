@@ -22,7 +22,7 @@ import CreateProductsFromSpecificRestaurant from '../pages/admin/products/create
 import SuccessPage from '../pages/payment/success';
 
 import PaymentHome from '../pages/payment';
-import Test from '../pages/Test';
+import Livreur from '../pages/Livreur';
 
 const AppRoute = () => {
   return (
@@ -52,7 +52,7 @@ const AppRoute = () => {
       <Route path="/feed" element={<RestaurantFeed />} />
       <Route path="/back-office" element={<BackOffice />} />
       <Route path="/paiement" element={<PaymentHome />} />
-      <Route path="/test" element={<Test />} />
+      <Route path="/livreur" element={<Livreur />} />
       <Route path="/success" element={<SuccessPage />} />
     </Routes>
   );
