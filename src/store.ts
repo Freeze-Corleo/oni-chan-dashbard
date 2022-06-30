@@ -22,6 +22,7 @@ import { UserGateway } from './secondary-adapters/users/userGateway';
 import { PartnerGateway } from './secondary-adapters/partners/partnerGateway';
 import { RestaurantGateway } from './secondary-adapters/restaurant/restaurantGateway';
 import { CategoryGateway } from './secondary-adapters/products/categoryGateway';
+import { CommandGateway } from './secondary-adapters/command/commandGateway';
 
 export interface Dependencies {
   restaurantGateway: RestaurantGateway;
@@ -30,6 +31,7 @@ export interface Dependencies {
   userGateway: UserGateway;
   partnerGateway: PartnerGateway;
   categoryGateway: CategoryGateway;
+  commandGateway: CommandGateway;
 }
 
 // custom combine store to implmenent it with middlewares that will be used in actions

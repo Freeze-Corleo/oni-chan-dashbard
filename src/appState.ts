@@ -17,7 +17,7 @@ export interface AppState {
   },
   basket: {
     isLoading: boolean;
-    data: {qteTotal: number, totalPrice: number, restaurantName: string, products: {qte: number, product: IProduct}[]} | null;
+    data: {restoId: string, qteTotal: number, totalPrice: number, restaurantName: string, products: {qte: number, product: IProduct}[]} | null;
   },
   user: {
     isLoading: boolean;
@@ -124,6 +124,7 @@ export interface IMyProfil {
   uuid: string;
   firstname: string;
   lastname: string;
+  address: string;
 }
 
 export interface IAddress{

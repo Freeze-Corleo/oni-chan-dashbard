@@ -37,7 +37,11 @@ const Restaurant = () => {
   ];
   const [open, setOpen] = useState(false);
   const [id, setId] = useState(0);
-  const addProduct = (product: IProduct, restaurantName: string) => {
+  const addProduct = (
+    product: IProduct,
+    restaurantName: string,
+    restoId: string
+  ) => {
     setOpen(false);
     setId(id + 1);
     dispatch(
@@ -45,6 +49,7 @@ const Restaurant = () => {
         id: id,
         product,
         restaurantName,
+        restoId,
       })
     );
   };
@@ -64,7 +69,7 @@ const Restaurant = () => {
   useEffect(() => {
     dispatch(retrieveRestaurantInformation(last));
   }, []);
-  console.log(rest);
+
   return (
     <HomeRoot>
       <div className="grid place-content-center z-50 relative">
@@ -150,7 +155,8 @@ const Restaurant = () => {
                                 onClick={() =>
                                   addProduct(
                                     datas as IProduct,
-                                    rest?.product?.data?.name
+                                    rest?.product?.data?.name,
+                                    rest?.product?.data?._id
                                   )
                                 }
                                 className="px-8 py-4 bg-black text-white rounded-full"

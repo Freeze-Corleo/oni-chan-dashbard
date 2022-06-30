@@ -1,10 +1,10 @@
 import {ICommandCreate } from "../../appState";
 import { ICommandGateway } from "../../core-logic/gateways/commandGateway";
-import * as partner from '../services/partners/partner.service';
+import * as command from '../services/commands/command.service';
 
 export class CommandGateway implements ICommandGateway {
 
   public async createCommandClient(_command: ICommandCreate): Promise<{response: any, error: any}> {
-    return partner.getAllPartners();
+    return command.createCommand(_command);
   }
 }

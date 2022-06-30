@@ -8,6 +8,7 @@ import { UserGateway } from '../secondary-adapters/users/userGateway';
 import { PartnerGateway } from '../secondary-adapters/partners/partnerGateway';
 import { RestaurantGateway } from '../secondary-adapters/restaurant/restaurantGateway';
 import { CategoryGateway } from '../secondary-adapters/products/categoryGateway';
+import { CommandGateway } from '../secondary-adapters/command/commandGateway';
 
 // Instiate all gateways
 const productGateway = new ProductGateway();
@@ -16,6 +17,7 @@ const userGateway = new UserGateway();
 const partnerGateway = new PartnerGateway();
 const restaurantGateway = new RestaurantGateway();
 const categoryGateway = new CategoryGateway();
+const commandGateway = new CommandGateway();
 
 // Implement gateways as redux middleware
 export const store = configureStore({
@@ -24,7 +26,8 @@ export const store = configureStore({
   userGateway,
   partnerGateway,
   restaurantGateway,
-  categoryGateway
+  categoryGateway,
+  commandGateway
 });
 
 export type AppDispatch = typeof store.dispatch;

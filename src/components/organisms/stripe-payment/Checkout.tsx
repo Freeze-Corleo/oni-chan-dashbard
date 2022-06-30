@@ -9,10 +9,13 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 import { retrieveMyUserFromCookie } from '../../../core-logic/usecases/my-profil/myUserUseCase';
+import { createCommand } from '../../../core-logic/usecases/command/commandUseCase';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { selectMyProfilReducer } from '../../../view-model-generation/generateMyProfilModel';
 import { selectBasketReducer } from '../../../view-model-generation/generateBasketModel';
+
+import { ICommandCreate } from '../../../appState';
 
 interface ICheckoutProps {
   offer?: any;
@@ -74,6 +77,25 @@ const Checkout = (props: ICheckoutProps) => {
               switch (paymentIntent.status) {
                 case 'succeeded':
                   setMessage('Paiement réussi!');
+                  if (basket) {
+                    let productsId: any[] = [];
+                    basket?.products.map((pro) =>
+                      productsId.push(pro.product._id)
+                    );
+                    const data: ICommandCreate = {
+                      price: basket?.totalPrice,
+                      products: productsId,
+                      restaurantId: basket?.restoId,
+                      address: user.data.address,
+                      userId: user.data.uuid,
+                      delivery: '',
+                      isAccepted: false,
+                      isReceived: false,
+                      deleted: false,
+                    };
+                    console.log(data);
+                    dispatch(createCommand(data));
+                  }
                   navigate('/success');
                   break;
                 case 'processing':
@@ -88,22 +110,11 @@ const Checkout = (props: ICheckoutProps) => {
               }
             }
           })
-          .catch(() => {
+          .catch((error) => {
+            console.error(error);
             alert("Le paiement a écouché d'une manière inattendue!");
           });
       });
-
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
-    // if (error.type === "card_error" || error.type === "validation_error") {
-    //   setMessage(error.message);
-    // } else {
-    //   setMessage("An unexpected error occured.");
-    // }
-
     setIsLoading(false);
   };
 
