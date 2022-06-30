@@ -12,4 +12,5 @@ export interface IRestaurantGateway {
   update(_id: string, _restaurant: IRestaurant): Promise<{restaurant: IRestaurant | null, message: string}>;
   delete(_id: string | undefined): Promise<string>;
   retrieveByPartner(_userId: string): Promise<{response: any, error: any}>;
+  retrieveStatistics(_userId: string): Promise<{response: any, error: any}>;
 }

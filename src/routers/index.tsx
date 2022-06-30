@@ -28,7 +28,6 @@ const AppRoute = () => {
   return (
     <Routes>
       <Route path="/" element={<ProtectedRoutes />}>
-        <Route path="/admin" element={<IndexAdminDashboard />} />
         <Route
           path="/admin/create-restaurant"
           element={<CreateRestaurantAdmin />}
@@ -40,6 +39,8 @@ const AppRoute = () => {
           element={<CreateProductsFromSpecificRestaurant />}
         />
       </Route>
+      <Route path="/admin" element={<IndexAdminDashboard />} />
+
       <Route path="/" element={<PublicRoutes />}></Route>
       <Route path="/home" element={<Home />} />
       <Route path="/login" element={<Login />} />

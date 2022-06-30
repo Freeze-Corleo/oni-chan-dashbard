@@ -73,3 +73,15 @@ export const deleteRestaurant = async (id: string | undefined) => {
 
   return "Restaurant deleted";
 }
+
+export const getStatisticsById = async (_userId: string) => {
+  let response: any = null;
+  let error = null;
+  try {
+    response = await axiosConfig.get(`/oni-chan/restaurant/statistics`, { params: { id: _userId } });
+  } catch (err) {
+    error = err;
+  }
+
+  return {response, error};
+}

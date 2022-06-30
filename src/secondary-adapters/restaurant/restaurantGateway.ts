@@ -3,6 +3,7 @@ import { IRestaurantGateway } from "../../core-logic/gateways/restaurantGateway"
 import * as restaurant from '../services/restaurant/restaurant.service';
 
 export class RestaurantGateway implements IRestaurantGateway {
+
   public async retrieveOne(_id: string| undefined): Promise<IRestaurant | null> {
     return await restaurant.getRestaurantByID(_id);
   }
@@ -18,8 +19,10 @@ export class RestaurantGateway implements IRestaurantGateway {
   public async retrieve(): Promise<{response: IRestaurant[] | null, error: any }> {
     return await restaurant.getAllRestaurants();
   }
-
   public async retrieveByPartner(_userId: string): Promise<{response: any, error: any}> {
     return await restaurant.getAllRestaurantsByPartner(_userId);
+  }
+  public async retrieveStatistics(_restaurantId: string): Promise<{ response: any; error: any; }> {
+    return await restaurant.getStatisticsById(_restaurantId);
   }
 }

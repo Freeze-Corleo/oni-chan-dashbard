@@ -5,6 +5,7 @@ import * as actionCreator from './actionCreator';
 import { RestaurantGateway } from "../../../secondary-adapters/restaurant/restaurantGateway";
 
 import { displayToastNotification } from '../../../core-logic/usecases/notifications/notificationsUseCase';
+import { getStatisticsById } from "../../../secondary-adapters/services/restaurant/restaurant.service";
 
 // Action that will be called in frontend, will disptach notification
 //  and will load the product list to the Product reducer.
@@ -69,5 +70,14 @@ export const getRestaurantsByPartner = (_userId: string): ThunkResult<Promise<vo
   const {response, error} = await restaurantGateway.retrieveByPartner(_userId);
   if(!error && response !== null) {
     dispatch(actionCreator.Actions.restaurantByPartnerRetrieved(response.data));
+  }
+}
+
+export const getStatisticsByRestaurantId = (_restaurantId: string): ThunkResult<Promise<void>> => async (dispatch, getState, {restaurantGateway}: {restaurantGateway: IRestaurantGateway}) => {
+  dispatch(actionCreator.Actions.retrieveRestaurantsStatistics());
+  //getStatisticsById(_restaurantId)
+  const {response, error} = await restaurantGateway.retrieveStatistics(_restaurantId);
+  if(!error && response !== null) {
+    dispatch(actionCreator.Actions.restaurantsStatisticsRetrieved());
   }
 }
