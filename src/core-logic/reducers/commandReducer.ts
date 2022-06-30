@@ -16,6 +16,8 @@ export const data = (
       return [action.payload];
     case actions.COMMANDS_RETRIEVED:
       return {...state, commands: action.payload};
+    case actions.HISTO_BY_USER_RETRIEVED:
+      return {...state, commands: action.payload};
     default: return state;
   }
 }

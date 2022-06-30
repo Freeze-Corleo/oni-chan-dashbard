@@ -11,4 +11,8 @@ export class CommandGateway implements ICommandGateway {
   public async retrieve(): Promise<{response: ICommand[] | null, error: any }> {
     return await command.getAllCommands();
   }
+
+  public async retrieveHistoryCommands(_id: string, person: string): Promise<{response: ICommand[] | null, error: any }> {
+    return await command.getHistoCommandByUser(_id, person);
+  }
 }

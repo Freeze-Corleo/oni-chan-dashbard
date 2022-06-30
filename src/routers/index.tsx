@@ -23,6 +23,7 @@ import SuccessPage from '../pages/payment/success';
 
 import PaymentHome from '../pages/payment';
 import Livreur from '../pages/Livreur';
+import HistoCommand from '../pages/HistoriqueUser';
 
 const AppRoute = () => {
   return (
@@ -54,6 +55,7 @@ const AppRoute = () => {
       <Route path="/paiement" element={<PaymentHome />} />
       <Route path="/livreur" element={<Livreur />} />
       <Route path="/success" element={<SuccessPage />} />
+      <Route path="/histoCommand" element={<HistoCommand />} />
     </Routes>
   );
 };

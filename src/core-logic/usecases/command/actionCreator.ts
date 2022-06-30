@@ -10,6 +10,8 @@ export const Actions = {
   commandCreated: (commandCreated: ICommand) => createAction(_actions.COMMAND_CREATED, commandCreated),
   retrieveCommands: () => createAction(_actions.RETRIEVE_COMMANDS),
   commandsRetrieved: (commands: ICommand[] | null) => createAction(_actions.COMMANDS_RETRIEVED, commands),
+  retrieveHistoByUser: () => createAction(_actions.RETRIEVE_HISTO_BY_USER),
+  histoByUserRetrieved: (commands: ICommand[] | null) => createAction(_actions.HISTO_BY_USER_RETRIEVED, commands),
 };
 
 export type Actions = ActionsUnion<typeof Actions>;
