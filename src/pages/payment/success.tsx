@@ -1,18 +1,50 @@
 import React from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import io from 'socket.io-client';
+import { useCookies } from 'react-cookie';
 
 import { selectBasketReducer } from '../../view-model-generation/generateBasketModel';
 import { selectCommandReducer } from '../../view-model-generation/generateCommandModel';
+import { selectMyProfilReducer } from '../../view-model-generation/generateMyProfilModel';
+import { retrieveMyUserFromCookie } from '../../core-logic/usecases/my-profil/myUserUseCase';
+import { updateCommand } from '../../core-logic/usecases/command/commandUseCase';
 import HomeRoot from '../../components/organisms/HomeRoot';
 
 const socket = io('ws://localhost:6969');
 
 const SuccessPage = () => {
+  const cookie: any = useCookies(['FREEZE_JWT']);
+  const user = useSelector(selectMyProfilReducer);
   const basket = useSelector(selectBasketReducer);
   const command = useSelector(selectCommandReducer);
+  const dispatch = useDispatch();
   const [response, setResponse] = React.useState('0');
+  const status: { [key: string]: string[] } = {
+    '0': [
+      'Commande envoyée au restaurateur avec succès, préparez vous à bien manger',
+      'La commande a été envoyée au restaurateur',
+    ],
+    '25': [
+      'Attention, le cuistot se met au travail !',
+      'La commande a été acceptée par le restaurateur',
+    ],
+    '50': [
+      'Un livreur va bientôt récupérer votre commande !',
+      'La commande a été accepté par un livreur',
+    ],
+    '75': [
+      'Votre livreur est devant chez vous ! Il est timide allez le voir',
+      ' La commande est devant chez vous',
+    ],
+    '100': [
+      'Notre équipe vous souhaite bon appétit !',
+      'La commande est arrivée dans votre cuisine',
+    ],
+  };
+  React.useEffect(() => {
+    dispatch(retrieveMyUserFromCookie(cookie[0].FREEZE_JWT));
+  }, []);
 
   React.useEffect(() => {
     socket.on('ClientSocket', (data: string) => {
@@ -27,6 +59,7 @@ const SuccessPage = () => {
 
   const hasFood = () => {
     if (command) {
+      dispatch(updateCommand(command[0]._id, 'receieved', user.data.uuid));
       socket.emit('CommandSocket', `100% ${command[0].uuid}`);
     }
   };
@@ -34,10 +67,7 @@ const SuccessPage = () => {
   return (
     <HomeRoot>
       <div className="relative z-50 pt-40">
-        <h1 className="text-2xl font-bold">
-          Commande envoyée au restaurateur avec succès, préparez vous à bien
-          manger !
-        </h1>
+        <h1 className="text-2xl font-bold">{status[response][0]}</h1>
         <div className="relative pt-8">
           <div className="h-4 bg-gray-200 rounded-full"></div>
           <div
@@ -46,8 +76,8 @@ const SuccessPage = () => {
           ></div>
         </div>
         <div className="pt-4 tracking-wide">
-          <span className="font-bold">Statut de la commande</span> : La commande
-          est en préparation
+          <span className="font-bold">Statut de la commande</span> :{' '}
+          {status[response][1]}
         </div>
         <div className="pt-8">
           <h2 className="text-lg font-medium">

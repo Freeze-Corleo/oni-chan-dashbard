@@ -257,4 +257,5 @@ export interface ICommand {
   isReceived: boolean;
   deleted: boolean;
   uuid: string;
+  _id: string;
 }
