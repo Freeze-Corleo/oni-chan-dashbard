@@ -8,7 +8,15 @@ export class CommandGateway implements ICommandGateway {
     return command.createCommand(_command);
   }
 
+  public async retrieveRestorerCommands(_restaurantId: string): Promise<{response: any, error: any}> {
+    return command.retrieveCommandsFromRestaurant(_restaurantId);
+  }
+
   public async retrieve(): Promise<{response: ICommand[] | null, error: any }> {
     return await command.getAllCommands();
+  }
+
+  public async deleteCommand(_id: string): Promise<{response: any, error: any}> {
+    return await command.deleteCommand(_id);
   }
 }

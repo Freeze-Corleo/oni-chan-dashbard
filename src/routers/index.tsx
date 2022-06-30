@@ -17,6 +17,8 @@ import BackOffice from '../pages/back-office';
 import IndexAdminDashboard from '../pages/admin/index';
 import CreateRestaurantAdmin from '../pages/admin/createRestaurant';
 import RestaurantIdAdmin from '../pages/admin/createRestaurant/restaurant';
+import MyCommandsAdmin from '../pages/admin/commands';
+import CommandsDetailsByRestaurant from '../pages/admin/commands/commands';
 import ProductIndex from '../pages/admin/products';
 import CreateProductsFromSpecificRestaurant from '../pages/admin/products/create';
 import SuccessPage from '../pages/payment/success';
@@ -38,6 +40,11 @@ const AppRoute = () => {
         <Route
           path="/admin/create-product/:id"
           element={<CreateProductsFromSpecificRestaurant />}
+        />
+        <Route path="/admin/mes-commandes" element={<MyCommandsAdmin />} />
+        <Route
+          path="/admin/mes-commandes/:id"
+          element={<CommandsDetailsByRestaurant />}
         />
       </Route>
       <Route path="/" element={<PublicRoutes />}></Route>
