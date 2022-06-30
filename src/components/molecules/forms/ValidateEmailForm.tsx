@@ -22,7 +22,9 @@ const ValidateEmailForm = ({
     const auth = new AuthenticationGateway();
     if (uuid) {
       const { error } = await auth.validateCode(uuid, code);
+      console.log(error);
       if (!error) {
+        console.log('uiii je suis meilleur');
         dispatch(
           displayToastNotification({
             text: 'Votre code de validation est bon',
@@ -63,8 +65,8 @@ const ValidateEmailForm = ({
           <path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 4.99L4 6h16zm0 12H4V8l8 5 8-5v10z" />
         </svg>
       </div>
-      <h1 className="font-medium pt-4">V&eacute;rifiez votre code</h1>
-      <h2 className="font-medium pt-4">
+      <h1 className="pt-4 font-medium">V&eacute;rifiez votre code</h1>
+      <h2 className="pt-4 font-medium">
         Entrez le code de v&eacute;rification envoy&eacute; &agrave; {email}
       </h2>
 
@@ -103,7 +105,7 @@ const ValidateEmailForm = ({
         onClick={() => {
           onSubmitAndVerify();
         }}
-        className="mt-8 bg-white py-2 px-4 rounded-full font-medium hover:bg-gray-200 transition duration-300 linear"
+        className="px-4 py-2 mt-8 font-medium transition duration-300 bg-white rounded-full hover:bg-gray-200 linear"
       >
         Valider
       </button>
