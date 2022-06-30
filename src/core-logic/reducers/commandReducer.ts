@@ -18,6 +18,8 @@ export const data = (
       return {...state, commands: action.payload};
     case actions.HISTO_BY_USER_RETRIEVED:
       return {...state, commands: action.payload};
+    case actions.COMMANDS_FROM_RESTO_RETRIEVED:
+      return action.payload;
     default: return state;
   }
 }

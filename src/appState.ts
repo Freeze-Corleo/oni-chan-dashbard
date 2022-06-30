@@ -39,10 +39,6 @@ export interface AppState {
     isLoading: boolean;
     data: ICategoryRetrieved[] | null;
   },
-  // command: {
-  //   isLoading: boolean;
-  //   data: ICommandCreate | null;
-  // }
 }
 
 /**
@@ -248,13 +244,17 @@ export interface ICommandCreate {
 export interface ICommand {
   price: number;
   products: IProduct[];
-  restaurantId: string;
+  restaurantId: IRestaurant;
   address: string;
   city: string;
   zipCode: string;
   delivery: string;
-  userId: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  phone: string;
   isAccepted: boolean;
   isReceived: boolean;
   deleted: boolean;
+  uuid: string;
 }
