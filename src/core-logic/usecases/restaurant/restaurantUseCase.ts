@@ -26,8 +26,9 @@ export const retrieveRestaurantInformation = (_id: string | undefined): ThunkRes
 
 // Action that will be called in frontend, will disptach notification
 //  and will load the product to the Product reducer.
-export const updateRestaurantInformation = (_id: string, _restaurant: IRestaurant): ThunkResult<Promise<void>> => async (dispatch, getState, {restaurantInfoGate}: {restaurantInfoGate: IRestaurantGateway}) => {
+export const updateRestaurantInformation = (_id: string | undefined, _restaurant: IRestaurant): ThunkResult<Promise<void>> => async (dispatch, getState, {restaurantInfoGate}: {restaurantInfoGate: IRestaurantGateway}) => {
   dispatch(actionCreator.Actions.updateRestaurant());
+  restaurantInfoGate = new RestaurantGateway();
   const {restaurant, message} = await restaurantInfoGate.update(_id, _restaurant);
   dispatch(actionCreator.Actions.restaurantUpdated(restaurant, message));
 }
