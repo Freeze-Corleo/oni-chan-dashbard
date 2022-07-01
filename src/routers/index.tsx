@@ -25,13 +25,12 @@ import SuccessPage from '../pages/payment/success';
 
 import PaymentHome from '../pages/payment';
 import Livreur from '../pages/Livreur';
-import HistoCommand from '../pages/HistoriqueUser';
-import HistoCommandResto from '../pages/admin/commands/historique';
 
 const AppRoute = () => {
   return (
     <Routes>
       <Route path="/" element={<ProtectedRoutes />}>
+        <Route path="/admin" element={<IndexAdminDashboard />} />
         <Route
           path="/admin/create-restaurant"
           element={<CreateRestaurantAdmin />}
@@ -43,13 +42,11 @@ const AppRoute = () => {
           element={<CreateProductsFromSpecificRestaurant />}
         />
         <Route path="/admin/mes-commandes" element={<MyCommandsAdmin />} />
-        <Route path="/admin/historique" element={<HistoCommandResto />} />
         <Route
           path="/admin/mes-commandes/:id"
           element={<CommandsDetailsByRestaurant />}
         />
       </Route>
-      <Route path="/admin" element={<IndexAdminDashboard />} />
 
       <Route path="/" element={<PublicRoutes />}></Route>
       <Route path="/home" element={<Home />} />
@@ -65,7 +62,6 @@ const AppRoute = () => {
       <Route path="/paiement" element={<PaymentHome />} />
       <Route path="/livreur" element={<Livreur />} />
       <Route path="/success" element={<SuccessPage />} />
-      <Route path="/histoCommand" element={<HistoCommand />} />
     </Routes>
   );
 };
