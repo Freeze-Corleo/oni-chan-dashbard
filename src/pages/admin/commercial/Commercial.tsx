@@ -6,19 +6,20 @@ import HomeRoot from '../../../components/organisms/HomeRoot';
 import { selectBasketReducer } from '../../../view-model-generation/generateBasketModel';
 import { selectCommandReducer } from '../../../view-model-generation/generateCommandModel';
 
+import { ICommand } from '../../../appState';
 
 const socket = io('ws://localhost:6969');
 
 const Commercial = () => {
   const basket = useSelector(selectBasketReducer);
-  const command = useSelector(selectCommandReducer);
+  const command: ICommand = useSelector(selectCommandReducer) as ICommand;
   const [response, setResponse] = React.useState('0');
 
   React.useEffect(() => {
     socket.on('AdminSocket', (data: string) => {
       if (command) {
         console.log(command);
-        if (data.includes(command[0].uuid)) {
+        if (data.includes(command.uuid)) {
           setResponse(data.split(' ')[0]);
         }
       }
@@ -27,16 +28,14 @@ const Commercial = () => {
 
   const hasFood = () => {
     if (command) {
-      socket.emit('CommandSocket', `100% ${command[0].uuid}`);
+      socket.emit('CommandSocket', `100% ${command.uuid}`);
     }
   };
 
   return (
     <HomeRoot>
       <div className="relative z-50 pt-40">
-        <h1 className="text-2xl font-bold">
-          Suivi de la commande  
-        </h1>
+        <h1 className="text-2xl font-bold">Suivi de la commande</h1>
         <div className="relative pt-8">
           <div className="h-4 bg-gray-200 rounded-full"></div>
           <div

@@ -33,7 +33,7 @@ export interface AppState {
   },
   command: {
     isLoading: boolean;
-    data: ICommand[] | null;
+    data: ICommand[] | ICommand | null;
   },
   category: {
     isLoading: boolean;

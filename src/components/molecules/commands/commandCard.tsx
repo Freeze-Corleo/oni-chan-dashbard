@@ -15,8 +15,8 @@ const CommandCard: React.FC<ICommandCardProps> = ({ command, userId }) => {
   const dispatch = useDispatch();
 
   const commandAccepted = () => {
-    dispatch(updateCommand(command._id, 'accepted_restaurant', userId));
     socket.emit('CommandSocket', `25% ${command.uuid}`);
+    dispatch(updateCommand(command._id, 'accepted_restaurant', ''));
   };
 
   return (

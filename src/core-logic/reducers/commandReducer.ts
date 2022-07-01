@@ -19,9 +19,9 @@ export const data = (
     case actions.HISTO_BY_USER_RETRIEVED:
       return {...state, commands: action.payload};
     case actions.COMMANDS_FROM_RESTO_RETRIEVED:
-      return action.payload;
+      return [...action.payload];
     case actions.COMMAND_UPDATED:
-      return [action.payload];
+      return state;
     default: return state;
   }
 }

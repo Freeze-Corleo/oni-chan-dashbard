@@ -11,13 +11,15 @@ import { retrieveMyUserFromCookie } from '../../core-logic/usecases/my-profil/my
 import { updateCommand } from '../../core-logic/usecases/command/commandUseCase';
 import HomeRoot from '../../components/organisms/HomeRoot';
 
+import { ICommand } from '../../appState';
+
 const socket = io('ws://localhost:6969');
 
 const SuccessPage = () => {
   const cookie: any = useCookies(['FREEZE_JWT']);
   const user = useSelector(selectMyProfilReducer);
   const basket = useSelector(selectBasketReducer);
-  const command = useSelector(selectCommandReducer);
+  const command: ICommand[] = useSelector(selectCommandReducer) as ICommand[];
   const dispatch = useDispatch();
   const [response, setResponse] = React.useState('0');
   const status: { [key: string]: string[] } = {
@@ -25,19 +27,19 @@ const SuccessPage = () => {
       'Commande envoyée au restaurateur avec succès, préparez vous à bien manger',
       'La commande a été envoyée au restaurateur',
     ],
-    '25': [
+    '25%': [
       'Attention, le cuistot se met au travail !',
       'La commande a été acceptée par le restaurateur',
     ],
-    '50': [
+    '50%': [
       'Un livreur va bientôt récupérer votre commande !',
       'La commande a été accepté par un livreur',
     ],
-    '75': [
+    '75%': [
       'Votre livreur est devant chez vous ! Il est timide allez le voir',
       ' La commande est devant chez vous',
     ],
-    '100': [
+    '100%': [
       'Notre équipe vous souhaite bon appétit !',
       'La commande est arrivée dans votre cuisine',
     ],
@@ -48,14 +50,14 @@ const SuccessPage = () => {
 
   React.useEffect(() => {
     socket.on('ClientSocket', (data: string) => {
+      setResponse(data.split(' ')[0]);
       if (command) {
-        console.log(command);
-        if (data.includes(command[0].uuid)) {
+        if (data.split(' ')[1] === command[0].uuid) {
           setResponse(data.split(' ')[0]);
         }
       }
     });
-  }, [setResponse]);
+  });
 
   const hasFood = () => {
     if (command) {
@@ -63,6 +65,8 @@ const SuccessPage = () => {
       socket.emit('CommandSocket', `100% ${command[0].uuid}`);
     }
   };
+
+  console.log(response);
 
   return (
     <HomeRoot>
@@ -98,14 +102,18 @@ const SuccessPage = () => {
             })}
           </div>
           <div className="pt-4 font-medium">Total : {basket?.totalPrice} €</div>
-          <button
-            className="px-8 py-4 mt-8 text-white transition duration-300 bg-black rounded-full hover:bg-gray-800"
-            onClick={() => {
-              hasFood();
-            }}
-          >
-            J'ai bien reçu la nourriture
-          </button>
+          {response === '100%' ? (
+            <p className="pt-8 text-lg font-medium">Bon appétit ! </p>
+          ) : (
+            <button
+              className="px-8 py-4 mt-8 text-white transition duration-300 bg-black rounded-full hover:bg-gray-800"
+              onClick={() => {
+                hasFood();
+              }}
+            >
+              J'ai bien reçu la nourriture
+            </button>
+          )}
         </div>
       </div>
     </HomeRoot>

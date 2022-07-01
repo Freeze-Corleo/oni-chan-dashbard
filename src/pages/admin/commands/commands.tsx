@@ -11,12 +11,14 @@ import { selectCommandReducer } from '../../../view-model-generation/generateCom
 import { retrieveCommandsFromRestorer } from '../../../core-logic/usecases/command/commandUseCase';
 import { retrieveMyUserFromCookie } from '../../../core-logic/usecases/my-profil/myUserUseCase';
 
+import { ICommand } from '../../../appState';
+
 const CommandsDetailsByRestaurant = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const cookie: any = useCookies(['FREEZE_JWT']);
   const user = useSelector(selectMyProfilReducer);
-  const commands = useSelector(selectCommandReducer);
+  const commands: ICommand[] = useSelector(selectCommandReducer) as ICommand[];
 
   React.useEffect(() => {
     params.id && dispatch(retrieveCommandsFromRestorer(params?.id));
@@ -25,7 +27,7 @@ const CommandsDetailsByRestaurant = () => {
   React.useEffect(() => {
     dispatch(retrieveMyUserFromCookie(cookie[0].FREEZE_JWT));
   }, []);
-
+  console.log(commands);
   return (
     <AdminHomeRoot>
       <div className="col-span-12 bg-white rounded-lg shadow-lg">
