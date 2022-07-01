@@ -9,7 +9,7 @@ export const register = async (_user: IUserRegister) => {
   let error = null;
 
   try {
-    response = await axiosConfig.post(`/oni-chan/auth/register`, {..._user});
+    response = await axiosConfig.post(`/big-mom/auth/register`, {..._user});
   } catch (err) {
     error = err;
   }
@@ -23,7 +23,7 @@ export const login = async (_credentials: IUserLogin) => {
   let error = null;
   let jwtDecoded: IMyProfil | null = null;
   try {
-    response = await axiosConfig.post(`/oni-chan/auth/login`, {..._credentials});
+    response = await axiosConfig.post(`/big-mom/auth/login`, {..._credentials});
     initializeJwtHeader(response.data.token);
     jwtDecoded = jwtDecode(response.data.token);
   } catch (err) {
@@ -37,7 +37,7 @@ export const validateEmail = async (_id: string, _code: string) => {
   let error = null;
   let jwtDecoded: IMyProfil | null = null;
   try {
-    response = await axiosConfig.get(`/oni-chan/auth/verify/${_id}/${_code}`);
+    response = await axiosConfig.get(`/big-mom/auth/verify/${_id}/${_code}`);
     initializeJwtHeader(response.data.token);
     jwtDecoded = jwtDecode(response.data.token);
   } catch(err) {

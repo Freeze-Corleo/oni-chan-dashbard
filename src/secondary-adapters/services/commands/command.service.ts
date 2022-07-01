@@ -8,7 +8,7 @@ export const createCommand = async (_command: ICommandCreate) => {
   let error: any = null;
 
   try {
-    response = await axiosConfig.post(`/oni-chan/command/create`, { command: _command});
+    response = await axiosConfig.post(`/big-mom/command/create`, { command: _command});
     response = response.data;
   } catch (err) {
     error = err;
@@ -22,7 +22,7 @@ export const retrieveCommandsFromRestaurant = async (_id: string) => {
   let error: any = null;
 
   try {
-    response = await axiosConfig.get(`/oni-chan/command/by-restaurant/${_id}`);
+    response = await axiosConfig.get(`/big-mom/command/by-restaurant/${_id}`);
     response = response.data;
   } catch(err) {
     error = err;
@@ -36,7 +36,7 @@ export const getAllCommands = async () => {
   let error: any = null;
 
   try {
-    response = await axiosConfig.get(`/oni-chan/command/get-all`);
+    response = await axiosConfig.get(`/big-mom/command/get-all`);
     console.log(response);
   } catch (err) {
     error = err;
@@ -50,7 +50,7 @@ export const getAllCommands = async () => {
   let error: any = null;
 
   try {
-    response = await axiosConfig.put(`/oni-chan/command/update/${_commandId}`, {state, deliveryId});
+    response = await axiosConfig.put(`/big-mom/command/update/${_commandId}`, {state, deliveryId});
     console.log(response);
   } catch (err) {
     error = err;
@@ -63,7 +63,7 @@ export const getHistoCommandByUser = async (_id: string, person: string) => {
   let response: any;
   let error: any = null;
   try {
-    response = await axiosConfig.post(`/oni-chan/command/history/user/`+_id, {status: person});
+    response = await axiosConfig.post(`/big-mom/command/history/user/`+_id, {status: person});
   } catch (err) {
     error = err;
   }
@@ -76,7 +76,7 @@ export const deleteCommand = async (_id: string) => {
   let error: any = null;
 
   try {
-    response = await axiosConfig.delete(`/oni-chan/command/delete/${_id}`);
+    response = await axiosConfig.delete(`/big-mom/command/delete/${_id}`);
   } catch (err) {
     error = err;
   }

@@ -76,7 +76,7 @@ const LoginForm = () => {
               />
               <p style={{ fontSize: 16 }}>Se connecter avec Facebook</p>
             </button>
-            <a href="http://localhost:8080/oni-chan/auth/google">
+            <a href="http://localhost:8080/big-mom/auth/google">
               <div className="rounded-full flex items-center bg-white text-black font-medium tracking-wide px-20 py-2 cursor-pointer space-x-4 hover:bg-gray-200 shadow-md transition duration-300 linear border">
                 <img
                   src={process.env.PUBLIC_URL + '/img/google-icon.png'}

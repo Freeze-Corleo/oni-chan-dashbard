@@ -7,7 +7,7 @@ export const applyPartnerMembership = async (partnerData: IPartnerRegister) => {
   let error: any = null;
 
   try {
-    response = await axiosConfig.post(`/oni-chan/partner/create`, {...partnerData});
+    response = await axiosConfig.post(`/big-mom/partner/create`, {...partnerData});
     response = response.data;
   } catch (err) {
     error = err;
@@ -21,7 +21,7 @@ export const getAllPartners = async () => {
   let error: any = null;
 
   try {
-    response = await axiosConfig.get(`/oni-chan/partner/get-all`);
+    response = await axiosConfig.get(`/big-mom/partner/get-all`);
     response = response.data;
   } catch (err) {
     error = err;
@@ -35,7 +35,7 @@ export const createPartner = async (partnerData: IPartnerApply) => {
   let error: any = null;
 
   try {
-    response = await axiosConfig.post(`/oni-chan/partner/verify/${partnerData.id}`, {password: partnerData.password, status:partnerData.status});
+    response = await axiosConfig.post(`/big-mom/partner/verify/${partnerData.id}`, {password: partnerData.password, status:partnerData.status});
     response = response.data;
   } catch (err) {
     error = err;

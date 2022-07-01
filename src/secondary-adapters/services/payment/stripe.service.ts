@@ -6,7 +6,7 @@ export const createIntent = async (paymentIntentData: {userId: string, productsI
   let error: any = null;
 
   try {
-    response = await axiosConfig.post(`/oni-chan/payment/payment-intent/${paymentIntentData.userId}`, {productsId: paymentIntentData.productsId, provider: paymentIntentData.provider, totalPrice: paymentIntentData.totalPrice});
+    response = await axiosConfig.post(`/big-mom/payment/payment-intent/${paymentIntentData.userId}`, {productsId: paymentIntentData.productsId, provider: paymentIntentData.provider, totalPrice: paymentIntentData.totalPrice});
     response = response.data;
   } catch (err) {
     error = err;
