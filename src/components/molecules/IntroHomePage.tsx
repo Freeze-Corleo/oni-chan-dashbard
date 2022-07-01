@@ -12,10 +12,17 @@ const IntroPage = () => {
   };
 
   const searchRestaurant = () => {
-    navigate({
-      pathname: '/feed',
-      search: `?search=`+search,
-    });
+    if(search != ""){
+      navigate({
+        pathname: '/feed',
+        search: `?search=`+search,
+      });
+    } else {
+      navigate({
+        pathname: '/feed'
+      });
+    }
+
   };
 
   return (

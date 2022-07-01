@@ -8,11 +8,11 @@ const Presentation = () => {
                 <img className='object-scale-down h-48 w-48 mb-4 ml-32' src={process.env.PUBLIC_URL + '/img/camion.png'} />
                 <div>
                     <p className='mt-6 font-bold text-center text-3xl'>Livrer pour nous</p>
-                    <p className='mt-6 text-center'>Roulez avec Deliveroo et travaillez à votre propre rythme. En rejoignant la communauté de livreurs et livreuses partenaires de Deliveroo, vous profiterez également de tout un tas d'avantages et de réductions.</p>
+                    <p className='mt-6 text-center'>Roulez avec Matr et travaillez à votre propre rythme. En rejoignant la communauté de livreurs et livreuses partenaires de Matr, vous profiterez également de tout un tas d'avantages et de réductions.</p>
                 </div>
                 <div>
                     <p className='mt-6 font-bold text-center text-3xl'>Devenez partenaire</p>
-                    <p className='mt-6 text-center'>Devenez partenaire de Deliveroo et attirez encore plus de clients. Nous gérons la livraison, vous ne gérez que la préparation !</p>
+                    <p className='mt-6 text-center'>Devenez partenaire de Matr et attirez encore plus de clients. Nous gérons la livraison, vous ne gérez que la préparation !</p>
                 </div>
                 <img className='object-scale-down h-48 w-48 mb-4 mr-32' src={process.env.PUBLIC_URL + '/img/serveur.png'} />
                 <img className='object-scale-down h-48 w-48 mb-4 ml-32' src={process.env.PUBLIC_URL + '/img/travail.png'} />
