@@ -8,7 +8,7 @@ import { selectCommandReducer } from '../../../view-model-generation/generateCom
 
 import { ICommand } from '../../../appState';
 
-const socket = io('ws://https://test-bigmom-api.herokuapp.com:6969');
+const socket = io('ws://test-onichan-api.herokuapp.com:6969');
 
 const Commercial = () => {
   const basket = useSelector(selectBasketReducer);
