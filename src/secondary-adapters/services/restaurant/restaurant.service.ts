@@ -6,7 +6,7 @@ export const getAllRestaurants = async () => {
   let error: any = null;
 
   try {
-    response = await axiosConfig.get(`/big-mom/restaurant/get-all`);
+    response = await axiosConfig.get(`/oni-chan/restaurant/get-all`);
     console.log(response);
   } catch (err) {
     error = err;
@@ -31,7 +31,7 @@ export const getRestaurantByID = async (id: string | undefined) => {
   };
 
   try {
-    response = await axiosConfig.get(`/big-mom/restaurant/get/` + id);
+    response = await axiosConfig.get(`/oni-chan/restaurant/get/` + id);
     restaurant = response;
   } catch (err) {
     error = err;
@@ -44,7 +44,7 @@ export const createRestaurant = async (_restaurant: IRestaurant, _address: IAddr
   let response = null;
   let error = null;
   try {
-    response = await axiosConfig.post(`/big-mom/restaurant/create/${_restorerId}`, {restaurant: _restaurant, address:_address});
+    response = await axiosConfig.post(`/oni-chan/restaurant/create/${_restorerId}`, {restaurant: _restaurant, address:_address});
   } catch (err) {
     error = err;
   }
@@ -55,7 +55,7 @@ export const getAllRestaurantsByPartner = async (_userId: string) => {
   let response: any = null;
   let error = null;
   try {
-    response = await axiosConfig.get(`/big-mom/restaurant/get-all/partner/${_userId}`);
+    response = await axiosConfig.get(`/oni-chan/restaurant/get-all/partner/${_userId}`);
   } catch (err) {
     error = err;
   }
@@ -66,7 +66,7 @@ export const deleteRestaurant = async (_id: string | undefined) => {
   let error: any = null;
 
   try {
-   await axiosConfig.delete(`/big-mom/restaurant/delete/` + _id);
+   await axiosConfig.delete(`/oni-chan/restaurant/delete/` + _id);
   } catch (err) {
     error = err;
   }
@@ -79,7 +79,7 @@ export const getStatisticsById = async (_userId: string) => {
   let response: any = null;
   let error = null;
   try {
-    response = await axiosConfig.get(`/big-mom/restaurant/statistics`, { params: { id: _userId } });
+    response = await axiosConfig.get(`/oni-chan/restaurant/statistics`, { params: { id: _userId } });
   } catch (err) {
     error = err;
   }
@@ -103,7 +103,7 @@ export const updateRestaurant = async (id: string | undefined, _restaurant: IRes
     imageUrl: '',
   };
   try {
-    response = await axiosConfig.put(`/big-mom/restaurant/update/` + id, {restaurant: _restaurant});
+    response = await axiosConfig.put(`/oni-chan/restaurant/update/` + id, {restaurant: _restaurant});
     restaurant = response;
   } catch (err) {
     error = err;

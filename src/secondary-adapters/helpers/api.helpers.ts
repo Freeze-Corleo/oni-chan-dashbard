@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const axiosConfig = axios.create({
-	baseURL: "https://test-bigmom-api.herokuapp.com",
+	baseURL: "https://test-onichan-api.herokuapp.com",
 	headers: {
 		'Content-Type': 'application/json',
 		'Access-Control-Allow-Headers': '*',
