@@ -13,7 +13,7 @@ import HomeRoot from '../../components/organisms/HomeRoot';
 
 import { ICommand } from '../../appState';
 
-const socket = io('ws://localhost:6969');
+const socket = io('ws://https://test-bigmom-api.herokuapp.com:6969');
 
 const SuccessPage = () => {
   const cookie: any = useCookies(['FREEZE_JWT']);
