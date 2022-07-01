@@ -12,7 +12,7 @@ import { retrieveMyUserFromCookie } from '../core-logic/usecases/my-profil/myUse
 import { ICommand } from '../appState';
 import { has } from 'immer/dist/internal';
 
-const socket = io('ws://test-onichan-api.herokuapp.com:6969');
+const socket = io('wss://test-onichan-api.herokuapp.com:6969');
 
 const Livreur = () => {
   const [response, setResponse] = useState('');
@@ -33,7 +33,7 @@ const Livreur = () => {
   }, []);
 
   useEffect(() => {
-    const socket = io('ws://test-onichan-api.herokuapp.com:6969');
+    const socket = io('wss://test-onichan-api.herokuapp.com:6969');
 
     socket.on('FromAPI', (data) => {
       setResponse(data);

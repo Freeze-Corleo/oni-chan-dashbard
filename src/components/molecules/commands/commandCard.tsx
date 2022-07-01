@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 import { useDispatch } from 'react-redux';
 import { updateCommand } from '../../../core-logic/usecases/command/commandUseCase';
 
-const socket = io('ws://test-onichan-api.herokuapp.com:6969');
+const socket = io('wss://test-onichan-api.herokuapp.com:6969');
 interface ICommandCardProps {
   command: ICommand;
   userId: string;
