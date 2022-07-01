@@ -20,6 +20,8 @@ export const data = (
       return {...state, commands: action.payload};
     case actions.COMMANDS_FROM_RESTO_RETRIEVED:
       return action.payload;
+    case actions.COMMAND_UPDATED:
+      return [action.payload];
     default: return state;
   }
 }

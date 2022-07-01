@@ -45,7 +45,19 @@ export const getAllCommands = async () => {
   return {response, error};
 }
 
- 
+ export const updateCommand = async (_commandId: string, state: string, deliveryId: string) => {
+  let response: any;
+  let error: any = null;
+
+  try {
+    response = await axiosConfig.put(`/oni-chan/command/update/${_commandId}`, {state, deliveryId});
+    console.log(response);
+  } catch (err) {
+    error = err;
+  }
+
+  return {response, error};
+ }
 
 export const getHistoCommandByUser = async (_id: string, person: string) => {
   let response: any;
@@ -59,7 +71,7 @@ export const getHistoCommandByUser = async (_id: string, person: string) => {
 }
 
 export const deleteCommand = async (_id: string) => {
- 
+
   let response: any;
   let error: any = null;
 

@@ -15,7 +15,9 @@ export const Actions = {
 
   retrieveCommandsFromRestaurant: () => createAction(_actions.RETRIEVE_COMMANDS_FROM_RESTO),
   commandsFromRestaurantsRetrieved: (_commands: ICommand[]) => createAction(_actions.COMMANDS_FROM_RESTO_RETRIEVED, _commands),
-  deleteSpecificCommand: (_id: string) => createAction(_actions.DELETE_COMMAND, _id)
+  deleteSpecificCommand: (_id: string) => createAction(_actions.DELETE_COMMAND, _id),
+  updateCommand: () => createAction(_actions.UPDATE_COMMAND),
+  commandUpdated: (command: ICommand) => createAction(_actions.COMMAND_UPDATED, command)
 };
 
 export type Actions = ActionsUnion<typeof Actions>;

@@ -42,3 +42,11 @@ export const deleteACommand = (_commandId: string): ThunkResult<Promise<void>> =
     dispatch(actionCreator.Actions.deleteSpecificCommand(response.data));
   }
 }
+
+export const updateCommand = (_commandId: string, state: string, deliveryId: string): ThunkResult<Promise<void>> => async (dispatch, getState, {commandGateway}:{commandGateway : ICommandGateway}) => {
+  dispatch(actionCreator.Actions.updateCommand);
+  const {response, error} = await commandGateway.updateCommand(_commandId, state, deliveryId);
+  if(!error) {
+    dispatch(actionCreator.Actions.commandUpdated(response.data));
+  }
+}

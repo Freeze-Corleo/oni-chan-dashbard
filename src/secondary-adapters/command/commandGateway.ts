@@ -22,4 +22,8 @@ export class CommandGateway implements ICommandGateway {
   public async deleteCommand(_id: string): Promise<{response: any, error: any}> {
     return await command.deleteCommand(_id);
   }
+
+  public async updateCommand(_commandId: string, state: string, deliveryId: string): Promise<{response: any, error: any}> {
+    return await command.updateCommand(_commandId, state, deliveryId);
+  }
 }

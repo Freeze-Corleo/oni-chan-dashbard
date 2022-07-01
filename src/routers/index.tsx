@@ -25,6 +25,9 @@ import SuccessPage from '../pages/payment/success';
 
 import PaymentHome from '../pages/payment';
 import Livreur from '../pages/Livreur';
+import HistoCommand from '../pages/HistoriqueUser';
+import HistoCommandResto from '../pages/admin/commands/historique';
+import Commercial from '../pages/admin/commercial/Commercial';
 
 const AppRoute = () => {
   return (
@@ -36,6 +39,7 @@ const AppRoute = () => {
           element={<CreateRestaurantAdmin />}
         />
         <Route path="/admin/restaurant/:id" element={<RestaurantIdAdmin />} />
+        <Route path="/admin/commercial" element={<Commercial />} />
         <Route path="/admin/create-product" element={<ProductIndex />} />
         <Route
           path="/admin/create-product/:id"
